@@ -8,6 +8,7 @@ int main(){
     int screen = 2;
     
     int** map = generateMap(10, 10);
+    system("cls");
     
     while (gameRun){
         
