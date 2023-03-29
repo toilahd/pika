@@ -10,6 +10,7 @@ int main(){
     int** map = generateMap(10, 10);
     system("cls");
     
+    
     while (gameRun){
         
         switch (screen){
