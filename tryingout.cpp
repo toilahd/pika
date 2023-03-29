@@ -13,6 +13,10 @@ void color(){
 }
 
 int main(){
-    color();
+    SetConsoleOutputCP(65001);
+    cout << "╭────────────────────────╮\n\
+│先生はえっちですね│\n\
+╰────────────────────────╯";
+    
     return 0;
 }

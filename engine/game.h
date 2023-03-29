@@ -100,12 +100,12 @@ void mapPrint(int **map, int m, int n, int mx = -1, int my = -1, int m2x = -1, i
 
 bool isClear(int **map, int m, int n, int x, int y, int x2, int y2){
     if (y == y2)
-        for (int i = min(x, x2); i <= max(x, x2); i++)
+        for (int i = min(x, x2) + 1; i < max(x, x2); i++)
             if (map[y][i] != 0)
                 return false;
                 
     if (x == x2)
-        for (int i = min(y, y2); i <= max(y, y2); i++)
+        for (int i = min(y, y2) + 1; i < max(y, y2); i++)
             if (map[i][x] != 0)
                 return false;
                 
@@ -387,6 +387,49 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
                 return true;
             }
             
+        }
+        
+    }
+    
+    if (x != x2 && y  != y2){
+        if (x > x2){
+            swap(x, x2);
+            swap(y, y2);
+        }
+        
+        for (int i = x + 1; i < x2; i++){
+            if (!isClear(map, m, n, i, y, i, y2))
+                continue;
+            
+            if (!isClear(map, m, n, x, y, i, y))
+                continue;
+                
+            if (!isClear(map, m, n, x2, y2, i, y2))
+                continue;
+                
+            map[y][x] = map[y2][x2] = 0;
+            return true;
+        }
+        
+        
+        
+        if (y > y2){
+            swap(x, x2);
+            swap(y, y2);
+        }
+        
+        for (int i = y + 1; i < y2; i++){
+            if (!isClear(map, m, n, x - 1, i, x2 + 1, i))
+                continue;
+            
+            if (!isClear(map, m, n, x, y, x, i))
+                continue;
+                
+            if (!isClear(map, m, n, x2, y2, x2, i))
+                continue;
+                
+            map[y][x] = map[y2][x2] = 0;
+            return true;
         }
         
     }
