@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 			if(getmouse(&event) == OK)
 			{
 				if(event.bstate & BUTTON1_PRESSED) {
-					printw("Mouse down at, x: %d y: %d\n", event.x, event.y);
+					printw("Mouse down at ê ệ \033[38;2;255;192;203mHello\033[0m, x: %d y: %d\n", event.x, event.y);
 					refresh();
 				}
 			}
