@@ -3,6 +3,7 @@
         "iostream": "cpp",
         "string": "cpp",
         "random": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "iosfwd": "cpp"
     }
 }

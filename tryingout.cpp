@@ -1,5 +1,9 @@
 #define NCURSES_MOUSE_VERSION
-#include "include/curses.h"
+// #include "include/curses.h"
+#include <Windows.h>
+#include <iostream>
+
+using namespace std;
 
 
 /*
@@ -30,12 +34,10 @@ ALL_MOUSE_EVENTS         report all button state changes
 REPORT_MOUSE_POSITION    report mouse movement
 */
 
-/* mouse usage */
-int main(int argc, char *argv[])
-{
+/* void ncurses(){
 	MEVENT event;
 
-  int ch = 0;
+	int ch = 0;
 	initscr();
 	// raw();
 	keypad(stdscr, TRUE);
@@ -60,6 +62,24 @@ int main(int argc, char *argv[])
 	
 	refresh();
 	endwin();
+} */
+
+
+int main(int argc, char *argv[])
+{
+	SetConsoleOutputCP(65001);
+	cout << "        ╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮\n\
+           A      B      A      B      A      B      A      B\n\
+	╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯\n\
+        ╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮\n\
+        │  A      B      A      B      A      B      A      B\n\
+        ╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯\n\
+        ╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮\n\
+           A      B      A      B      A      B      A      B\n\
+        ╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯\n\
+        ╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮\n\
+           A      B      A      B      A      B      A      B\n\
+        ╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯\n";
 
 	return 0;
 }
