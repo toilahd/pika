@@ -4,6 +4,14 @@
 
 using namespace std;
 
+ostream& bold_on(ostream& cout){
+    return cout << "\e[1m";
+}
+
+ostream& bold_off(ostream& cout){
+return cout << "\e[0m";
+}
+
 string dye(string color, string text = "▞▞▞▞▞█▓▒░"){
     if (color.at(0) == '#'){
         color = color.substr(1, 6);
@@ -16,7 +24,15 @@ string dye(string color, string text = "▞▞▞▞▞█▓▒░"){
     return "\033[38;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + "\033[0m";
 }
 
-int main(){
+void testingBold(){
+    cout << "\e[1mHello\e[0mHello" << endl;
+    cout << "\e[1m" << dye("ec8797", "Hello") << "\e[0m" << dye("ec8797", "Hello") << "" << endl;
+    cout << "\x1b[1mHello\x1b[0mHello" << endl;
+    cout << bold_on << "Hello" << bold_off << "Hello" << endl;
+    cout << bold_on << dye("ec8797", "Hello") << bold_off << dye("ec8797", "Hello") << endl;
+}
+
+void testColor(){
     SetConsoleOutputCP(65001);
     
 	cout << dye("#cba6f7", "Hex color code can be written with/without # ,like dye(\"#cba6f7\", textToDye)") << endl;
@@ -31,6 +47,4 @@ int main(){
     cout << dye("#0000ff") << endl;
     cout << dye("#4b0082") << endl;
     cout << dye("#ee82ee") << endl;
-
-	return 0;
 }
