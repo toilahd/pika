@@ -3,6 +3,8 @@
 #include <iostream>
 #include <Windows.h>
 
+#include "console.cpp"
+
 void SetWindowSize(SHORT width, SHORT height);
 void color(int color);
 void setConsoleFontSize(int size);

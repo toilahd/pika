@@ -1,6 +1,6 @@
 #include <iostream>
 #include "engine/game.h"
-#include "engine/color.hpp"
+#include "console/color.hpp"
 
 using namespace std;
 
@@ -22,7 +22,7 @@ int main(){
                 break;
                 
             case 2:
-                playScreen(map, 10, 10);
+                playScreen(map, 4, 10);
                 // cout << EXAMPLE_LAYOUT << endl;
                 cin >> tmp;
                 break;

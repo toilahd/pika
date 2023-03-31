@@ -3,6 +3,8 @@
 #include <Windows.h>
 #include <iostream>
 
+#include "console/ui.hpp"
+
 using namespace std;
 
 
@@ -64,10 +66,7 @@ REPORT_MOUSE_POSITION    report mouse movement
 	endwin();
 } */
 
-
-int main(int argc, char *argv[])
-{
-	SetConsoleOutputCP(65001);
+void layout(){
 	cout << "        ╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮\n\
            A      B      A      B      A      B      A      B\n\
 	╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯\n\
@@ -80,6 +79,27 @@ int main(int argc, char *argv[])
         ╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮\n\
            A      B      A      B      A      B      A      B\n\
         ╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯\n";
+}
+
+
+int main(int argc, char *argv[])
+{
+	SetConsoleOutputCP(65001);
+	
+	cout << "      ╭─ Player 1 ───────────────────────────────────────────────╮\n\
+      │ ╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮ │\n\
+      │    A <==> B      A      B      A      B      A      B    │\n\
+      │ ╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯ │\n\
+      │ ╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮       ╭─   ─╮╭─   ─╮╭─   ─╮ │\n\
+      │    A      B      A      B <====╗      B      A      B    │\n\
+      │ ╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯   ║   ╰─   ─╯╰─   ─╯╰─   ─╯ │\n\
+      │ ╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮   ║   ╭─   ─╮╭─   ─╮╭─   ─╮ │\n\
+      │    A      B      A      B      ║      B      A      B    │\n\
+      │ ╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯   ║   ╰─   ─╯╰─   ─╯╰─   ─╯ │\n\
+      │ ╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮   ║          ╭─   ─╮╭─   ─╮ │\n\
+      │    A      B      A      B      ╚===========> A      B    │\n\
+      │ ╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯              ╰─   ─╯╰─   ─╯ │\n\
+      ╰──────────────────────────────────────────────────────────╯";
 
 	return 0;
 }

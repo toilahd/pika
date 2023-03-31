@@ -1,8 +1,13 @@
+#ifndef COLOR
+
+
 #include <iostream>
 #include <string>
 #include <Windows.h>
 
 using namespace std;
+
+const string rainbow[] = {"#FF0000", "#FFA500", "#FFFF00", "#5dc591", "#84ff01", "#077712", "#00FFFF", "#ADD8E6", "#0000FF", "#4B0082", "#FFC0CB", "#EE82EE", "#FF69B4", "#FF1493", "#800000"};
 
 ostream& bold_on(ostream& cout){
     return cout << "\e[1m";
@@ -48,3 +53,6 @@ void testColor(){
     cout << dye("#4b0082") << endl;
     cout << dye("#ee82ee") << endl;
 }
+
+#define COLOR
+#endif

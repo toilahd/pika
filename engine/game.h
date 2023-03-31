@@ -5,6 +5,8 @@
 #include <iomanip>
 #include <string>
 
+#include "../console/ui.hpp"
+
 using namespace std;
 
 #define KEY_UP 72
@@ -141,8 +143,6 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
     if (*(*(map + y) + x) == 0 || *(*(map + y2) + x2) == 0 || (x == x2 && y == y2) || *(*(map + y) + x) != *(*(map + y2) + x2))
         return false;
         
-    Sleep(1000);
-    
     // Horizontal matching
     if (y == y2){
         bool obstacle = false;
@@ -461,7 +461,8 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
 }
 
 void playScreen(int** map, int m, int n){
-    mapPrint(map, m, n);
+    boardPrint(map, m, n);
+    // mapPrint(map, m, n);
     
     char temp;
     int a, b, c, d;
@@ -472,13 +473,13 @@ void playScreen(int** map, int m, int n){
     
     if (!pathSearch(map, m, n, b, a, d, c)){
         cout << "Khong co duong" << endl;
-        // Sleep(800);
+        Sleep(800);
         // string temp;
         // cin >> temp;
     }
     else {
         cout << "UOOooh" << endl;
-        // Sleep(800);
+        Sleep(800);
         // string temp;
         // cin >> temp;
     }
