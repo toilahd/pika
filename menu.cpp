@@ -1,10 +1,8 @@
-#include <iostream>
 #include <conio.h>
-#include <Windows.h>
 #include <string>
 #include <iomanip>
 #include <cstdlib>
-#include "consolecontrol.h"
+#include "console.h"
 
 
 using namespace std;
@@ -87,7 +85,6 @@ void drawMenu() {
 
 		)";
 		gotoxy(50, 0);
-		dye("#0D5060", pics);
 		cout << pics;
 		gotoxy(50, 20);
 		color(Set[0]);
@@ -164,11 +161,4 @@ void drawMenu() {
 		}
 	}
 
-}
-
-int main() {
-
-	drawMenu();
-
-	return 0;
 }
