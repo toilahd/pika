@@ -1,15 +1,22 @@
-#include <iostream>
 #include <conio.h>
-#include <Windows.h>
 #include <string>
 #include <iomanip>
 #include <cstdlib>
-#include "consolecontrol.h"
+#include "console.h"
 
 
 using namespace std;
-void ClearScreen(){
-    cout << string( 100, '\n' );
+
+string dye(string color, string text = "▞▞▞▞▞█▓▒░"){
+    if (color.at(0) == '#'){
+        color = color.substr(1, 6);
+    }
+    
+    int r = stoi(color.substr(0, 2), nullptr, 16);
+    int g = stoi(color.substr(2, 2), nullptr, 16);
+    int b = stoi(color.substr(4, 2), nullptr, 16);
+    
+    return "\033[38;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + "\033[0m";
 }
 
 void playGame() {
@@ -58,11 +65,27 @@ void drawMenu() {
 	DisableResizeWindow();
 	DisableCtrButton(0, 0, 1);
 
-	
+	system("cls");
 	while (true) {
-		ClearScreen();
+		string pics = R"(
+		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⠤⠤⠤⠤⠤⠤⣀⡀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢀⣠⢤⡶⠞⠋⠉⠀⣀⣀⣀⣀⣀⣀⣀⠀⠉⠲⡀⠀
+⠀⠀⠀⠀⣀⠴⢊⡥⠚⠁⣀⠤⠖⠊⠉⠀⠀⠀⠀⠈⢧⡸⡀⠀⠀⢹⠀
+⠀⢀⡴⠊⣡⠖⠁⢀⠴⠊⣁⣀⡠⠔⠒⠊⠉⠉⠓⢦⠀⠀⢱⠀⠀⢀⡇
+⡴⠋⢀⠞⠁⢀⠔⠁⢀⡼⠤⠇⣀⡤⠤⠤⡀⠀⠀⢸⠀⠀⡸⠀⠀⡸⠀
+⠀⣰⠃⠀⡰⠃⠀⡴⠋⠀⡠⠊⠁⠀⠀⣠⠇⠀⢠⠎⠀⢠⠋⠀⣰⠃⠀
+⣰⠃⢠⡚⡗⠀⡜⠀⠀⢸⡀⠀⣀⣼⣹⠁⢀⠔⠁⢀⡴⠃⢀⡴⠁⠀⠀
+⡇⠀⠀⡏⠁⠀⣇⠀⠀⠀⠈⠉⠀⣀⠤⠚⠁⢀⡤⠋⠀⡠⠊⣠⠞⠀⠀
+⡇⠀⠀⢻⡀⠀⠈⠓⠲⠖⠒⠚⠉⠀⢰⡋⢙⠏⢀⡤⢊⡠⠚⠁⠀⠀⠀
+⢳⡀⠀⠀⠙⠲⠤⠄⠀⠠⠤⠤⠒⠊⠁⣉⣭⣚⡥⠒⠉⠀⠀⠀⠀⠀⠀
+⠀⠙⡞⠉⣆⠀⠀⠀⠀⢀⣀⡤⠤⠶⠛⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠉⠚⠁⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+
+⠀⠀⠀⠀⠰⠤⠴⠤⠴⢶⠴⠤⠤⠆⠀⠂⠄⠀⠴⠤⠦⠴⠀⠀⠀⠀⠀	
+
+		)";
 		gotoxy(50, 0);
-		
+		cout << pics;
 		gotoxy(50, 20);
 		color(Set[0]);
 		cout << "=== MENU ===";
@@ -138,11 +161,4 @@ void drawMenu() {
 		}
 	}
 
-}
-
-int main() {
-
-	drawMenu();
-
-	return 0;
 }

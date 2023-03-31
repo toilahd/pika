@@ -1,4 +1,4 @@
-#include "consolecontrol.h"
+#include "console.h"
 
 void SetWindowSize(SHORT width, SHORT height)
 {

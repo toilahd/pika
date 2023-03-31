@@ -1,5 +1,5 @@
 #pragma once
-#include "consolecontrol.cpp"
+
 #include <iostream>
 #include <Windows.h>
 
