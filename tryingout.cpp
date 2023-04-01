@@ -81,11 +81,7 @@ void layout(){
         ╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯\n";
 }
 
-
-int main(int argc, char *argv[])
-{
-	SetConsoleOutputCP(65001);
-	
+void anotherLayout(){
 	cout << "      ╭─ Player 1 ───────────────────────────────────────────────╮\n\
       │ ╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮ │\n\
       │    A <==> B      A      B      A      B      A      B    │\n\
@@ -100,6 +96,14 @@ int main(int argc, char *argv[])
       │    A      B      A      B      ╚===========> A      B    │\n\
       │ ╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯              ╰─   ─╯╰─   ─╯ │\n\
       ╰──────────────────────────────────────────────────────────╯";
+}
+
+
+int main(int argc, char *argv[])
+{
+	SetConsoleOutputCP(65001);
+	
+	testColor();
 
 	return 0;
 }

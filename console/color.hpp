@@ -1,5 +1,4 @@
-#ifndef COLOR
-
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -29,6 +28,18 @@ string dye(string color, string text = "▞▞▞▞▞█▓▒░"){
     return "\033[38;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + "\033[0m";
 }
 
+string fill(string color, string text = "hello"){
+    if (color.at(0) == '#'){
+        color = color.substr(1, 6);
+    }
+    
+    int r = stoi(color.substr(0, 2), nullptr, 16);
+    int g = stoi(color.substr(2, 2), nullptr, 16);
+    int b = stoi(color.substr(4, 2), nullptr, 16);
+    
+    return "\033[48;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + "\033[0m";
+}
+
 void testingBold(){
     cout << "\e[1mHello\e[0mHello" << endl;
     cout << "\e[1m" << dye("ec8797", "Hello") << "\e[0m" << dye("ec8797", "Hello") << "" << endl;
@@ -43,7 +54,7 @@ void testColor(){
 	cout << dye("#cba6f7", "Hex color code can be written with/without # ,like dye(\"#cba6f7\", textToDye)") << endl;
 	cout << dye("cba6f7", "...or dye(\"cba6f7\", anotherTextToDye)") << endl;
     
-    cout << "...and it automatically resets, even written inline like " << dye("ff0000","t") << dye("00ff00", "h") << dye("0000ff", "i") << dye("ffffff","s") << ". But changing background color is not available yet." << endl;
+    cout << "...and it automatically resets, even written inline like " << dye("ff0000","t") << dye("00ff00", "h") << dye("0000ff", "i") << dye("ffffff","s") << ", and " << fill("137213", "background") << " too." << endl;
     
     cout << dye("#ff0000") << endl;
     cout << dye("#ffa500") << endl;
@@ -52,7 +63,13 @@ void testColor(){
     cout << dye("#0000ff") << endl;
     cout << dye("#4b0082") << endl;
     cout << dye("#ee82ee") << endl;
+    
+    
+    cout << fill("#ff0000") << endl;
+    cout << fill("#ffa500") << endl;
+    cout << fill("#ffff00") << endl;
+    cout << fill("#008000") << endl;
+    cout << fill("#0000ff") << endl;
+    cout << fill("#4b0082") << endl;
+    cout << fill("#ee82ee") << endl;
 }
-
-#define COLOR
-#endif

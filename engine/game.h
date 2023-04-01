@@ -461,6 +461,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
 }
 
 void playScreen(int** map, int m, int n){
+    system("cls");
     boardPrint(map, m, n);
     // mapPrint(map, m, n);
     

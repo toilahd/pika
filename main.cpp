@@ -24,7 +24,7 @@ int main(){
             case 2:
                 playScreen(map, 4, 10);
                 // cout << EXAMPLE_LAYOUT << endl;
-                cin >> tmp;
+                // cin >> tmp;
                 break;
             
             default:
