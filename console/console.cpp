@@ -1,4 +1,5 @@
 #include "console.h"
+#include <Windows.h>
 
 void SetWindowSize(SHORT width, SHORT height)
 {

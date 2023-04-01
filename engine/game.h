@@ -460,30 +460,64 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
     return false;
 }
 
+int selectBlock(){
+    int input = _getch();
+    
+    if (input == 224){
+        switch (_getch()){
+		case KEY_UP:				//lên
+			cout << 1 << endl;
+            return 1;
+            // break;
+		case KEY_LEFT:				//trái
+			cout << 2 << endl;
+            return 2;
+            // break;
+		case KEY_RIGHT:				//phải
+			cout << 4 << endl;
+            return 4;
+            // break;
+		case KEY_DOWN:				//xuống
+			cout << 3 << endl;
+            return 3;
+            // break;
+		default:				//nút khác
+			cout << 0 << endl;
+            return 0;
+            // break;
+		}
+    }
+    
+    cout << "Input" << endl;
+    Sleep(800);
+}
+
 void playScreen(int** map, int m, int n){
     system("cls");
     boardPrint(map, m, n);
     // mapPrint(map, m, n);
     
-    char temp;
-    int a, b, c, d;
-    cout << "Nhap toa do 1: ";
-    cin >> a >> b;
-    cout << "Nhap toa do 2: ";
-    cin >> c >> d;
+    int move = selectBlock();
+    switch ()
+    // char temp;
+    // int a, b, c, d;
+    // cout << "Nhap toa do 1: ";
+    // cin >> a >> b;
+    // cout << "Nhap toa do 2: ";
+    // cin >> c >> d;
     
-    if (!pathSearch(map, m, n, b, a, d, c)){
-        cout << "Khong co duong" << endl;
-        Sleep(800);
-        // string temp;
-        // cin >> temp;
-    }
-    else {
-        cout << "UOOooh" << endl;
-        Sleep(800);
-        // string temp;
-        // cin >> temp;
-    }
+    // if (!pathSearch(map, m, n, b, a, d, c)){
+    //     cout << "Khong co duong" << endl;
+    //     Sleep(800);
+    //     // string temp;
+    //     // cin >> temp;
+    // }
+    // else {
+    //     cout << "UOOooh" << endl;
+    //     Sleep(800);
+    //     // string temp;
+    //     // cin >> temp;
+    // }
     
     cout << endl << endl << endl;
 }

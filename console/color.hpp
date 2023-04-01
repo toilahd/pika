@@ -54,7 +54,7 @@ void testColor(){
 	cout << dye("#cba6f7", "Hex color code can be written with/without # ,like dye(\"#cba6f7\", textToDye)") << endl;
 	cout << dye("cba6f7", "...or dye(\"cba6f7\", anotherTextToDye)") << endl;
     
-    cout << "...and it automatically resets, even written inline like " << dye("ff0000","t") << dye("00ff00", "h") << dye("0000ff", "i") << dye("ffffff","s") << ", and " << fill("137213", "background") << " too." << endl;
+    cout << "...and it automatically resets, even written inline like " << dye("ff0000","t") << dye("00ff00", "h") << dye("0000ff", "i") << dye("ffffff","s") << ", and " << fill("437213", "background") << " too." << endl;
     
     cout << dye("#ff0000") << endl;
     cout << dye("#ffa500") << endl;
