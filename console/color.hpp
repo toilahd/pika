@@ -64,6 +64,7 @@ void testColor(){
     cout << dye("#4b0082") << endl;
     cout << dye("#ee82ee") << endl;
     
+    cout << "And now, the classics..." << endl;
     
     cout << fill("#ff0000") << endl;
     cout << fill("#ffa500") << endl;
