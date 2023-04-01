@@ -7,7 +7,6 @@
 
 using namespace std;
 
-string dye(string color, string text = "▞▞▞▞▞█▓▒░");
 void playGame();
 void gameMode();
 void leaderBoards();
