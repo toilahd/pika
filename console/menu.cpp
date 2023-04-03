@@ -1,11 +1,4 @@
-#include <conio.h>
-#include <string>
-#include <iomanip>
-#include <cstdlib>
-#include "console.h"
-
-
-using namespace std;
+#include "menu.h"
 
 
 void playGame() {
@@ -44,51 +37,19 @@ void exit() {
 	return;
 }
 void drawMenu() {
-	int Set[] = { 7 ,7 ,7 ,7 ,7 ,7 };
+	string menu[6] = {"=== MENU ===", "Play", "Game Mode", "LeaderBoards", "Credits", "Exit"};
 	int counter = 1;
 	char key;
-	setConsoleFontSize(20);
-	SetWindowSize(110, 30);
-	SetScreenBufferSize(110, 30);
-	ShowScrollbar(false);
-	DisableResizeWindow();
-	DisableCtrButton(0, 0, 1);
-	// For the love of God, your mental health, the advancement of technoloy and humanity and everything in between, use this to output ANY UNICODE character
 	SetConsoleOutputCP(65001);
 	system("cls");
-	// The top piece of the votex will always be off to the rest of the pics when printed out
-	// WHY? 'cause you moved your cursor in the middle of the console for the top part but not for the rest of the pics
-	while (true) {
-		
-		gotoxy(50, 0
-		
-		gotoxy(50, 20);
-		color(Set[0]);
-		cout << "=== MENU ===";
-
-		gotoxy(50, 21);
-		color(Set[1]);
-		cout << "Play";
-
-
-		gotoxy(50, 22);
-		color(Set[2]);
-		cout << "Game Mode";
-
-		gotoxy(50, 23);
-		color(Set[3]);
-		cout << "LeaderBoards";
-
-		gotoxy(50, 24);
-		color(Set[4]);
-		cout << "Credits";
-
-		gotoxy(50, 25);
-		color(Set[5]);
-		cout << "Exit";
-
+	
+		for (int i = 0; i < 6 ; i++ ){
+			int y = 20;
+			gotoxy(50, y);
+			cout << menu[i] << "\n";
+			y++;
+		}	
 		key = _getch();
-
 		// 72 = up arrow key
 		if (key == 72 && (counter >= 2 && counter <= 5)) {
 			counter--;
@@ -114,33 +75,15 @@ void drawMenu() {
 				exit();
 			}
 		}
-		Set[0] = 8;
-		Set[1] = 7;
-		Set[2] = 7;
-		Set[3] = 7;
-		Set[4] = 7;
-		Set[5] = 7;
+		
 		if (counter == 1) {
-			Set[1] = 12;
 		}
 		if (counter == 2) {
-			Set[2] = 12;
 		}
 		if (counter == 3) {
-			Set[3] = 12;
 		}
 		if (counter == 4) {
-			Set[4] = 12;
 		}
 		if (counter == 5) {
-			Set[5] = 12;
 		}
 	}
-
-}
-
-
-int main(){
-	drawMenu();	
-	return 0;
-}

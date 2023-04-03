@@ -1,5 +1,4 @@
 #include "console.h"
-#include <Windows.h>
 
 void SetWindowSize(SHORT width, SHORT height)
 {
@@ -13,9 +12,7 @@ void SetWindowSize(SHORT width, SHORT height)
 
 	SetConsoleWindowInfo(hStdout, 1, &WindowSize);
 }
-void color(int color) {
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
-}
+
 void setConsoleFontSize(int size)
 {
 	HANDLE hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);

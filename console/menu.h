@@ -1,11 +1,4 @@
-#include <conio.h>
-#include <string>
-#include <iomanip>
-#include <cstdlib>
 #include "console.h"
-
-
-using namespace std;
 
 void playGame();
 void gameMode();

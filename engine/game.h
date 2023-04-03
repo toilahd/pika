@@ -498,7 +498,6 @@ void playScreen(int** map, int m, int n){
     // mapPrint(map, m, n);
     
     int move = selectBlock();
-    switch ()
     // char temp;
     // int a, b, c, d;
     // cout << "Nhap toa do 1: ";
