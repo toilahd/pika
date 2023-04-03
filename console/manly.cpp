@@ -3,10 +3,11 @@
 #include <iomanip>
 #include <cstdlib>
 #include "console.h"
+#include "color.hpp"
+#include <fstream>
 
 
 using namespace std;
-
 
 void playGame() {
 	system("cls");
@@ -40,28 +41,17 @@ void exit() {
 	gotoxy(50, 15);
 	cout << "Thank you so much!\n";
 	gotoxy(45, 16);
-	system("pause");
+	system("pause");	
 	return;
 }
 void drawMenu() {
 	int Set[] = { 7 ,7 ,7 ,7 ,7 ,7 };
 	int counter = 1;
 	char key;
-	setConsoleFontSize(20);
-	SetWindowSize(110, 30);
-	SetScreenBufferSize(110, 30);
-	ShowScrollbar(false);
-	DisableResizeWindow();
-	DisableCtrButton(0, 0, 1);
-	// For the love of God, your mental health, the advancement of technoloy and humanity and everything in between, use this to output ANY UNICODE character
-	SetConsoleOutputCP(65001);
+	
+
 	system("cls");
-	// The top piece of the votex will always be off to the rest of the pics when printed out
-	// WHY? 'cause you moved your cursor in the middle of the console for the top part but not for the rest of the pics
 	while (true) {
-		
-		gotoxy(50, 0
-		
 		gotoxy(50, 20);
 		color(Set[0]);
 		cout << "=== MENU ===";
@@ -77,15 +67,15 @@ void drawMenu() {
 
 		gotoxy(50, 23);
 		color(Set[3]);
-		cout << "LeaderBoards";
+		cout << "\nLeaderBoards";
 
 		gotoxy(50, 24);
 		color(Set[4]);
-		cout << "Credits";
+		cout << "\nCredits";
 
 		gotoxy(50, 25);
 		color(Set[5]);
-		cout << "Exit";
+		cout << "\nExit";
 
 		key = _getch();
 
@@ -111,7 +101,7 @@ void drawMenu() {
 				credits();
 			}
 			if (counter == 5) {
-				exit();
+				return;
 			}
 		}
 		Set[0] = 8;
@@ -141,6 +131,7 @@ void drawMenu() {
 
 
 int main(){
-	drawMenu();	
+	drawMenu();
+	
 	return 0;
 }
