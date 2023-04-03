@@ -40,15 +40,15 @@ void drawMenu() {
 	string menu[6] = {"=== MENU ===", "Play", "Game Mode", "LeaderBoards", "Credits", "Exit"};
 	int counter = 1;
 	char key;
-	SetConsoleOutputCP(65001);
+	int y = 20;
 	system("cls");
-	
-		for (int i = 0; i < 6 ; i++ ){
-			int y = 20;
+	SetConsoleOutputCP(65001);
+	while(true){
+		for (int i = 0; i < 6; i++) {
 			gotoxy(50, y);
 			cout << menu[i] << "\n";
 			y++;
-		}	
+		}
 		key = _getch();
 		// 72 = up arrow key
 		if (key == 72 && (counter >= 2 && counter <= 5)) {
@@ -75,15 +75,20 @@ void drawMenu() {
 				exit();
 			}
 		}
-		
 		if (counter == 1) {
+			dye(menu[1], rainbow[0]);
 		}
 		if (counter == 2) {
+			dye(menu[2], rainbow[0]);
 		}
 		if (counter == 3) {
+			dye(menu[3], rainbow[0]);
 		}
 		if (counter == 4) {
+			dye(menu[4], rainbow[0]);
 		}
 		if (counter == 5) {
+			dye(menu[5], rainbow[0]);
 		}
 	}
+}

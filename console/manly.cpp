@@ -2,6 +2,6 @@
 
 
 int main(){
-	drawMenu();
+	testColor();
 	return 0;
 }

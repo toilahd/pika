@@ -1,4 +1,5 @@
 #include "console.h"
+#pragma once
 
 void playGame();
 void gameMode();
