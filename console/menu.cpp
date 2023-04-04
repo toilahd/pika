@@ -35,8 +35,20 @@ void exit() {
 	system("pause");
 	return;
 }
-
-void drawBox(string menu, int x, int y, int z){
+void drawImages(int x, int y, string filename){
+	int line = 0, col = 0;
+	string img;
+	ifstream in;
+	in.open(filename);
+	while(!in.eof()){
+		getline(in, img);
+		gotoxy(x, y + line);
+		cout << img;
+		line++;
+	}
+	in.close();
+}
+void drawBox(string menu, int x, float y, int z){
 	gotoxy(x - 6, y - 1 );
 	cout << "╭───────────────────────╮" << endl;
 	gotoxy(x - 6, y);
@@ -56,13 +68,15 @@ void drawMenu() {
 	SetConsoleOutputCP(65001);
 	system("cls");
 	while(true){
-		gotoxy(50, 19);
+		drawImages(30, 3, "logo.txt");
+		drawImages(0, 15, "logo1.txt");
+		gotoxy(55, 25);
 		cout << menu[0];
-		drawBox(menu[1], 50, 21, 54);
-		drawBox(menu[2], 50, 24, 52);
-		drawBox(menu[3], 50, 27, 50);
-		drawBox(menu[4], 50, 30, 53);
-		drawBox(menu[5], 50, 33, 54);		
+		drawBox(menu[1], 55, 27, 59);
+		drawBox(menu[2], 55, 30, 57);
+		drawBox(menu[3], 55, 33, 55);
+		drawBox(menu[4], 55, 36, 58);
+		drawBox(menu[5], 55, 39, 59);		
 		key = _getch();
 		// 72 = up arrow key
 		if (key == 72 && (counter >= 2 && counter <= 5)) {
@@ -72,42 +86,42 @@ void drawMenu() {
 			counter++;
 		}
 		//carriage return = enter key
-		if (key == '\r') {
-			if (counter == 1) {
-				playGame();
-			}
-			if (counter == 2) {
-				gameMode();
-			}
-			if (counter == 3) {
-				leaderBoards();
-			}
-			if (counter == 4) {
-				credits();
-			}
-			if (counter == 5) {
-				exit();
-			}
-		}
-		if (counter == 1) {
-			gotoxy(50, 21);
+		if (counter == 1){
+			gotoxy(54, 21);
 			cout << dye(rainbow[3], menu[1]);
 		}
-		if (counter == 2) {
-			gotoxy(50, 22);
+		if (counter == 2){
+			gotoxy(50, 24);
 			cout << dye(rainbow[3], menu[2]);
 		}
-		if (counter == 3) {
-			gotoxy(50, 23);
+		if (counter == 3){
+			gotoxy(50, 27);
 			cout << dye(rainbow[3], menu[3]);
 		}
-		if (counter == 4) {
-			gotoxy(50, 24);
+		if (counter == 4){
+			gotoxy(53, 24);
 			cout << dye(rainbow[3], menu[4]);
 		}
-		if (counter == 5) {
-			gotoxy(50, 25);
+		if (counter == 5){
+			gotoxy(54, 33);
 			cout << dye(rainbow[3], menu[5]);
+		}
+		if (key == '\r'){
+			if (counter == 1){
+				playGame();
+			}
+			if (counter == 2){
+				gameMode();
+			}
+			if (counter == 3){
+				leaderBoards();
+			}
+			if (counter == 4){
+				credits();
+			}
+			if (counter == 5){
+				exit();
+			}
 		}
 	}
 }

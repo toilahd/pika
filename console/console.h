@@ -5,11 +5,10 @@
 #include <string>
 #include <iomanip>
 #include "color.hpp"
+#include <fstream>
 #include "console.cpp"
 
 using namespace std;
-
-
 
 void SetWindowSize(SHORT width, SHORT height);
 void setConsoleFontSize(int size);
