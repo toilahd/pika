@@ -7,12 +7,14 @@ using namespace std;
 
 const string rainbow[] = {"#FF0000", "#FFA500", "#FFFF00", "#5dc591", "#84ff01", "#077712", "#00FFFF", "#ADD8E6", "#0000FF", "#4B0082", "#FFC0CB", "#EE82EE", "#FF69B4", "#FF1493", "#800000"};
 
+#define COLOR_RESET "\033[0m"
+
 ostream& bold_on(ostream& cout){
     return cout << "\e[1m";
 }
 
 ostream& bold_off(ostream& cout){
-return cout << "\e[0m";
+    return cout << "\e[0m";
 }
 
 string dye(string color, string text = "▞▞▞▞▞█▓▒░"){
@@ -20,11 +22,23 @@ string dye(string color, string text = "▞▞▞▞▞█▓▒░"){
         color = color.substr(1, 6);
     }
     
-    int r = stoi(color.substr(0, 2), nullptr, 16);
-    int g = stoi(color.substr(2, 2), nullptr, 16);
-    int b = stoi(color.substr(4, 2), nullptr, 16);
+    int r = stoi(color.substr(0, 2), NULL, 16);
+    int g = stoi(color.substr(2, 2), NULL, 16);
+    int b = stoi(color.substr(4, 2), NULL, 16);
     
     return "\033[38;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + "\033[0m";
+}
+
+string dyeAll(string color){
+    if (color.at(0) == '#'){
+        color = color.substr(1, 6);
+    }
+    
+    int r = stoi(color.substr(0, 2), NULL, 16);
+    int g = stoi(color.substr(2, 2), NULL, 16);
+    int b = stoi(color.substr(4, 2), NULL, 16);
+    
+    return "\033[38;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m";
 }
 
 string fill(string color, string text = "hello"){
@@ -32,11 +46,23 @@ string fill(string color, string text = "hello"){
         color = color.substr(1, 6);
     }
     
-    int r = stoi(color.substr(0, 2), nullptr, 16);
-    int g = stoi(color.substr(2, 2), nullptr, 16);
-    int b = stoi(color.substr(4, 2), nullptr, 16);
+    int r = stoi(color.substr(0, 2), NULL, 16);
+    int g = stoi(color.substr(2, 2), NULL, 16);
+    int b = stoi(color.substr(4, 2), NULL, 16);
     
     return "\033[48;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + "\033[0m";
+}
+
+string fillAll(string color, string text = "hello"){
+    if (color.at(0) == '#'){
+        color = color.substr(1, 6);
+    }
+    
+    int r = stoi(color.substr(0, 2), NULL, 16);
+    int g = stoi(color.substr(2, 2), NULL, 16);
+    int b = stoi(color.substr(4, 2), NULL, 16);
+    
+    return "\033[48;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m";
 }
 
 void testingBold(){

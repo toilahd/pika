@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <conio.h>
 #include <Windows.h>
@@ -6,6 +8,8 @@
 #include <string>
 
 #include "../console/ui.hpp"
+#include "../console/console.h"
+#include "dataType.hpp"
 
 using namespace std;
 
@@ -38,37 +42,6 @@ string testingLigature = " \
  ─╮   │          ╭─\n \
       ╰----------> \n \
 ";
-
-void menuScreen(){
-    system("cls");
-    
-    cout << (selected != 1 ? "\t" : ">\t") << "Play Game" << endl;
-    cout << (selected != 2 ? "\t" : ">\t") << "Continue previous game" << endl;
-    cout << (selected != 3 ? "\t" : ">\t") << "About" << endl;
-    
-    int c = 0;
-    switch((c=getch())) {
-        case KEY_DOWN:
-            // cout << endl << "Up" << endl;//key up
-            if (selected == 3)
-                selected = 1;
-            else
-                selected += 1;
-            break;
-            
-        case KEY_UP:
-            // cout << endl << "Down" << endl;   // key down
-            if (selected == 1)
-                selected = 3;
-            else
-                selected -= 1;
-            break;
-        
-        default:
-            // cout << endl << "null" << endl;  // not arrow
-            break;
-        }
-}
 
 int** generateMap(int m, int n){
     int **map = new int*[m];
@@ -461,7 +434,11 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
 }
 
 int selectBlock(){
-    int input = _getch();
+    int input;
+    if (_kbhit())
+        input = _getch();
+    else
+        return 0;
     
     if (input == 224){
         switch (_getch()){
@@ -488,16 +465,53 @@ int selectBlock(){
 		}
     }
     
-    cout << "Input" << endl;
-    Sleep(800);
+    
+    return 0;
 }
 
-void playScreen(int** map, int m, int n){
-    system("cls");
-    boardPrint(map, m, n);
+int xSelect = 0, ySelect = 0;
+
+void oldPlayScreen(int** map, int m, int n){
+    // system("cls");
+    // ShowConsoleCursor(false);
+    pair<int, int> highlight(xSelect, ySelect);
+    boardPrint(map, m, n, highlight);
     // mapPrint(map, m, n);
     
     int move = selectBlock();
+    if (move != 0){
+        // Sleep(100);
+        switch (move){
+            case 1:
+                ySelect--;
+                if (ySelect < 0)
+                    ySelect = 0;
+                break;
+                
+            case 2:
+                xSelect--;
+                if (xSelect < 0)
+                    xSelect = 0;
+                    break;
+                
+            case 3:
+                ySelect++;
+                if (ySelect >= m)
+                    ySelect = m - 1;
+                    break;
+                    
+            case 4:
+                xSelect++;
+                if (xSelect >= n)
+                    xSelect = n - 1;
+                    break;
+        }
+    }
+    else
+        cout << "No Input" << endl;
+        
+    cout << "Looping" << endl;
+    // switch ()
     // char temp;
     // int a, b, c, d;
     // cout << "Nhap toa do 1: ";
@@ -519,4 +533,140 @@ void playScreen(int** map, int m, int n){
     // }
     
     cout << endl << endl << endl;
+}
+
+
+void banter(int skill){
+    if (skill <= 0){
+        // Construct a new screen with dialog box
+        gotoxy(50, 15);
+        cout << "My oh my, a new kid on the block, trying to kill his useless time";
+        gotoxy(0, 0);
+    }
+}
+void playScreen(User player = User{"", "", 0}){
+    
+    if (player.isLogged == false){
+        player.getBoard.board = generateMap(5, 5);
+        player.getBoard.height = 5;
+        player.getBoard.width = 5;
+    }
+    
+    bool isWon = false;
+    while (1){
+        if (isWon){
+            player.skill++;
+        }
+        
+        banter(player.skill);
+        
+        time_t startTime = time(NULL);
+        
+        boardPrint(player.getBoard.board, player.getBoard.height, player.getBoard.width, player.getBoard.highlight);
+        
+        while (1){
+            int key = -1;
+            
+            // Non blocking input
+            if (_kbhit()){
+                key = _getch();
+                cout << "Key: " << key << endl;
+            }
+            
+            // if ESC -> pauseScreen
+            if (key == 27)
+                while (1){
+                    cout << "Break time!" << endl;
+                    // Some reserved space for code to navigate Pause screen items but repressing the ESC key will break out the pause loop
+                    
+                    // A blocking input
+                    key = _getch();
+                    
+                    if (key == 27){
+                        cout << "Continuing the game..." << endl;
+                        break;
+                    }
+                }
+            
+            // if move, refresh the actual map
+            else if (key == 0 || key == 224){
+                key = _getch();
+                
+                switch (key) {
+                    case 72: 
+                        player.getBoard.highlight.second--;
+                        if (player.getBoard.highlight.second < 0)
+                            player.getBoard.highlight.second = 0;
+                        cout << "Up arrow" << endl;
+                        break;
+                    case 80:
+                        player.getBoard.highlight.second++;
+                        if (player.getBoard.highlight.second >= player.getBoard.height)
+                            player.getBoard.highlight.second = player.getBoard.height - 1;
+                        cout << "Down arrow" << endl; 
+                        break;
+                    case 75: 
+                        player.getBoard.highlight.first--;
+                        if (player.getBoard.highlight.first < 0)
+                            player.getBoard.highlight.first = 0;
+                        cout << "Left arrow" << endl; 
+                        break;
+                    case 77: 
+                        player.getBoard.highlight.first++;
+                        if (player.getBoard.highlight.first >= player.getBoard.width)
+                            player.getBoard.highlight.first = player.getBoard.width - 1;
+                        cout << "Right arrow" << endl; 
+                        break;
+                    case 71: cout << "Home" << endl; break;
+                    case 79: cout << "End" << endl; break;
+                    case 73: cout << "Page up" << endl; break;
+                    case 81: cout << "Page down" << endl; break;
+                    case 82: cout << "Insert" << endl; break;
+                    case 83: cout << "Delete" << endl; break;
+                    default: cout << "Unknown extended key" << endl; break;
+                }
+                
+                boardPrint(player.getBoard.board, player.getBoard.height, player.getBoard.width, player.getBoard.highlight);
+            }
+                
+            // if did not move, do not refresh the map but only refresh the time, stats element...
+        }
+    }
+}
+
+
+void menuScreen(bool skip = false){
+    if (skip){
+        playScreen();
+        return;
+    }
+    
+    system("cls");
+    
+    cout << (selected != 1 ? "\t" : ">\t") << "Play Game" << endl;
+    cout << (selected != 2 ? "\t" : ">\t") << "Continue previous game" << endl;
+    cout << (selected != 3 ? "\t" : ">\t") << "About" << endl;
+    
+    int c = 0;
+    switch((c=getch())) {
+        case KEY_DOWN:
+            // cout << endl << "Up" << endl;//key up
+            if (selected == 3)
+                selected = 1;
+            else
+                selected += 1;
+            break;
+            
+        case KEY_UP:
+            // cout << endl << "Down" << endl;   // key down
+            if (selected == 1)
+                selected = 3;
+            else
+                selected -= 1;
+            break;
+        
+        default:
+            // cout << endl << "null" << endl;  // not arrow
+            break;
+        }
 }
