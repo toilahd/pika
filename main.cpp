@@ -8,9 +8,11 @@ int main(){
     SetConsoleOutputCP(65001);
     // ShowConsoleCursor(false);
     
-    system("cls");
-    
-    menuScreen(true);
+    cout << "╭────         ────╮" << endl;
+    cout << "│      menu       │" << endl;
+    cout << "╰────         ────╯" << endl;
+
+
     
     return 0;
 }
