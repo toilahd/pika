@@ -1,6 +1,5 @@
 #include "menu.h"
 
-
 void playGame() {
 	system("cls");
 	cout << "=== PLAY GAME ===" << endl;
@@ -36,19 +35,34 @@ void exit() {
 	system("pause");
 	return;
 }
+
+void drawBox(string menu, int x, int y, int z){
+	gotoxy(x - 6, y - 1 );
+	cout << "╭───────────────────────╮" << endl;
+	gotoxy(x - 6, y);
+    cout << "│      ";
+	gotoxy(z, y);
+	cout << menu;
+	gotoxy(x + 13, y);
+	cout << "     │" << endl;
+	gotoxy(x - 6, y + 1);
+    cout << "╰───────────────────────╯";
+}
 void drawMenu() {
+	
 	string menu[6] = {"=== MENU ===", "Play", "Game Mode", "LeaderBoards", "Credits", "Exit"};
 	int counter = 1;
 	char key;
-	int y = 20;
-	system("cls");
 	SetConsoleOutputCP(65001);
+	system("cls");
 	while(true){
-		for (int i = 0; i < 6; i++) {
-			gotoxy(50, y);
-			cout << menu[i] << "\n";
-			y++;
-		}
+		gotoxy(50, 19);
+		cout << menu[0];
+		drawBox(menu[1], 50, 21, 54);
+		drawBox(menu[2], 50, 24, 52);
+		drawBox(menu[3], 50, 27, 50);
+		drawBox(menu[4], 50, 30, 53);
+		drawBox(menu[5], 50, 33, 54);		
 		key = _getch();
 		// 72 = up arrow key
 		if (key == 72 && (counter >= 2 && counter <= 5)) {
@@ -76,19 +90,24 @@ void drawMenu() {
 			}
 		}
 		if (counter == 1) {
-			dye(menu[1], rainbow[0]);
+			gotoxy(50, 21);
+			cout << dye(rainbow[3], menu[1]);
 		}
 		if (counter == 2) {
-			dye(menu[2], rainbow[0]);
+			gotoxy(50, 22);
+			cout << dye(rainbow[3], menu[2]);
 		}
 		if (counter == 3) {
-			dye(menu[3], rainbow[0]);
+			gotoxy(50, 23);
+			cout << dye(rainbow[3], menu[3]);
 		}
 		if (counter == 4) {
-			dye(menu[4], rainbow[0]);
+			gotoxy(50, 24);
+			cout << dye(rainbow[3], menu[4]);
 		}
 		if (counter == 5) {
-			dye(menu[5], rainbow[0]);
+			gotoxy(50, 25);
+			cout << dye(rainbow[3], menu[5]);
 		}
 	}
 }
