@@ -1,11 +1,5 @@
-#include <conio.h>
-#include <string>
-#include <iomanip>
-#include <cstdlib>
 #include "console.h"
-
-
-using namespace std;
+#pragma once
 
 void playGame();
 void gameMode();

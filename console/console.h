@@ -1,12 +1,16 @@
 #pragma once
-
 #include <iostream>
 #include <Windows.h>
+#include <conio.h>
+#include <string>
+#include <iomanip>
+#include "color.hpp"
 
-#include "console.cpp"
+using namespace std;
+
+
 
 void SetWindowSize(SHORT width, SHORT height);
-void color(int color);
 void setConsoleFontSize(int size);
 void gotoxy(int x, int y);
 void DisableResizeWindow();
