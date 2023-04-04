@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 
 using namespace std;
@@ -38,7 +40,7 @@ struct savefile {
     Board state[5];    // List of save state
 };
 
-// Before saving file structures
+// Before saving-file structures
 
 struct BoardLayout {
     int **board = NULL;
@@ -46,6 +48,8 @@ struct BoardLayout {
     int height = 0;
     char background[URLSIZE] = "";
     pair<int, int> highlight = make_pair(0, 0);
+    pair<int, int> point1 = make_pair(-1, -1);
+    pair<int, int> point2 = make_pair(-1, -1);
 };
 
 struct User {
@@ -53,5 +57,7 @@ struct User {
     char pass[20] = "";
     int isLogged = 0;
     int skill = 0;
+    char ass[8] = "";
+    char id[10] = "";
     BoardLayout getBoard;
 };

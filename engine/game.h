@@ -43,20 +43,6 @@ string testingLigature = " \
       ╰----------> \n \
 ";
 
-int** generateMap(int m, int n){
-    int **map = new int*[m];
-    srand(4);
-    
-    for (int i = 0; i < m; i++){
-        map[i] = new int [n];
-        
-        for (int j = 0; j < n; j++)
-            map[i][j] = rand() % 8;
-    }
-    
-    return map;
-}
-
 void mapPrint(int **map, int m, int n, int mx = -1, int my = -1, int m2x = -1, int m2y = -1){
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD pos = {0, 0};
@@ -110,10 +96,12 @@ bool isClear(int **map, int m, int n, int x, int y, int x2, int y2){
     return y == y2 || x == x2;
 }
 
-bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
+bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip = false){
     
-    // cout << x << " : " << x2 << endl;
-    if (*(*(map + y) + x) == 0 || *(*(map + y2) + x2) == 0 || (x == x2 && y == y2) || *(*(map + y) + x) != *(*(map + y2) + x2))
+    if ((*(*(map + y) + x) == 0 || *(*(map + y2) + x2) == 0) && skip == false)
+        return false;
+    
+    if ((x == x2 && y == y2) || *(*(map + y) + x) != *(*(map + y2) + x2))
         return false;
         
     // Horizontal matching
@@ -131,7 +119,16 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
                 map[y][i] = 0;
             }
             
-            // cout << endl;
+            // For debugging
+            COORD origin = GetConsoleCaretPos();
+            gotoxy(70, 16);
+            cout << "Hor matching";
+            if (!skip)
+                Sleep(400);
+            gotoxy(70, 16);
+            cout << "            ";
+            gotoxy(origin.X, origin.Y);
+            
             return true;
         }
     }
@@ -151,13 +148,23 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
                 map[i][x] = 0;
             }
             
-            // cout << endl;
+            // For debugging
+            COORD origin = GetConsoleCaretPos();
+            gotoxy(70, 16);
+            cout << "Hor matching";
+            if (!skip)
+                Sleep(400);
+            gotoxy(70, 16);
+            cout << "            ";
+            gotoxy(origin.X, origin.Y);
+            
             return true;
         }
     }
     
     // Right angle matching
     if (x != x2 && y != y2){
+        // L|⅃
         bool obstacle = false;
         
         if (y > y2){
@@ -184,10 +191,21 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
         }
         
         if (!obstacle){
+            // For debugging
+            COORD origin = GetConsoleCaretPos();
+            gotoxy(70, 16);
+            cout << "L|⅃ matching";
+            if (!skip)
+                Sleep(400);
+            gotoxy(70, 16);
+            cout << "            ";
+            gotoxy(origin.X, origin.Y);
+            
             map[y][x] = map[y2][x2] = 0;
             return true;
         }
         
+        // Γ|⅂
         obstacle = false;
         if (y < y2){
             swap(y, y2);
@@ -196,7 +214,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
         
         for (int i = y - 1; i >= y2; i--)
             if (map[i][x] != 0){
-                cout << i << ":" << x << map[i][x] << endl;
+                // cout << i << ":" << x << map[i][x] << endl;
                 obstacle = true;
                 break;
             }
@@ -208,19 +226,40 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
                 
             for (int i = x + direction; i != x2; i+=direction)
                 if (map[y2][i] != 0){
+                    
+                    COORD origin = GetConsoleCaretPos();
+                    gotoxy(70, 16);
                     cout << y2 << ":" << i << map[y2][i] << endl;
+                    if (!skip)
+                        Sleep(400);
+                    gotoxy(70, 16);
+                    cout << "            ";
+                    gotoxy(origin.X, origin.Y);
+                    
                     obstacle = true;
                     break;
             }
         }
         
         if (!obstacle){
+            // For debugging
+            COORD origin = GetConsoleCaretPos();
+            gotoxy(70, 16);
+            cout << "Γ|⅂ matching";
+            if (!skip)
+                Sleep(400);
+            gotoxy(70, 16);
+            cout << "            ";
+            gotoxy(origin.X, origin.Y);
+            
             map[y][x] = map[y2][x2] = 0;
             return true;
         }
     }
     
+    // U matching
     if (x != x2 || y  != y2){
+        // ⊃
         if (y != y2){
             int i = max(x, x2) + 1;
             
@@ -240,11 +279,22 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
                     
                 if (!obstacle){
                     map[y][x] = map[y2][x2] = 0;
+                    
+                    // For debugging
+                    COORD origin = GetConsoleCaretPos();
+                    gotoxy(70, 16);
+                    cout << "⊃   matching";
+                    if (!skip)
+                        Sleep(400);
+                    gotoxy(70, 16);
+                    cout << "            ";
+                    gotoxy(origin.X, origin.Y);
+                    
                     return true;
                 }
             }
             
-            while (map[y][i] == 0 && map[y2][i] == 0){
+            while (i < n && isClear(map, m, n, x, y, i + 1, y) && isClear(map, m, n, x2, y2, i + 1, y2)){
                 bool obstacle = false;
                 for (int j = min(y, y2); j <= max(y, y2); j++)
                     if (map[j][i] != 0){
@@ -257,12 +307,23 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
                     continue;
                 }
                 
+                // For debugging
+                COORD origin = GetConsoleCaretPos();
+                gotoxy(70, 16);
+                cout << "⊃matching@" << i;
+                if (!skip)
+                    Sleep(400);
+                gotoxy(70, 16);
+                cout << "            ";
+                gotoxy(origin.X, origin.Y);
+                
                 map[y][x] = map[y2][x2] = 0;
                 return true;
             }
             
         }
         
+        // ⋃
         if (x != x2){
             int i = max(y, y2) + 1;
             
@@ -282,11 +343,22 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
                     
                 if (!obstacle){
                     map[y][x] = map[y2][x2] = 0;
+                    
+                    // For debugging
+                    COORD origin = GetConsoleCaretPos();
+                    gotoxy(70, 16);
+                    cout << "⋃   matching";
+                    if (!skip)
+                        Sleep(400);
+                    gotoxy(70, 16);
+                    cout << "            ";
+                    gotoxy(origin.X, origin.Y);
+                    
                     return true;
                 }
             }
             
-            while (map[i][x] == 0 && map[i][x2] == 0){
+            while (i < m && isClear(map, m, n, x, y, x, i + 1) && isClear(map, m, n, x2, y2, x2, i + 1)){
                 bool obstacle = false;
                 
                 if (!isClear(map, m, n, min(x, x2), i, max(x, x2), i))
@@ -297,12 +369,23 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
                     continue;
                 }
                 
+                // For debugging
+                COORD origin = GetConsoleCaretPos();
+                gotoxy(70, 16);
+                cout << "⋃no matching";
+                if (!skip)
+                    Sleep(400);
+                gotoxy(70, 16);
+                cout << "            ";
+                gotoxy(origin.X, origin.Y);
+                
                 map[y][x] = map[y2][x2] = 0;
                 return true;
             }
             
         }
         
+        // ⊂ 
         if (y != y2){
             int i = min(x, x2) - 1;
             
@@ -322,11 +405,22 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
                     
                 if (!obstacle){
                     map[y][x] = map[y2][x2] = 0;
+                    
+                    // For debugging
+                    COORD origin = GetConsoleCaretPos();
+                    gotoxy(70, 16);
+                    cout << "⊂   matching";
+                    if (!skip)
+                        Sleep(400);
+                    gotoxy(70, 16);
+                    cout << "            ";
+                    gotoxy(origin.X, origin.Y);
+                    
                     return true;
                 }
             }
             
-            while (map[y][i] == 0 && map[y2][i] == 0){
+            while (i > -1 && isClear(map, m, n, x, y, i - 1, y) && isClear(map, m, n, x2, y2, i - 1, y2)){
                 bool obstacle = false;
                 for (int j = min(y, y2); j <= max(y, y2); j++)
                     if (map[j][i] != 0){
@@ -340,11 +434,23 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
                 }
                 
                 map[y][x] = map[y2][x2] = 0;
+                
+                // For debugging
+                COORD origin = GetConsoleCaretPos();
+                gotoxy(70, 16);
+                cout << "⊂   matching";
+                if (!skip)
+                    Sleep(400);
+                gotoxy(70, 16);
+                cout << "            ";
+                gotoxy(origin.X, origin.Y);
+                
                 return true;
             }
             
         }
         
+        // ⋂
         if (x != x2){
             int i = min(y, y2) - 1;
             
@@ -364,15 +470,29 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
                     
                 if (!obstacle){
                     map[y][x] = map[y2][x2] = 0;
+                    
+                    // For debugging
+                    COORD origin = GetConsoleCaretPos();
+                    gotoxy(70, 16);
+                    cout << "⋂   matching";
+                    if (!skip)
+                        Sleep(400);
+                    gotoxy(70, 16);
+                    cout << "            ";
+                    gotoxy(origin.X, origin.Y);
+                    
                     return true;
                 }
             }
             
-            while (map[i][x] == 0 && map[i][x2] == 0){
+            while (i > -1 && isClear(map, m, n, x, y, x, i - 1) && isClear(map, m, n, x2, y2, x2, i - 1)){
                 bool obstacle = false;
-                
-                if (!isClear(map, m, n, min(x, x2), i, max(x, x2), i))
-                    obstacle = true;
+                    
+                for (int j = min(x, x2); j <= max(x, x2); j++)
+                    if (map[i][j] != 0){
+                        obstacle = true;
+                        break;
+                    }
                 
                 if (obstacle && i > 0){
                     i--;
@@ -380,6 +500,17 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
                 }
                 
                 map[y][x] = map[y2][x2] = 0;
+                
+                // For debugging
+                COORD origin = GetConsoleCaretPos();
+                gotoxy(70, 16);
+                cout << "⋂   matching";
+                if (!skip)
+                    Sleep(400);
+                gotoxy(70, 16);
+                cout << "            ";
+                gotoxy(origin.X, origin.Y);
+                
                 return true;
             }
             
@@ -387,14 +518,18 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
         
     }
     
-    if (x != x2 && y  != y2){
+    // Zig-zag matching
+    if (x != x2 && y != y2){
+        if (abs(x - x2) <= 1 && abs(y - y2) <= 1)
+            return false;
+        
         if (x > x2){
             swap(x, x2);
             swap(y, y2);
         }
         
         for (int i = x + 1; i < x2; i++){
-            if (!isClear(map, m, n, i, y, i, y2))
+            if (!isClear(map, m, n, i, min(y, y2) - 1, i, max(y, y2) + 1))
                 continue;
             
             if (!isClear(map, m, n, x, y, i, y))
@@ -404,10 +539,19 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
                 continue;
                 
             map[y][x] = map[y2][x2] = 0;
+            
+            // For debugging
+            COORD origin = GetConsoleCaretPos();
+            gotoxy(70, 16);
+            cout << "Z   matching";
+            if (!skip)
+                Sleep(400);
+            gotoxy(70, 16);
+            cout << "            ";
+            gotoxy(origin.X, origin.Y);
+            
             return true;
         }
-        
-        
         
         if (y > y2){
             swap(x, x2);
@@ -415,7 +559,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
         }
         
         for (int i = y + 1; i < y2; i++){
-            if (!isClear(map, m, n, x - 1, i, x2 + 1, i))
+            if (!isClear(map, m, n, min(x, x2) - 1, i, max(x, x2) + 1, i))
                 continue;
             
             if (!isClear(map, m, n, x, y, x, i))
@@ -425,12 +569,63 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2){
                 continue;
                 
             map[y][x] = map[y2][x2] = 0;
+            
+            // For debugging
+            COORD origin = GetConsoleCaretPos();
+            gotoxy(70, 16);
+            cout << "N matching";
+            if (!skip)
+                Sleep(400);
+            gotoxy(70, 16);
+            cout << "            ";
+            gotoxy(origin.X, origin.Y);
+            
             return true;
         }
         
     }
     
     return false;
+}
+
+
+int** generateMap(int m, int n){
+    int **map = new int*[m];
+    srand(4);
+    
+    for (int i = 0; i < m; i++){
+        map[i] = new int [n];
+        
+        for (int j = 0; j < n; j++)
+            map[i][j] = 0;
+    }
+    
+    int count = 1;
+    while (m*(double)n / (2*count) > 25 && m*n % (2*count) == 0)
+        count++;
+        
+    for (int i = 0; i < m*(double)n / (2*count); i++)
+        for (int j = 0; j < count; j++){
+            int x, y, x2, y2;
+            
+            // do {
+                do {x = rand() % n; y = rand() % m;} while (map[y][x] != 0);
+                do {x2 = rand() % n; y2 = rand() % m;} while (map[y2][x2] != 0);
+            // }
+            // while (!pathSearch(map, m, n, x, y, x2, y2, true));
+            
+            map[y][x] = i;
+            map[y2][x2] = i;
+            
+            for (int a = 0; a < m; a++){
+                for (int b = 0; b < n; b++)
+                    cout << "[" << map[a][b] << "]";
+                cout << endl;
+            }
+            cout << "----------------------------" << endl;
+        }  
+    
+    return map;
 }
 
 int selectBlock(){
@@ -475,7 +670,7 @@ void oldPlayScreen(int** map, int m, int n){
     // system("cls");
     // ShowConsoleCursor(false);
     pair<int, int> highlight(xSelect, ySelect);
-    boardPrint(map, m, n, highlight);
+    // boardPrint(map, m, n, highlight);
     // mapPrint(map, m, n);
     
     int move = selectBlock();
@@ -536,45 +731,86 @@ void oldPlayScreen(int** map, int m, int n){
 }
 
 
+bool isEmpty(BoardLayout a){
+    for (int i = 0; i < a.height; i++)
+        for (int j = 0; j < a.width; j++)
+            if (a.board[i][j] != 0)
+                return false;
+                
+    return true;
+}
+
+bool isSolveable(BoardLayout a){
+    for (int i = 0; i < a.height; i++)
+        for (int j = 0; j < a.width; j++){
+            int value = a.board[i][j];
+            
+            if (value == 0)
+                continue;
+            
+            for (int b = 0; b < a.height; b++)
+                for (int c = 0; c < a.width; c++)
+                
+                    if (a.board[i][j] != a.board[b][c])
+                        continue;
+                        
+                    else if (pathSearch(a.board, a.height, a.width, j, i, c, b, true)){
+                        a.board[i][j] = a.board[b][c] = value;
+                        return true;
+                    }
+        }
+                
+    return false;
+}
+
 void banter(int skill){
-    if (skill <= 0){
-        // Construct a new screen with dialog box
+    // Construct a new screen with dialog box
+    if (skill <= 0 && false){
         gotoxy(50, 15);
         cout << "My oh my, a new kid on the block, trying to kill his useless time";
         gotoxy(0, 0);
     }
 }
 void playScreen(User player = User{"", "", 0}){
+    ShowConsoleCursor(false);
+    int timeLength = 300;
+    
     
     if (player.isLogged == false){
-        player.getBoard.board = generateMap(5, 5);
-        player.getBoard.height = 5;
-        player.getBoard.width = 5;
+        string stockName = "Player 1";
+        strcpy(player.name, stockName.c_str());
+        player.getBoard.board = generateMap(8, 8);
+        player.getBoard.height = 8;
+        player.getBoard.width = 8;
     }
+    
+    bool solveState = isSolveable(player.getBoard);
     
     bool isWon = false;
     while (1){
         if (isWon){
             player.skill++;
+            isWon = false;
         }
         
         banter(player.skill);
         
         time_t startTime = time(NULL);
         
-        boardPrint(player.getBoard.board, player.getBoard.height, player.getBoard.width, player.getBoard.highlight);
+        boardPrint(player.getBoard, "Level: " + to_string(player.skill));
         
         while (1){
             int key = -1;
             
-            // Non blocking input
+            // A non blocking input
             if (_kbhit()){
                 key = _getch();
-                cout << "Key: " << key << endl;
+                // cout << "Key: " << key << endl;
             }
             
             // if ESC -> pauseScreen
-            if (key == 27)
+            if (key == 27){
+                time_t pauseTime = time(NULL);
                 while (1){
                     cout << "Break time!" << endl;
                     // Some reserved space for code to navigate Pause screen items but repressing the ESC key will break out the pause loop
@@ -583,38 +819,80 @@ void playScreen(User player = User{"", "", 0}){
                     key = _getch();
                     
                     if (key == 27){
+                        startTime += time(NULL) - pauseTime;
                         cout << "Continuing the game..." << endl;
                         break;
                     }
                 }
             
+            }
+            //  Check for Space key input
+            else if (key == 32){
+                // Fill up point1 and point2
+                if (player.getBoard.point1 == make_pair(-1, -1)){
+                    player.getBoard.point1 = player.getBoard.highlight;
+                }
+                else if (player.getBoard.point2 == make_pair(-1, -1)){
+                    player.getBoard.point2 = player.getBoard.highlight;
+                }
+                
+                // Path search when 2 points were filled
+                if (player.getBoard.point1 != make_pair(-1, -1) && player.getBoard.point2 != make_pair(-1, -1)){
+                    cout << "Search for path" << endl;
+                    if (pathSearch(player.getBoard.board, player.getBoard.height, player.getBoard.width, player.getBoard.point1.first, player.getBoard.point1.second, player.getBoard.point2.first, player.getBoard.point2.second)){
+                        boardPrint(player.getBoard);
+                        Sleep(400);
+                        // Reset 2 highlighted points
+                        player.getBoard.point1 = player.getBoard.point2 = make_pair(-1, -1);
+                        boardPrint(player.getBoard);
+                    }
+                    else {
+                        cout << "No path found";
+                        Sleep(400);
+                        player.getBoard.point1 = player.getBoard.point2 = make_pair(-1, -1);
+                        boardPrint(player.getBoard);
+                    }
+                    
+                }
+                
+            }
+            
             // if move, refresh the actual map
             else if (key == 0 || key == 224){
                 key = _getch();
                 
+                // Arrow keys for navigating the board
                 switch (key) {
                     case 72: 
                         player.getBoard.highlight.second--;
-                        if (player.getBoard.highlight.second < 0)
+                        if (player.getBoard.highlight.second < 0){
                             player.getBoard.highlight.second = 0;
+                            break;
+                        }
                         cout << "Up arrow" << endl;
                         break;
                     case 80:
                         player.getBoard.highlight.second++;
-                        if (player.getBoard.highlight.second >= player.getBoard.height)
+                        if (player.getBoard.highlight.second >= player.getBoard.height){
                             player.getBoard.highlight.second = player.getBoard.height - 1;
+                            break;
+                        }
                         cout << "Down arrow" << endl; 
                         break;
                     case 75: 
                         player.getBoard.highlight.first--;
-                        if (player.getBoard.highlight.first < 0)
+                        if (player.getBoard.highlight.first < 0){
                             player.getBoard.highlight.first = 0;
+                            break;
+                        }
                         cout << "Left arrow" << endl; 
                         break;
                     case 77: 
                         player.getBoard.highlight.first++;
-                        if (player.getBoard.highlight.first >= player.getBoard.width)
+                        if (player.getBoard.highlight.first >= player.getBoard.width){
                             player.getBoard.highlight.first = player.getBoard.width - 1;
+                            break;
+                        }
                         cout << "Right arrow" << endl; 
                         break;
                     case 71: cout << "Home" << endl; break;
@@ -626,10 +904,48 @@ void playScreen(User player = User{"", "", 0}){
                     default: cout << "Unknown extended key" << endl; break;
                 }
                 
-                boardPrint(player.getBoard.board, player.getBoard.height, player.getBoard.width, player.getBoard.highlight);
+                boardPrint(player.getBoard);
+                solveState = isSolveable(player.getBoard);
             }
                 
             // if did not move, do not refresh the map but only refresh the time, stats element...
+            COORD origin = GetConsoleCaretPos();
+            gotoxy(70, 2);
+            cout << setw(3) << setfill(' ') << timeLength - (time(NULL) - startTime);
+            gotoxy(origin.X, origin.Y);
+            
+            // If board empty, time out or unsolvable -> go to endscreen
+            if (time(NULL) - startTime >= timeLength || isEmpty(player.getBoard) || !solveState){
+                while (1) {
+                    if (isWon || (time(NULL) - startTime < timeLength && (isEmpty(player.getBoard) || !solveState))) {
+                        isWon = true;
+                        COORD origin = GetConsoleCaretPos();
+                        gotoxy(70, 2);
+                        cout << "You won";
+                        gotoxy(70, 3);
+                        cout << "Press Space for next level";
+                        gotoxy(origin.X, origin.Y);
+                        
+                        int key = _getch();
+                        
+                        origin = GetConsoleCaretPos();
+                        gotoxy(70, 4);
+                        cout << key;
+                        gotoxy(origin.X, origin.Y);
+                        
+                        if (key == 32)
+                            break;
+                    }
+                    else {
+                        COORD origin = GetConsoleCaretPos();
+                        gotoxy(70, 2);
+                        cout << "Lmao, look at him, he can't count";
+                        gotoxy(origin.X, origin.Y);
+                    }
+                    
+                }
+            }
+                
         }
     }
 }

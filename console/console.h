@@ -4,12 +4,13 @@
 #include <conio.h>
 #include <string>
 #include <iomanip>
+
 #include "color.hpp"
-#include <fstream>
 #include "console.cpp"
 
 using namespace std;
 
+COORD GetConsoleCaretPos(HANDLE hConsoleOutput);
 void SetWindowSize(SHORT width, SHORT height);
 void setConsoleFontSize(int size);
 void gotoxy(int x, int y);

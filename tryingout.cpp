@@ -183,39 +183,51 @@ void keyPressTest(){
 	}
 }
 
-void pixelManipulatingTest(){
-	//Get a console handle
-    HWND myconsole = GetConsoleWindow();
-    //Get a handle to device context
-    HDC mydc = GetDC(myconsole);
+// void pixelManipulatingTest(){
+// 	//Get a console handle
+//     HWND myconsole = GetConsoleWindow();
+//     //Get a handle to device context
+//     HDC mydc = GetDC(myconsole);
 
-    while(true){
-        SetPixel(mydc, 20, 20, RGB(255, 255, 255));
-        SetPixel(mydc, 20, 21, RGB(255, 255, 255));
-        SetPixel(mydc, 20, 22, RGB(255, 255, 255));
-        SetPixel(mydc, 20, 23, RGB(255, 255, 255));
-        SetPixel(mydc, 21, 20, RGB(255, 255, 255));
-        SetPixel(mydc, 21, 21, RGB(255, 255, 255));
-        SetPixel(mydc, 21, 22, RGB(255, 255, 255));
-        SetPixel(mydc, 21, 23, RGB(255, 255, 255));
-        SetPixel(mydc, 22, 20, RGB(255, 255, 255));
-        SetPixel(mydc, 22, 21, RGB(255, 255, 255));
-        SetPixel(mydc, 22, 22, RGB(255, 255, 255));
-        SetPixel(mydc, 22, 23, RGB(255, 255, 255));
-        SetPixel(mydc, 23, 20, RGB(255, 255, 255));
-        SetPixel(mydc, 23, 21, RGB(255, 255, 255));
-        SetPixel(mydc, 23, 22, RGB(255, 255, 255));
-        SetPixel(mydc, 23, 23, RGB(255, 255, 255));
-    }
+//     while(true){
+//         SetPixel(mydc, 20, 20, RGB(255, 255, 255));
+//         SetPixel(mydc, 20, 21, RGB(255, 255, 255));
+//         SetPixel(mydc, 20, 22, RGB(255, 255, 255));
+//         SetPixel(mydc, 20, 23, RGB(255, 255, 255));
+//         SetPixel(mydc, 21, 20, RGB(255, 255, 255));
+//         SetPixel(mydc, 21, 21, RGB(255, 255, 255));
+//         SetPixel(mydc, 21, 22, RGB(255, 255, 255));
+//         SetPixel(mydc, 21, 23, RGB(255, 255, 255));
+//         SetPixel(mydc, 22, 20, RGB(255, 255, 255));
+//         SetPixel(mydc, 22, 21, RGB(255, 255, 255));
+//         SetPixel(mydc, 22, 22, RGB(255, 255, 255));
+//         SetPixel(mydc, 22, 23, RGB(255, 255, 255));
+//         SetPixel(mydc, 23, 20, RGB(255, 255, 255));
+//         SetPixel(mydc, 23, 21, RGB(255, 255, 255));
+//         SetPixel(mydc, 23, 22, RGB(255, 255, 255));
+//         SetPixel(mydc, 23, 23, RGB(255, 255, 255));
+//     }
 
-    ReleaseDC(myconsole, mydc);
-    cin.ignore();
-}
+//     ReleaseDC(myconsole, mydc);
+//     cin.ignore();
+// }
 
 
 int main(int argc, char *argv[]){
-	while (1)
-		pixelManipulatingTest();
+	SetConsoleOutputCP(65001);
+	
+	cout << "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⠿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n\
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟\033[0;37m⣉⡥⠶⢶⣿⣿⣿⣿⣷⣆\033[0m⠉⠛⠿⣿⣿⣿⣿⣿⣿⣿\n\
+⣿⣿⣿⣿⣿⣿⣿⡿\033[0;37m⢡⡞⠁⠀⠀⠤⠈⠿⠿⠿⠿⣿\033[0m\033[0;31m⠀⢻⣦⡈\033[0m⠻⣿⣿⣿⣿⣿\n\
+⣿⣿⣿⣿⣿⣿⣿⡇⠘⡁⠀\033[0;37m⢀⣀⣀⣀⣈⣁⣐⡒\033[0m\033[0;31m⠢⢤⡈⠛⢿⡄\033[0m⠻⣿⣿⣿⣿\n\
+⣿⣿⣿⣿⣿⣿⣿⡇⠀\033[0;37m⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣶⣄\033[0m\033[0;31m⠉⠐⠄⡈⢀\033[0m⣿⣿⣿⣿\n\
+⣿⣿⣿⣿⣿⣿⣿⠇\033[0;37m⢠⣿⣿⣿⣿⡿⢿⣿⣿⣿⠁⢈⣿⡄\033[0m⠀\033[0;36m⢀⣀\033[0m⠸⣿⣿⣿⣿\n\
+⣿⣿⣿⣿⡿⠟\033[0;33m⣡⣶⣶⣬⣭⣥⣴\033[0m\033[0;37m⠀⣾⣿⣿⣿⣶⣾⣿⣧\033[0m\033[0;36m⠀⣼⣿⣷⣌\033[0m⡻⢿⣿\n\
+⣿⣿⠟\033[0;33m⣋⣴⣾⣿⣿⣿⣿⣿⣿⣿⡇\033[0m\033[0;37m⢿⣿⣿⣿⣿⣿⣿⡿\033[0m\033[0;36m⢸⣿⣿⣿⣿⣷\033[0m⠄⢻\n\
+⡏\033[0;33m⠰⢾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⢂\033[0m\033[0;37m⣭⣿⣿⣿⣿⣿⠇\033[0m\033[0;36m⠘⠛⠛⢉⣉\033[0m⣠⣴⣾\n\
+⣿⣷⣦\033[0;33m⣬⣍⣉⣉⣛⣛⣉⠉\033[0m\033[0;37m⣤⣶⣾⣿⣿⣿⣿⣿⣿⡿\033[0m⢰⣿⣿⣿⣿⣿⣿⣿⣿\n\
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧\033[0;37m⡘⣿⣿⣿⣿⣿⣿⣿⣿⡇\033[0m⣼⣿⣿⣿⣿⣿⣿⣿⣿\n\
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇\033[0;37m⢸⣿⣿⣿⣿⣿⣿⣿⠁\033[0m⣿⣿⣿⣿⣿⣿⣿⣿⣿";
 
 	return 0;
 }
