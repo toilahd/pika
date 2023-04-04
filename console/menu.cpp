@@ -1,6 +1,5 @@
 #include "menu.h"
 
-
 void playGame() {
 	system("cls");
 	cout << "=== PLAY GAME ===" << endl;
@@ -41,14 +40,14 @@ void drawMenu() {
 	int counter = 1;
 	char key;
 	int y = 20;
-	system("cls");
 	SetConsoleOutputCP(65001);
+	system("cls");
 	while(true){
 		for (int i = 0; i < 6; i++) {
 			gotoxy(50, y);
 			cout << menu[i] << "\n";
 			y++;
-		}
+		}	
 		key = _getch();
 		// 72 = up arrow key
 		if (key == 72 && (counter >= 2 && counter <= 5)) {
@@ -76,19 +75,19 @@ void drawMenu() {
 			}
 		}
 		if (counter == 1) {
-			dye(menu[1], rainbow[0]);
+			dye(rainbow[0], menu[1]);
 		}
 		if (counter == 2) {
-			dye(menu[2], rainbow[0]);
+			dye(rainbow[0], menu[2]);
 		}
 		if (counter == 3) {
-			dye(menu[3], rainbow[0]);
+			dye(rainbow[0], menu[3]);
 		}
 		if (counter == 4) {
-			dye(menu[4], rainbow[0]);
+			dye(rainbow[0], menu[4]);
 		}
 		if (counter == 5) {
-			dye(menu[5], rainbow[0]);
+			dye(rainbow[0], menu[5]);
 		}
 	}
 }

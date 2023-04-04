@@ -5,6 +5,7 @@
 #include <string>
 #include <iomanip>
 #include "color.hpp"
+#include "console.cpp"
 
 using namespace std;
 

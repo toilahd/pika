@@ -1,6 +1,6 @@
 #include "console.h"
 #pragma once
-
+#include "menu.cpp"
 void playGame();
 void gameMode();
 void leaderBoards();
