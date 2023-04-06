@@ -6,13 +6,6 @@ using namespace std;
 
 int main(){
     SetConsoleOutputCP(65001);
-    // ShowConsoleCursor(false);
-    
-    cout << "╭────         ────╮" << endl;
-    cout << "│      menu       │" << endl;
-    cout << "╰────         ────╯" << endl;
-
-
-    
+    menuScreen(true);   
     return 0;
 }
