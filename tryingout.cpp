@@ -250,6 +250,19 @@ void ansiArtTest(){
 	cout << banVit;
 }
 
+void printImageBlock(int x = 0, int y = 0){
+	
+}
+
+void findM(string str, int &i){
+	i = str.find('m', i);
+	
+	if (str[i + 1] == '\033'){
+		i++;
+		findM(str, i);
+	}
+}
+
 int main(int argc, char *argv[]){
 	SetConsoleOutputCP(65001);
 
@@ -257,12 +270,41 @@ int main(int argc, char *argv[]){
 	// while (1)
 	// drawBackground(2, 1, 20, 90);
 	
-	char str[4000];
-	strcpy(str, fall.c_str());
+	int found = 0;
+	int i = 0;
+	for (int j = 0; j <= 6; j++){
+		// cout << "------" << endl;
+		// cout << i << endl;
+		
+		if (i >= abc.size())
+			break;
+		
+		if (abc[i] == '\033'){
+			int mAt = i;
+			findM(abc, mAt);
+			mAt++;
+			cout << abc.substr(i, mAt - i + 1);
+			i += mAt - i + 1;
+		}
+		else{
+			cout << abc[i];
+			i++;
+		}
+		
+		cout << endl;
+	}	
 	
-	cout << str;
+	// return 0;
 	
-	Sleep(3000);
+	// cout << endl << COLOR_RESET;
+	// cout << "-------------------------\n";
+	// cout << endl;
+	
+	// for (int i = 0; i < 50; i){
+	// 	cout << fall[i];
+			
+	// 	i++;
+	// }
 	
 	return 0;
 }
