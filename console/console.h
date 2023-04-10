@@ -4,7 +4,7 @@
 #include <conio.h>
 #include <string>
 #include <iomanip>
-
+#include <fstream>
 #include "color.hpp"
 #include "console.cpp"
 #include "cstdlib"

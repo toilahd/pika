@@ -1,7 +1,5 @@
 #include "menu.h"
 
-
-
 int main(){
     SetConsoleOutputCP(65001);
     system("cls");
