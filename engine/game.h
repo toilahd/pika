@@ -100,11 +100,15 @@ bool isClear(int **map, int m, int n, int x, int y, int x2, int y2){
 
 bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip = false){
     
+    // Check if the two points are not 0 (while not is debugging mode (skip = false))
     if ((*(*(map + y) + x) == 0 || *(*(map + y2) + x2) == 0) && skip == false)
         return false;
     
+    // Check if the 2 points are separated and have the same value
     if ((x == x2 && y == y2) || *(*(map + y) + x) != *(*(map + y2) + x2))
         return false;
+        
+    // Put your cursor here and ctrl + shift + p -> fold level 2 and 3 to save your brain cells
         
     // Horizontal matching
     if (y == y2){
@@ -608,6 +612,7 @@ int** generateMap(int m, int n){
     int **map = new int*[m];
     srand(7);
     
+    // Fill each block with 0s
     for (int i = 0; i < m; i++){
         map[i] = new int [n];
         
@@ -615,12 +620,14 @@ int** generateMap(int m, int n){
             map[i][j] = 0;
     }
     
+    // How many pairs of the same number should be in a map
     int count = 3;
         
     for (int i = 1; i <= m*n / (count * 2); i++){
             int x, y, x2, y2;
             
             for (int j = 0; j < count; j++) {
+                // Randomly choose 2 points then fill the numbers in
                 do {x = rand() % n; y = rand() % m;} while (map[y][x] != 0);
                 map[y][x] = i;
                 do {x2 = rand() % n; y2 = rand() % m;} while (map[y2][x2] != 0);
@@ -631,6 +638,7 @@ int** generateMap(int m, int n){
             }
             // while (!pathSearch(map, m, n, x, y, x2, y2, true));
             
+            // For debugging purpose, should be commentted out
             for (int a = 0; a < m; a++){
                 for (int b = 0; b < n; b++)
                     cout << "[" << dye(rainbow[map[a][b] % 15], to_string(map[a][b])) << "]";
@@ -682,6 +690,7 @@ int selectBlock(){
 
 int xSelect = 0, ySelect = 0;
 
+// For refferencing purpose
 void oldPlayScreen(int** map, int m, int n){
     // system("cls");
     // ShowConsoleCursor(false);
@@ -747,6 +756,7 @@ void oldPlayScreen(int** map, int m, int n){
 }
 
 
+// Check if the board is empty
 bool isEmpty(BoardLayout a){
     for (int i = 0; i < a.height; i++)
         for (int j = 0; j < a.width; j++)
@@ -756,6 +766,7 @@ bool isEmpty(BoardLayout a){
     return true;
 }
 
+// Check if the board is solvable
 bool isSolvable(BoardLayout &a, bool showHint = false, bool autoHighlight = false){
     for (int i = 0; i < a.height; i++)
         for (int j = 0; j < a.width; j++){
@@ -789,6 +800,7 @@ bool isSolvable(BoardLayout &a, bool showHint = false, bool autoHighlight = fals
     return false;
 }
 
+// Rearrange elements of the board based on player's skill
 bool rearrange(User &player){
     bool change = false;
     
@@ -922,18 +934,19 @@ void banter(int skill){
     }
 }
 
+// Need more work
 void infoScreen(){
     
 }
 
 void playScreen(User player = User{"", "", 0}){
     // Initialize new user / load user info from saved file
-    
     system("cls");
     ShowConsoleCursor(false);
     int timeLength = 300;
     
     
+    // If isLogged is false -> new user -> create map and default username
     if (player.isLogged == false){
         string stockName = "Player 1";
         strcpy(player.name, stockName.c_str());
@@ -945,8 +958,9 @@ void playScreen(User player = User{"", "", 0}){
     
     bool isWon = false;
     while (1){
-        // Game starting point. All levels only goes through lines this once
+        // Game starting point. All levels only goes through these lines once
         
+        // If the player has won in the previous game -> make new map + increase skill (level)
         if (isWon){
             player.skill++;
             isWon = false;
@@ -962,21 +976,25 @@ void playScreen(User player = User{"", "", 0}){
         // Check if the board is solvable then load the result to solveState
         bool solveState = isSolvable(player.getBoard);
         
+        // Small talk to the player (Coming soon)
         banter(player.skill);
         
+        // Time the level started
         time_t startTime = time(NULL);
         
+        // Draw background then overwrite it with the board
         drawBackground(MARGIN - 2, MARGIN - 3, BLOCK_HEIGHT*player.getBoard.height + 4, BLOCK_WIDTH*player.getBoard.width + 4);
-        
         boardPrint(player.getBoard, "Level: " + to_string(player.skill));
         
+        
         while (1){
+            // Check to see if the board need to be arrange based on skill or the board is already arraged
             if (rearrange(player))
                 boardPrint(player.getBoard, "Level: " + to_string(player.skill));
                 
             int key = -1;
             
-            // A non blocking input
+            // A non blocking input (If there is no input -> skip and go to next line)
             if (_kbhit()){
                 key = _getch();
                 // cout << "Key: " << key << endl;
@@ -1018,7 +1036,7 @@ void playScreen(User player = User{"", "", 0}){
             
             }
             
-            //  Check for Space key input
+            // If Space key -> select the points
             else if (key == 32){
                 // Fill up point1 and point2
                 if (player.getBoard.point1 == make_pair(-1, -1)){
@@ -1028,7 +1046,7 @@ void playScreen(User player = User{"", "", 0}){
                     player.getBoard.point2 = player.getBoard.highlight;
                 }
                 
-                // Path search when 2 points were filled
+                // pathSearch() activated when 2 points were filled
                 if (player.getBoard.point1 != make_pair(-1, -1) && player.getBoard.point2 != make_pair(-1, -1)){
                     cout << "Search for path" << endl;
                     if (pathSearch(player.getBoard.board, player.getBoard.height, player.getBoard.width, player.getBoard.point1.first, player.getBoard.point1.second, player.getBoard.point2.first, player.getBoard.point2.second)){
@@ -1062,7 +1080,7 @@ void playScreen(User player = User{"", "", 0}){
                 boardPrint(player.getBoard, "Level: " + to_string(player.skill));
             }
             
-            // If move, refresh the actual map
+            // If move -> refresh the actual map
             else if (key == 0 || key == 224){
                 key = _getch();
                 
@@ -1117,7 +1135,7 @@ void playScreen(User player = User{"", "", 0}){
                 solveState = isSolvable(player.getBoard);
             }
                 
-            // If did not move, do not refresh the map but only refresh the time, stats element...
+            // If did not move, do not refresh the map but only refresh the time, stats element (need more work),...
             COORD origin = GetConsoleCaretPos();
             gotoxy(70, 2);
             cout << setw(3) << setfill(' ') << timeLength - (time(NULL) - startTime);
@@ -1176,6 +1194,7 @@ void playScreen(User player = User{"", "", 0}){
 
 
 void menuScreen(bool skip = false){
+    // Skip to play screen
     if (skip){
         playScreen();
         return;

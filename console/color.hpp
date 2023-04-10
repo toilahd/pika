@@ -26,7 +26,7 @@ string dye(string color, string text = "▞▞▞▞▞█▓▒░"){
     int g = stoi(color.substr(2, 2), NULL, 16);
     int b = stoi(color.substr(4, 2), NULL, 16);
     
-    return "\033[38;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + "\033[0m";
+    return "\033[38;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + "\033[39m";
 }
 
 string dyeAll(string color){
@@ -50,7 +50,7 @@ string tint(string color, string text = "hello"){
     int g = stoi(color.substr(2, 2), NULL, 16);
     int b = stoi(color.substr(4, 2), NULL, 16);
     
-    return "\033[48;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + "\033[0m";
+    return "\033[48;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + "\033[49m";
 }
 
 string tintAll(string color, string text = "hello"){

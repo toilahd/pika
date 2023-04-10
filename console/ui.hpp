@@ -110,7 +110,7 @@ void drawUrightMatch(int x, int y, int x2, int y2, int end, int content = 0){
     gotoxy(origin.X, origin.Y);
 }
 
-// https://stackoverflow.com/a/15006332
+// Convert string to substrings separated by \n character, based on https://stackoverflow.com/a/15006332
 string process(string & s)
 {
     string result;
@@ -127,6 +127,7 @@ string process(string & s)
     return result;
 }
 
+// Need more work
 void drawBackground(int x, int y, int height = 50, int width = 120, string img = fall){
     COORD origin = GetConsoleCaretPos();
     
@@ -158,6 +159,8 @@ void drawBackground(int x, int y, int height = 50, int width = 120, string img =
 void drawBlock(int x, int y, string content){
     int cont = stoi(content);
     
+    // For board with no image, these lines should be uncommented (Need more work)
+    // Drawing blocks with 0 (empty blocks)
     if (content == "0"){
         // gotoxy(x, y);
         // string bunchOfSpaces(BLOCK_WIDTH, ' ');
@@ -175,6 +178,7 @@ void drawBlock(int x, int y, string content){
     }
         
     
+    // Drawing normal blocks
     gotoxy(x, y);
     cout << dye(rainbow[cont % 15], "╭─   ─╮");
     
@@ -192,6 +196,8 @@ void drawBlock(int x, int y, string content){
 void highlightBlock(int x, int y, string content){
     int cont = stoi(content);
     
+    // Highlighting blocks with 0 (empty blocks)
+    // Need more work
     if (content == "0"){
         gotoxy(x, y);
         cout << "╭─   ─╮";
@@ -205,6 +211,7 @@ void highlightBlock(int x, int y, string content){
         return;
     }
     
+    // Highlighting blocks with 0 (empty blocks)
     gotoxy(x, y);
     cout << tint(rainbow[cont % 15], "╭─   ─╮");
     
@@ -220,6 +227,7 @@ void highlightBlock(int x, int y, string content){
 }
 
 void boardPrint(BoardLayout userBoard, string name = ""){
+    // Loading username
     char username[30];
     if (name == "" || name.size() > 29)
         strcpy(username, "Player 1");
@@ -230,6 +238,7 @@ void boardPrint(BoardLayout userBoard, string name = ""){
     int m = userBoard.height, n = userBoard.width;
     pair<int, int> highlight = userBoard.highlight;
     
+    // Loop for highlight normal/selected blocks
     for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++)
             if (make_pair(j, i) != userBoard.highlight && make_pair(j, i) != userBoard.point1 && make_pair(j, i) != userBoard.point2 && make_pair(j, i) != userBoard.hint1 && make_pair(j, i) != userBoard.hint2)
@@ -237,6 +246,7 @@ void boardPrint(BoardLayout userBoard, string name = ""){
             else
                 highlightBlock(MARGIN + j*(int)BLOCK_WIDTH, MARGIN - 2 +  i*(int)BLOCK_HEIGHT, to_string(map[i][j]));
             
+    // Ugly a** code for drawing the outer box for the whole board
     COORD oldPos = GetConsoleCaretPos();
     gotoxy(MARGIN - 2, MARGIN - 3);
     cout << "╭─ " << username << " ";
