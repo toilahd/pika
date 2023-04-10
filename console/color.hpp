@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const string rainbow[] = {"#ff0000", "#ffa500", "#ffff00", "#5dc591", "#84ff01", "#077712", "#00FFFF", "#ADD8E6", "#0000FF", "#4B0082", "#FFC0CB", "#EE82EE", "#FF69B4", "#FF1493", "#800000"};
+const string rainbow[] = {"#FF0000", "#FFA500", "#FFFF00", "#5dc591", "#84ff01", "#077712", "#00FFFF", "#ADD8E6", "#0000FF", "#4B0082", "#FFC0CB", "#EE82EE", "#FF69B4", "#FF1493", "#800000"};
 
 #define COLOR_RESET "\033[0m"
 
@@ -41,7 +41,7 @@ string dyeAll(string color){
     return "\033[38;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m";
 }
 
-string fill(string color, string text = "hello"){
+string tint(string color, string text = "hello"){
     if (color.at(0) == '#'){
         color = color.substr(1, 6);
     }
@@ -53,7 +53,7 @@ string fill(string color, string text = "hello"){
     return "\033[48;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + "\033[0m";
 }
 
-string fillAll(string color, string text = "hello"){
+string tintAll(string color, string text = "hello"){
     if (color.at(0) == '#'){
         color = color.substr(1, 6);
     }
@@ -84,7 +84,7 @@ void testColor(){
 	cout << dye("#cba6f7", "Hex color code can be written with/without # ,like dye(\"#cba6f7\", textToDye)") << endl;
 	cout << dye("cba6f7", "...or dye(\"cba6f7\", anotherTextToDye)") << endl;
     
-    cout << "...and it automatically resets, even written inline like " << dye("ff0000","t") << dye("00ff00", "h") << dye("0000ff", "i") << dye("ffffff","s") << ", and " << fill("437213", "background") << " too." << endl;
+    cout << "...and it automatically resets, even written inline like " << dye("ff0000","t") << dye("00ff00", "h") << dye("0000ff", "i") << dye("ffffff","s") << ", and " << tint("437213", "background") << " too." << endl;
     
     cout << dye("#ff0000") << endl;
     cout << dye("#ffa500") << endl;
@@ -96,11 +96,11 @@ void testColor(){
     
     cout << "And now, the classics..." << endl;
     
-    cout << fill("#ff0000") << endl;
-    cout << fill("#ffa500") << endl;
-    cout << fill("#ffff00") << endl;
-    cout << fill("#008000") << endl;
-    cout << fill("#0000ff") << endl;
-    cout << fill("#4b0082") << endl;
-    cout << fill("#ee82ee") << endl;
+    cout << tint("#ff0000") << endl;
+    cout << tint("#ffa500") << endl;
+    cout << tint("#ffff00") << endl;
+    cout << tint("#008000") << endl;
+    cout << tint("#0000ff") << endl;
+    cout << tint("#4b0082") << endl;
+    cout << tint("#ee82ee") << endl;
 }

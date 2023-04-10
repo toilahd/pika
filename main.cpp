@@ -6,7 +6,11 @@ using namespace std;
 
 int main(){
     SetConsoleOutputCP(65001);
+    // ShowConsoleCursor(false);
+    
     system("cls");
-    menuScreen(true);   
+    
+    menuScreen(true);
+    
     return 0;
 }
