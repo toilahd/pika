@@ -1,6 +1,7 @@
 #include "menu.h"
 
 
+
 int GetRandom(int min,int max){
     return min + (int)(rand()*(max-min+1.0)/(1.0+RAND_MAX));
 }
@@ -52,20 +53,10 @@ void drawBox(string menu, int x, int y, int z){
 }
 void playGame() {
 	system("cls");
-	cout << "=== PLAY GAME ===" << endl;
-	// code for playing the game goes here
 	system("pause");
 	system("cls");
 }
 
-void gameMode() {
-	system("cls");
-	gotoxy(50, 10);
-	cout << "=== GAME MODE ===" << endl;
-	// code for choosing the game mode goes here
-	system("pause");
-	system("cls");
-}
 
 void leaderBoards() {
 	system("cls");
@@ -84,9 +75,56 @@ void credits() {
 	system("pause");
 	system("cls");
 }
-void drawMenu() {
+void cursor(int x, int y, int color){
+	gotoxy(x, y);
+	cout << dye(rainbow[color],"╭──               ──╮          ╭─   ─╮");
+	gotoxy(x, y + 2);
+	cout << dye(rainbow[color],"╰──               ──╯          ╰─   ─╯");
+}
+void redrawMenu(int counter){
+	string menu[4] = {"PLAY           ──────     ◊"
+					,"LEADERBOARDS      ──────     ◊"
+					, "CREDITS         ──────     ◊"
+					, "EXIT           ──────     ◊"};
 	
-	string menu[6] = {"=== MENU ===", "Play", "LeaderBoards", "Credits", "Exit"};
+		system("cls");
+		drawTitle(78, 3, "menu/menugame.txt");
+		gotoxy(94, 27);
+		cout << menu[0];
+		gotoxy(91, 30);
+		cout << menu[1];
+		gotoxy(93, 33);
+		cout << menu[2];
+		gotoxy(94, 36);
+		cout << menu[3];	
+		if (counter == 1){
+			cursor(86, 26, 4);
+			gotoxy(94, 27);	
+			cout << dye(rainbow[4], menu[0]);
+		}
+		if (counter == 2){
+			cursor(86, 29, 4);
+			gotoxy(91, 30);
+			cout << dye(rainbow[4], menu[1]);
+		}
+		if (counter == 3){
+			cursor(86, 32, 4);
+			gotoxy(93, 33);
+			cout << dye(rainbow[4], menu[2]);
+		}
+		if (counter == 4){
+			cursor(86, 35, 4);
+			gotoxy(94, 36);
+			cout << dye(rainbow[4], menu[3]);
+		}
+		
+
+}
+void drawMenu(){
+	string menu[4] = {"PLAY           ──────     ◊"
+					,"LEADERBOARDS      ──────     ◊"
+					, "CREDITS         ──────     ◊"
+					, "EXIT           ──────     ◊"};
 	int counter = 1;
 	char key;
 	SetWindowSize(150, 42);
@@ -94,38 +132,55 @@ void drawMenu() {
 	SetConsoleOutputCP(65001);
 	DisableResizeWindow();
 	ShowScrollbar(false);
+	ShowConsoleCursor(false);
 	system("cls");
 	while(true){
-		drawTitle(35, 3, "menu/logo.txt");
+		drawTitle(78, 3, "menu/menugame.txt");
 		//gotoxy(68, 25);
 		//cout << menu[0];
-		drawBox(menu[1], 68, 27, 72);
-		drawBox(menu[2], 68, 30, 69);
-		drawBox(menu[3], 68, 33, 71);
-		drawBox(menu[4], 68, 36, 72);		
+		//drawBox(menu[1], 68, 27, 72);
+		//drawBox(menu[2], 68, 30, 69);
+		//drawBox(menu[3], 68, 33, 71);
+		//drawBox(menu[4], 68, 36, 72);
+		gotoxy(94, 27);
+		cout << menu[0];
+		gotoxy(91, 30);
+		cout << menu[1];
+		gotoxy(93, 33);
+		cout << menu[2];
+		gotoxy(94, 36);
+		cout << menu[3];	
 		if (counter == 1){
-			gotoxy(72, 27);
-			cout << dye(rainbow[3], menu[1]);
+			cursor(86, 26, 4);
+			gotoxy(94, 27);	
+			cout << dye(rainbow[4], menu[0]);
 		}
 		if (counter == 2){
-			gotoxy(69, 30);
-			cout << dye(rainbow[3], menu[2]);
+			cursor(86, 29, 4);
+			gotoxy(91, 30);
+			cout << dye(rainbow[4], menu[1]);
 		}
 		if (counter == 3){
-			gotoxy(71, 33);
-			cout << dye(rainbow[3], menu[3]);
+			cursor(86, 32, 4);
+			gotoxy(93, 33);
+			cout << dye(rainbow[4], menu[2]);
 		}
 		if (counter == 4){
-			gotoxy(72, 36);
-			cout << dye(rainbow[3], menu[4]);
-		}
+			cursor(86, 35, 4);
+			gotoxy(94, 36);
+			cout << dye(rainbow[4], menu[3]);
+			}
 		key = _getch();
 		// 72 = up arrow key
 		if (key == 72 && (counter >= 2 && counter <= 4)) {
 			counter--;
+			redrawMenu(counter);
+			Sleep(100);
 		}
 		if (key == 80 && (counter >= 1 && counter <= 3)) {
 			counter++;
+			redrawMenu(counter);
+			Sleep(100);
 		}
 		//carriage return = enter key
 		if (key == '\r'){

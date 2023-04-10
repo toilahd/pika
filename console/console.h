@@ -7,6 +7,7 @@
 #include "color.hpp"
 #include <fstream>
 #include "console.cpp"
+#include "cstdlib"
 
 using namespace std;
 
