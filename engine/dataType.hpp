@@ -18,6 +18,7 @@ struct Board {                      // Representing a board state
                                     // value is NULL if there is no current
                                     // background
     // 500 byte NULL
+    char filler[500];
 };
 
 struct Date {
@@ -27,7 +28,9 @@ struct Date {
 struct Record {
     Date date;     // Date of completed record
     int points;  // points achieved
+    
     // 500 byte NULL
+    char filler[500];
 };
 
 struct savefile {
@@ -35,7 +38,10 @@ struct savefile {
                 // performing xor each with the mask - variable, bit - by - bit.
     char name[NAMESIZE];  // username
     char password[PASSSIZE]; // password
+    
     // 500 byte NULL
+    // char filler[500];
+    
     Record record[5];  // List of sorted best records
     Board state[5];    // List of save state
 };
@@ -50,6 +56,8 @@ struct BoardLayout {
     pair<int, int> highlight = make_pair(0, 0);
     pair<int, int> point1 = make_pair(-1, -1);
     pair<int, int> point2 = make_pair(-1, -1);
+    pair<int, int> hint1 = make_pair(-1, -1);
+    pair<int, int> hint2 = make_pair(-1, -1);
 };
 
 struct User {

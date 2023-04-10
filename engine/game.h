@@ -6,6 +6,8 @@
 #include <random>
 #include <iomanip>
 #include <string>
+#include <fstream>
+#include <stdlib.h>
 
 #include "../console/ui.hpp"
 #include "../console/console.h"
@@ -112,6 +114,10 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                 obstacle = true;
                 
         if (!obstacle){
+            if (!skip){
+                drawHorizonMatch(x, y, x2, y2, map[y][x]);
+            }
+            
             // cout << "Clear path" << endl;
             for (int i = min(x, x2); i <= max(x2, x); i++){
                 // mapPrint(map, m, n, x, y, x2, y2);
@@ -124,7 +130,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
             gotoxy(70, 16);
             cout << "Hor matching";
             if (!skip)
-                Sleep(400);
+                Sleep(000);
             gotoxy(70, 16);
             cout << "            ";
             gotoxy(origin.X, origin.Y);
@@ -141,6 +147,9 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                 obstacle = true;
                 
         if (!obstacle){
+            if (!skip)
+                drawVerticalMatch(x, y, x2, y2, map[y][x]);
+            
             // cout << "Clear path" << endl;
             for (int i = min(y, y2); i <= max(y2, y); i++){
                 // mapPrint(map, m, n, x, y, x2, y2); // Print map with selected squares
@@ -153,7 +162,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
             gotoxy(70, 16);
             cout << "Hor matching";
             if (!skip)
-                Sleep(400);
+                Sleep(000);
             gotoxy(70, 16);
             cout << "            ";
             gotoxy(origin.X, origin.Y);
@@ -196,7 +205,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
             gotoxy(70, 16);
             cout << "L|⅃ matching";
             if (!skip)
-                Sleep(400);
+                Sleep(000);
             gotoxy(70, 16);
             cout << "            ";
             gotoxy(origin.X, origin.Y);
@@ -231,7 +240,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                     gotoxy(70, 16);
                     cout << y2 << ":" << i << map[y2][i] << endl;
                     if (!skip)
-                        Sleep(400);
+                        Sleep(000);
                     gotoxy(70, 16);
                     cout << "            ";
                     gotoxy(origin.X, origin.Y);
@@ -247,7 +256,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
             gotoxy(70, 16);
             cout << "Γ|⅂ matching";
             if (!skip)
-                Sleep(400);
+                Sleep(000);
             gotoxy(70, 16);
             cout << "            ";
             gotoxy(origin.X, origin.Y);
@@ -278,6 +287,9 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                     }
                     
                 if (!obstacle){
+                    if (!skip)
+                        drawUrightMatch(x, y, x2, y2, i, map[y][x]);
+                    
                     map[y][x] = map[y2][x2] = 0;
                     
                     // For debugging
@@ -285,7 +297,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                     gotoxy(70, 16);
                     cout << "⊃   matching";
                     if (!skip)
-                        Sleep(400);
+                        Sleep(000);
                     gotoxy(70, 16);
                     cout << "            ";
                     gotoxy(origin.X, origin.Y);
@@ -307,12 +319,15 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                     continue;
                 }
                 
+                if (!skip)
+                    drawUrightMatch(x, y, x2, y2, i, map[y][x]);
+                
                 // For debugging
                 COORD origin = GetConsoleCaretPos();
                 gotoxy(70, 16);
                 cout << "⊃matching@" << i;
                 if (!skip)
-                    Sleep(400);
+                    Sleep(000);
                 gotoxy(70, 16);
                 cout << "            ";
                 gotoxy(origin.X, origin.Y);
@@ -349,7 +364,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                     gotoxy(70, 16);
                     cout << "⋃   matching";
                     if (!skip)
-                        Sleep(400);
+                        Sleep(000);
                     gotoxy(70, 16);
                     cout << "            ";
                     gotoxy(origin.X, origin.Y);
@@ -374,7 +389,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                 gotoxy(70, 16);
                 cout << "⋃no matching";
                 if (!skip)
-                    Sleep(400);
+                    Sleep(000);
                 gotoxy(70, 16);
                 cout << "            ";
                 gotoxy(origin.X, origin.Y);
@@ -411,7 +426,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                     gotoxy(70, 16);
                     cout << "⊂   matching";
                     if (!skip)
-                        Sleep(400);
+                        Sleep(000);
                     gotoxy(70, 16);
                     cout << "            ";
                     gotoxy(origin.X, origin.Y);
@@ -440,7 +455,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                 gotoxy(70, 16);
                 cout << "⊂   matching";
                 if (!skip)
-                    Sleep(400);
+                    Sleep(000);
                 gotoxy(70, 16);
                 cout << "            ";
                 gotoxy(origin.X, origin.Y);
@@ -476,7 +491,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                     gotoxy(70, 16);
                     cout << "⋂   matching";
                     if (!skip)
-                        Sleep(400);
+                        Sleep(000);
                     gotoxy(70, 16);
                     cout << "            ";
                     gotoxy(origin.X, origin.Y);
@@ -506,7 +521,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                 gotoxy(70, 16);
                 cout << "⋂   matching";
                 if (!skip)
-                    Sleep(400);
+                    Sleep(000);
                 gotoxy(70, 16);
                 cout << "            ";
                 gotoxy(origin.X, origin.Y);
@@ -545,7 +560,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
             gotoxy(70, 16);
             cout << "Z   matching";
             if (!skip)
-                Sleep(400);
+                Sleep(000);
             gotoxy(70, 16);
             cout << "            ";
             gotoxy(origin.X, origin.Y);
@@ -575,7 +590,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
             gotoxy(70, 16);
             cout << "N matching";
             if (!skip)
-                Sleep(400);
+                Sleep(000);
             gotoxy(70, 16);
             cout << "            ";
             gotoxy(origin.X, origin.Y);
@@ -591,7 +606,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
 
 int** generateMap(int m, int n){
     int **map = new int*[m];
-    srand(4);
+    srand(7);
     
     for (int i = 0; i < m; i++){
         map[i] = new int [n];
@@ -600,30 +615,31 @@ int** generateMap(int m, int n){
             map[i][j] = 0;
     }
     
-    int count = 1;
-    while (m*(double)n / (2*count) > 25 && m*n % (2*count) == 0)
-        count++;
+    int count = 3;
         
-    for (int i = 0; i < m*(double)n / (2*count); i++)
-        for (int j = 0; j < count; j++){
+    for (int i = 1; i <= m*n / (count * 2); i++){
             int x, y, x2, y2;
             
-            // do {
+            for (int j = 0; j < count; j++) {
                 do {x = rand() % n; y = rand() % m;} while (map[y][x] != 0);
+                map[y][x] = i;
                 do {x2 = rand() % n; y2 = rand() % m;} while (map[y2][x2] != 0);
-            // }
+                map[y2][x2] = i;
+                
+                cout << x << ":" << y << " & " << x2 << ":" << y2 << endl;
+                
+            }
             // while (!pathSearch(map, m, n, x, y, x2, y2, true));
-            
-            map[y][x] = i;
-            map[y2][x2] = i;
             
             for (int a = 0; a < m; a++){
                 for (int b = 0; b < n; b++)
-                    cout << "[" << map[a][b] << "]";
+                    cout << "[" << dye(rainbow[map[a][b] % 15], to_string(map[a][b])) << "]";
                 cout << endl;
             }
             cout << "----------------------------" << endl;
-        }  
+    }
+    
+    // exit(1);
     
     return map;
 }
@@ -740,7 +756,7 @@ bool isEmpty(BoardLayout a){
     return true;
 }
 
-bool isSolveable(BoardLayout a){
+bool isSolvable(BoardLayout &a, bool showHint = false, bool autoHighlight = false){
     for (int i = 0; i < a.height; i++)
         for (int j = 0; j < a.width; j++){
             int value = a.board[i][j];
@@ -755,12 +771,146 @@ bool isSolveable(BoardLayout a){
                         continue;
                         
                     else if (pathSearch(a.board, a.height, a.width, j, i, c, b, true)){
+                        if (showHint){
+                            a.hint1 = make_pair(j, i);
+                            a.hint2 = make_pair(c, b);
+                        }
+                        
+                        if (autoHighlight){
+                            a.point1 = a.hint1;
+                            a.point2 = a.hint2;
+                        }
+                        
                         a.board[i][j] = a.board[b][c] = value;
                         return true;
                     }
         }
                 
     return false;
+}
+
+bool rearrange(User &player){
+    bool change = false;
+    
+    if (player.skill == 1){
+        for (int i = 0; i < player.getBoard.height; i++){
+            int width = player.getBoard.width - 1;
+            while (player.getBoard.board[i][width] == 0 && width > 0)
+                width--;
+                
+            for (int j = 0; j < width; j++){
+                
+                if (player.getBoard.board[i][j] == 0){
+                    change = true;
+                    
+                    for (int k = j; k < width; k++){
+                        int temp = player.getBoard.board[i][k];
+                        player.getBoard.board[i][k] = player.getBoard.board[i][k + 1];
+                        player.getBoard.board[i][k + 1] = temp;
+                    }
+                    
+                    j--;
+                    width--;
+                }
+            }
+            
+            // for (int a = 0; a < player.getBoard.width; a++)
+            //     cout << player.getBoard.board[i][a] << "\t";
+                
+            // cout << endl;
+        }
+    }
+    
+    else if (player.skill == 2){
+        for (int i = 0; i < player.getBoard.height; i++){
+            int width = 0;
+            while (player.getBoard.board[i][width] == 0 && width < player.getBoard.width - 1)
+                width++;
+                
+            for (int j = player.getBoard.width - 1; j > width; j--){
+                
+                if (player.getBoard.board[i][j] == 0){
+                    change = true;
+                    
+                    for (int k = j; k > width; k--){
+                        int temp = player.getBoard.board[i][k];
+                        player.getBoard.board[i][k] = player.getBoard.board[i][k - 1];
+                        player.getBoard.board[i][k - 1] = temp;
+                    }
+                    
+                    j++;
+                    width++;
+                }
+            }
+            
+            // for (int a = 0; a < player.getBoard.width; a++)
+            //     cout << player.getBoard.board[i][a] << "\t";
+                
+            // cout << endl;
+        }
+    }
+    
+    else if (player.skill == 3){
+        for (int i = 0; i < player.getBoard.width; i++){
+            int height = player.getBoard.height - 1;
+            
+            while (player.getBoard.board[height][i] == 0 && height > 0)
+                height--;
+                
+            for (int j = 0; j < height; j++){
+                
+                if (player.getBoard.board[j][i] == 0){
+                    change = true;
+                    
+                    for (int k = j; k < height; k++){
+                        int temp = player.getBoard.board[k][i];
+                        player.getBoard.board[k][i] = player.getBoard.board[k + 1][i];
+                        player.getBoard.board[k + 1][i] = temp;
+                    }
+                    
+                    j--;
+                    height--;
+                }
+            }
+            
+            // for (int a = 0; a < player.getBoard.width; a++)
+            //     cout << player.getBoard.board[i][a] << "\t";
+                
+            // cout << endl;
+        }
+    }
+    
+    else if (player.skill == 4){
+        for (int i = 0; i < player.getBoard.height; i++){
+            int height = 0;
+            
+            while (player.getBoard.board[height][i] == 0 && height < player.getBoard.height - 1)
+                height++;
+                
+            for (int j = player.getBoard.height - 1; j > height; j--){
+                
+                if (player.getBoard.board[j][i] == 0){
+                    change = true;
+                    
+                    for (int k = j; k > height; k--){
+                        int temp = player.getBoard.board[k][i];
+                        player.getBoard.board[k][i] = player.getBoard.board[k - 1][i];
+                        player.getBoard.board[k - 1][i] = temp;
+                    }
+                    
+                    j++;
+                    height++;
+                }
+            }
+            
+            // for (int a = 0; a < player.getBoard.width; a++)
+            //     cout << player.getBoard.board[i][a] << "\t";
+                
+            // cout << endl;
+        }
+    }
+    
+    return change;
 }
 
 void banter(int skill){
@@ -771,7 +921,15 @@ void banter(int skill){
         gotoxy(0, 0);
     }
 }
+
+void infoScreen(){
+    
+}
+
 void playScreen(User player = User{"", "", 0}){
+    // Initialize new user / load user info from saved file
+    
+    system("cls");
     ShowConsoleCursor(false);
     int timeLength = 300;
     
@@ -779,27 +937,43 @@ void playScreen(User player = User{"", "", 0}){
     if (player.isLogged == false){
         string stockName = "Player 1";
         strcpy(player.name, stockName.c_str());
-        player.getBoard.board = generateMap(8, 8);
-        player.getBoard.height = 8;
-        player.getBoard.width = 8;
+        player.getBoard.board = generateMap(9, 9);
+        player.getBoard.height = 9;
+        player.getBoard.width = 9;
     }
     
-    bool solveState = isSolveable(player.getBoard);
     
     bool isWon = false;
     while (1){
+        // Game starting point. All levels only goes through lines this once
+        
         if (isWon){
             player.skill++;
             isWon = false;
+            player.getBoard.board = generateMap(9, 9);
+            player.getBoard.height = 9;
+            player.getBoard.width = 9;
         }
+        
+        // Check for player's skill level, then rearrange board accordingly
+        rearrange(player);
+        
+        
+        // Check if the board is solvable then load the result to solveState
+        bool solveState = isSolvable(player.getBoard);
         
         banter(player.skill);
         
         time_t startTime = time(NULL);
         
+        drawBackground(MARGIN - 2, MARGIN - 3, BLOCK_HEIGHT*player.getBoard.height + 4, BLOCK_WIDTH*player.getBoard.width + 4);
+        
         boardPrint(player.getBoard, "Level: " + to_string(player.skill));
         
         while (1){
+            if (rearrange(player))
+                boardPrint(player.getBoard, "Level: " + to_string(player.skill));
+                
             int key = -1;
             
             // A non blocking input
@@ -808,7 +982,7 @@ void playScreen(User player = User{"", "", 0}){
                 // cout << "Key: " << key << endl;
             }
             
-            // if ESC -> pauseScreen
+            // If ESC -> pauseScreen
             if (key == 27){
                 time_t pauseTime = time(NULL);
                 while (1){
@@ -817,15 +991,33 @@ void playScreen(User player = User{"", "", 0}){
                     
                     // A blocking input
                     key = _getch();
+                    COORD origin = GetConsoleCaretPos();
+                    gotoxy(70, 2);
+                    cout << key;
+                    gotoxy(origin.X, origin.Y);
                     
                     if (key == 27){
                         startTime += time(NULL) - pauseTime;
                         cout << "Continuing the game..." << endl;
                         break;
                     }
+                    else if (key == 113){
+                        ofstream out("savedFile.txt");
+                        
+                        out.write((char*)&player, sizeof(player));
+                        out.close();
+                        
+                        COORD origin = GetConsoleCaretPos();
+                        gotoxy(70, 2);
+                        cout << "Exiting the game...";
+                        gotoxy(origin.X, origin.Y);
+                        
+                        exit(1);
+                    }
                 }
             
             }
+            
             //  Check for Space key input
             else if (key == 32){
                 // Fill up point1 and point2
@@ -840,30 +1032,46 @@ void playScreen(User player = User{"", "", 0}){
                 if (player.getBoard.point1 != make_pair(-1, -1) && player.getBoard.point2 != make_pair(-1, -1)){
                     cout << "Search for path" << endl;
                     if (pathSearch(player.getBoard.board, player.getBoard.height, player.getBoard.width, player.getBoard.point1.first, player.getBoard.point1.second, player.getBoard.point2.first, player.getBoard.point2.second)){
-                        boardPrint(player.getBoard);
-                        Sleep(400);
+                        boardPrint(player.getBoard, "Level: " + to_string(player.skill));
+                        // Sleep(200);
                         // Reset 2 highlighted points
                         player.getBoard.point1 = player.getBoard.point2 = make_pair(-1, -1);
-                        boardPrint(player.getBoard);
+                        player.getBoard.hint1 = player.getBoard.hint2 = make_pair(-1, -1);
+                        
+                        drawBackground(MARGIN - 2, MARGIN - 3, BLOCK_HEIGHT*player.getBoard.height + 4, BLOCK_WIDTH*player.getBoard.width + 4);
+                        
+                        boardPrint(player.getBoard, "Level: " + to_string(player.skill));
                     }
                     else {
                         cout << "No path found";
-                        Sleep(400);
+                        // Sleep(200);
                         player.getBoard.point1 = player.getBoard.point2 = make_pair(-1, -1);
-                        boardPrint(player.getBoard);
+                        player.getBoard.hint1 = player.getBoard.hint2 = make_pair(-1, -1);
+                        boardPrint(player.getBoard, "Level: " + to_string(player.skill));
                     }
                     
                 }
                 
+                solveState = isSolvable(player.getBoard);
+                
             }
             
-            // if move, refresh the actual map
+            // If H -> Hint
+            else if (key == 'h'){
+                isSolvable(player.getBoard, true, true);
+                boardPrint(player.getBoard, "Level: " + to_string(player.skill));
+            }
+            
+            // If move, refresh the actual map
             else if (key == 0 || key == 224){
                 key = _getch();
                 
                 // Arrow keys for navigating the board
                 switch (key) {
                     case 72: 
+                        // if ()
+                        //     drawBackground(MARGIN - 2, MARGIN - 3, BLOCK_HEIGHT*player.getBoard.height + 4, BLOCK_WIDTH*player.getBoard.width + 4);
+                        
                         player.getBoard.highlight.second--;
                         if (player.getBoard.highlight.second < 0){
                             player.getBoard.highlight.second = 0;
@@ -904,11 +1112,12 @@ void playScreen(User player = User{"", "", 0}){
                     default: cout << "Unknown extended key" << endl; break;
                 }
                 
-                boardPrint(player.getBoard);
-                solveState = isSolveable(player.getBoard);
+                drawBackground(MARGIN - 2, MARGIN - 3, BLOCK_HEIGHT*player.getBoard.height + 4, BLOCK_WIDTH*player.getBoard.width + 4);
+                boardPrint(player.getBoard, "Level: " + to_string(player.skill));
+                solveState = isSolvable(player.getBoard);
             }
                 
-            // if did not move, do not refresh the map but only refresh the time, stats element...
+            // If did not move, do not refresh the map but only refresh the time, stats element...
             COORD origin = GetConsoleCaretPos();
             gotoxy(70, 2);
             cout << setw(3) << setfill(' ') << timeLength - (time(NULL) - startTime);
@@ -944,8 +1153,23 @@ void playScreen(User player = User{"", "", 0}){
                     }
                     
                 }
+                
+                COORD origin = GetConsoleCaretPos();
+                gotoxy(70, 4);
+                cout << "Out of while loop";
+                gotoxy(origin.X, origin.Y);
             }
                 
+            // If won -> break out while loop to go to next level
+            if (isWon){
+                COORD origin = GetConsoleCaretPos();
+                gotoxy(70, 5);
+                cout << "Break out of while loop";
+                Sleep(300);
+                gotoxy(origin.X, origin.Y);
+                system("cls");
+                break;
+            }
         }
     }
 }

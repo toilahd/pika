@@ -4,14 +4,17 @@
 #include <Windows.h>
 #include <windows.h>
 #include <iostream>
-#include <fstream>
 #include <conio.h>
 #include <cmath>
 #include <fstream>
+#include <string>
+#include <sstream>
 
 // #include "console/ui.hpp"
 #include "console/color.hpp"
 #include "engine/dataType.hpp"
+#include "ansiart.hpp"
+#include "console/ui.hpp"
 
 using namespace std;
 
@@ -116,12 +119,6 @@ void anotherLayout(){
       │ ╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯              ╰─   ─╯╰─   ─╯ │\n\
       ╰──────────────────────────────────────────────────────────╯";
 }
-void gotoxy(int x, int y) {
-	COORD c;
-	c.X = x;
-	c.Y = y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);
-}
 
 void testOnWin10(){
 	SetConsoleOutputCP(65001);
@@ -158,18 +155,43 @@ void testOnWin10(){
 
 struct Student {
 	unsigned short id; // 2 byte positive integer
-	char name[30]; // 29 chars + ’\0’
+	char name[30]; // 29 chars + '\0'
 	double score; // 8 byte floating point number
 };
 
 void fileTest(){
 	ifstream file("sample.bin", ios::binary);
+	ifstream in("savedFile.txt", ios::binary);
 	
-	file.seekg(0, ios:: end);
-	cout << file.tellg() << endl;
+	User user;
+	
+	file.seekg(0, ios::end);
+	in.read((char*)&user, sizeof(User));
+	
+	cout << user.name << endl;
+	cout << user.skill << endl;
+	cout << user.getBoard.highlight.first << " " << user.getBoard.highlight.second << endl;
+	cout << user.getBoard.point1.first << " " << user.getBoard.point1.second << endl;
+	cout << user.getBoard.point2.first << " " << user.getBoard.point2.second << endl;
 	
 	char a[100];
-	cout << sizeof(a) << endl;
+	cout << sizeof(savefile) << endl;
+}
+
+void readFileTest(){
+	ifstream f("students.dat", ios::binary);
+	// we can’t declare a student array here because we don’t know its size
+	// so now we compute the size before reading the file
+	f.seekg(0, ios::end);
+	int num = f.tellg() / 40; // file size / struct size
+	f.seekg(0, ios::beg);
+	
+	Student students; // now we can declare an array
+	
+	f.read((char*)&students, sizeof(Student));
+	cout << students.id << "\t" << students.name << "\t" << students.score << endl;
+	
+	f.close();
 }
 
 void keyPressTest(){
@@ -214,21 +236,33 @@ void keyPressTest(){
 // }
 
 
+void ansiArtTest(){
+	int count = 0;
+	for (int i = 0; i < 12; i++){
+		while (banVit[count] != '\n'){
+			cout << banVit[count];
+			count++;
+		}
+		cout << count << endl;
+		count++;
+	}
+	
+	cout << banVit;
+}
+
 int main(int argc, char *argv[]){
 	SetConsoleOutputCP(65001);
-	
-	cout << "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⠿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n\
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟\033[0;37m⣉⡥⠶⢶⣿⣿⣿⣿⣷⣆\033[0m⠉⠛⠿⣿⣿⣿⣿⣿⣿⣿\n\
-⣿⣿⣿⣿⣿⣿⣿⡿\033[0;37m⢡⡞⠁⠀⠀⠤⠈⠿⠿⠿⠿⣿\033[0m\033[0;31m⠀⢻⣦⡈\033[0m⠻⣿⣿⣿⣿⣿\n\
-⣿⣿⣿⣿⣿⣿⣿⡇⠘⡁⠀\033[0;37m⢀⣀⣀⣀⣈⣁⣐⡒\033[0m\033[0;31m⠢⢤⡈⠛⢿⡄\033[0m⠻⣿⣿⣿⣿\n\
-⣿⣿⣿⣿⣿⣿⣿⡇⠀\033[0;37m⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣶⣄\033[0m\033[0;31m⠉⠐⠄⡈⢀\033[0m⣿⣿⣿⣿\n\
-⣿⣿⣿⣿⣿⣿⣿⠇\033[0;37m⢠⣿⣿⣿⣿⡿⢿⣿⣿⣿⠁⢈⣿⡄\033[0m⠀\033[0;36m⢀⣀\033[0m⠸⣿⣿⣿⣿\n\
-⣿⣿⣿⣿⡿⠟\033[0;33m⣡⣶⣶⣬⣭⣥⣴\033[0m\033[0;37m⠀⣾⣿⣿⣿⣶⣾⣿⣧\033[0m\033[0;36m⠀⣼⣿⣷⣌\033[0m⡻⢿⣿\n\
-⣿⣿⠟\033[0;33m⣋⣴⣾⣿⣿⣿⣿⣿⣿⣿⡇\033[0m\033[0;37m⢿⣿⣿⣿⣿⣿⣿⡿\033[0m\033[0;36m⢸⣿⣿⣿⣿⣷\033[0m⠄⢻\n\
-⡏\033[0;33m⠰⢾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⢂\033[0m\033[0;37m⣭⣿⣿⣿⣿⣿⠇\033[0m\033[0;36m⠘⠛⠛⢉⣉\033[0m⣠⣴⣾\n\
-⣿⣷⣦\033[0;33m⣬⣍⣉⣉⣛⣛⣉⠉\033[0m\033[0;37m⣤⣶⣾⣿⣿⣿⣿⣿⣿⡿\033[0m⢰⣿⣿⣿⣿⣿⣿⣿⣿\n\
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧\033[0;37m⡘⣿⣿⣿⣿⣿⣿⣿⣿⡇\033[0m⣼⣿⣿⣿⣿⣿⣿⣿⣿\n\
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇\033[0;37m⢸⣿⣿⣿⣿⣿⣿⣿⠁\033[0m⣿⣿⣿⣿⣿⣿⣿⣿⣿";
 
+	// fileTest();
+	// while (1)
+	// drawBackground(2, 1, 20, 90);
+	
+	char str[4000];
+	strcpy(str, fall.c_str());
+	
+	cout << str;
+	
+	Sleep(3000);
+	
 	return 0;
 }
