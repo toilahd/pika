@@ -1,6 +1,7 @@
 #pragma once
 #include "console.h"
 #include "menu.cpp"
+
 void playGame();
 void gameMode();
 void leaderBoards();
