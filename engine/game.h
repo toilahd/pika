@@ -934,9 +934,221 @@ void banter(int skill){
     }
 }
 
+void boxDrawing(int boxHeight, int boxWidth){
+    gotoxy((120 - boxWidth)/2, (30 - boxHeight)/2);
+    cout << "╭";
+    
+    for (int i = 0; i < boxWidth - 2; i++)
+        cout << "─";
+        
+    cout << "╮";
+    
+    for (int i = 0; i < boxHeight - 2; i++){
+        gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y + 1);
+        cout << "│";
+    }
+    
+    gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y + 1);
+    cout << "╯";
+    
+    // Sleep(500);
+    for (int i = 0; i < boxWidth; i++){
+        gotoxy(GetConsoleCaretPos().X - 2, GetConsoleCaretPos().Y);
+        cout << "─";
+    }
+    
+    cout << "╰";
+    
+    for (int i = 0; i < boxHeight - 2; i++){
+        gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y - 1);
+        cout << "│";
+    }
+}
+
+void boxEraseLines(int boxHeight, int boxWidth){
+    gotoxy((120 - boxWidth)/2, (30 - boxHeight)/2);
+    string blankLine(boxWidth, ' ');
+    cout << " ";
+    
+    for (int i = 0; i < boxWidth - 2; i++)
+        cout << " ";
+        
+    cout << " ";
+    
+    for (int i = 0; i < boxHeight - 2; i++){
+        gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y + 1);
+        cout << " ";
+    }
+    
+    gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y + 1);
+    cout << " ";
+    
+    // Sleep(500);
+    gotoxy(GetConsoleCaretPos().X, GetConsoleCaretPos().Y - 1);
+    for (int i = 0; i < boxWidth - 2; i++){
+        gotoxy(GetConsoleCaretPos().X - 2, GetConsoleCaretPos().Y);
+        cout << " ";
+    }
+    
+    gotoxy(GetConsoleCaretPos().X - 2, GetConsoleCaretPos().Y);
+    cout << " ";
+    
+    for (int i = 0; i < boxHeight - 2; i++){
+        gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y - 1);
+        cout << " ";
+    }
+}
+
+void boxErase(int boxHeight, int boxWidth){
+    string blankLine(boxWidth, ' ');
+    for (int i = 0; i < boxHeight; i++){
+        gotoxy((120 - boxWidth)/2, (30 - boxHeight)/2 + i);
+        cout << blankLine;
+    }
+}
+
 // Need more work
 void infoScreen(){
     
+}
+
+void pauseScreen(time_t &startTime, User &player) {
+    time_t pauseTime = time(NULL);
+    
+    COORD origin = GetConsoleCaretPos();
+    int pauseBoxWidth = 100;
+    int pauseBoxHeight = 25;
+    
+    string blankLine(pauseBoxWidth, ' ');
+    string upperEdge;
+    for (int i = 0; i < pauseBoxWidth - 2; i++)
+        upperEdge += "─";
+        
+    for (int i = 0; i < pauseBoxHeight; i++){
+        gotoxy((120 - pauseBoxWidth)/2, (30 - pauseBoxHeight)/2 + i);
+        cout << blankLine;
+    }
+    
+    gotoxy((120 - pauseBoxWidth)/2, (30 - pauseBoxHeight)/2);
+    cout << "╭";
+    
+    cout << upperEdge;
+        
+    cout << "╮";
+    
+    for (int i = 0; i < pauseBoxHeight - 2; i++){
+        gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y + 1);
+        cout << "│";
+    }
+    
+    
+    gotoxy((120 - pauseBoxWidth)/2, (30 - pauseBoxHeight)/2 + pauseBoxHeight - 2);
+    cout << "╰";
+    cout << upperEdge;
+    cout << "╯";
+    
+    // Sleep(5000);
+    
+    gotoxy((120 - pauseBoxWidth)/2 + 1, (30 - pauseBoxHeight)/2);
+    for (int i = 0; i < pauseBoxHeight - 3; i++){
+        gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y + 1);
+        cout << "│";
+    }
+    // Sleep(3000);
+    
+    while (1){
+        gotoxy((120 - pauseBoxWidth)/2 + 1, (30 - pauseBoxHeight)/2);
+        cout << " Break time! ";
+        // Some reserved space for code to navigate Pause screen items but repressing the ESC key will break out the pause loop
+        
+        gotoxy((120 - pauseBoxWidth)/2 + 3, (30 - pauseBoxHeight)/2 + 2);
+        cout << "ESC for Continuing the game";
+        gotoxy((120 - pauseBoxWidth)/2 + 3, (30 - pauseBoxHeight)/2 + 3);
+        cout << "Q to Quit the current game";
+        
+        // A blocking input
+        int key = _getch();
+        COORD origin = GetConsoleCaretPos();
+        gotoxy(70, 2);
+        cout << key;
+        gotoxy(origin.X, origin.Y);
+        
+        // If ESC -> Continue the game
+        if (key == 27){
+            startTime += time(NULL) - pauseTime;
+            gotoxy((120 - pauseBoxWidth)/2 + 1, (30 - pauseBoxHeight)/2);
+            cout << "Continuing the game...";
+            
+            boxErase(pauseBoxHeight, pauseBoxWidth);
+            // Sleep(4000);
+            boardPrint(player.getBoard, "Level: " + to_string(player.skill));
+            break;
+        }
+        // If Q key -> Save player info and exit the game
+        else if (key == 113){
+            string name = "";
+            {
+                gotoxy(70, 4);
+                if (name != "")
+                    cout << "Retry: your name must not be longer than 49 charactes";
+                gotoxy(70, 5);
+                cout << "Your name: ";
+                cin >> name;
+            } while (name.size() > 49);
+            
+            string pass = "";
+            {
+                gotoxy(70, 6);
+                if (pass != "")
+                    cout << "Retry: your password must not be longer than 49 charactes";
+                else
+                    cout << "                                                         ";
+                gotoxy(70, 7);
+                cout << "Your password: ";
+                cin >> pass;
+            } while (pass.size() > 49);
+            
+            savefile *info = new savefile;
+            (*info).mask = 'Q';
+            strcpy((*info).name, name.c_str());
+            strcpy((*info).password, pass.c_str());
+            
+            for (int i = 0; i < 5; i++){
+                if ((*info).state[i].p == 0 && (*info).state[i].q == 0){
+                    (*info).state[i].p = player.getBoard.height;
+                    (*info).state[i].q = player.getBoard.width;
+                    
+                    (*info).state[i].p_ = player.getBoard.highlight.second;
+                    (*info).state[i].q_ = player.getBoard.highlight.first;
+                    
+                    int count = 0;
+                    for (int a = 0; a < player.getBoard.height; a++){
+                        gotoxy(70, 7 + a);
+                        for (int b = 0; b < player.getBoard.width; b++){
+                            (*info).state[i].board[count] = (char)(player.getBoard.board[a][b] + 63);
+                            cout << (*info).state[i].board[count] << " ";
+                            count++;
+                        }
+                    }
+                    
+                    break;
+                }
+            }
+            
+            ofstream out("savedFile.bin", ios::binary);
+            
+            out.write((char*)info, sizeof(savefile));
+            out.close();
+            
+            COORD origin = GetConsoleCaretPos();
+            gotoxy(70, 2);
+            cout << "Exiting the game...";
+            gotoxy(origin.X, origin.Y);
+            
+            exit(1);
+        }
+    }
+            
 }
 
 void playScreen(User player = User{"", "", 0}){
@@ -1002,38 +1214,7 @@ void playScreen(User player = User{"", "", 0}){
             
             // If ESC -> pauseScreen
             if (key == 27){
-                time_t pauseTime = time(NULL);
-                while (1){
-                    cout << "Break time!" << endl;
-                    // Some reserved space for code to navigate Pause screen items but repressing the ESC key will break out the pause loop
-                    
-                    // A blocking input
-                    key = _getch();
-                    COORD origin = GetConsoleCaretPos();
-                    gotoxy(70, 2);
-                    cout << key;
-                    gotoxy(origin.X, origin.Y);
-                    
-                    if (key == 27){
-                        startTime += time(NULL) - pauseTime;
-                        cout << "Continuing the game..." << endl;
-                        break;
-                    }
-                    else if (key == 113){
-                        ofstream out("savedFile.txt");
-                        
-                        out.write((char*)&player, sizeof(player));
-                        out.close();
-                        
-                        COORD origin = GetConsoleCaretPos();
-                        gotoxy(70, 2);
-                        cout << "Exiting the game...";
-                        gotoxy(origin.X, origin.Y);
-                        
-                        exit(1);
-                    }
-                }
-            
+                pauseScreen(startTime, player);
             }
             
             // If Space key -> select the points
