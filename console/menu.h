@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 #include "console.h"
 #include "menu.cpp"
 

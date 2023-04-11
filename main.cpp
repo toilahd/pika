@@ -1,3 +1,5 @@
+#pragma pack(1)
+
 #include <iostream>
 #include "engine/game.h"
 #include "console/color.hpp"

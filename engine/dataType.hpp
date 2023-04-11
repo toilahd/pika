@@ -11,7 +11,7 @@ using namespace std;
 #define URLSIZE 100
 
 struct Board {                      // Representing a board state
-    int p, q;                       // Size of the board game
+    int p = 0, q = 0;                       // Size of the board game
     int p_, q_;                     // Current cursor position
     char board[BOARDSIZE];          // Current board state
     char file_background[URLSIZE];  // Link to background file. This variable’s

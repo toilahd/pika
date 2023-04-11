@@ -128,26 +128,28 @@ string process(string & s)
 }
 
 // Need more work
-void drawBackground(int x, int y, int height = 50, int width = 120, string img = fall){
+void drawBackground(int x, int y, int height = 50, int width = 120){
+    return;
     COORD origin = GetConsoleCaretPos();
     
-    string fallCopy = fall;
+    string fallCopy = fall[0];
     string s = process(fallCopy);
     int count = 0, maxLenght = 0;
     
-    while (s != "" && count <= height){
+    while (/* s != "" &&  */count <= height && count < 25){
+        s = fall[count];
         gotoxy(x, y + count);
         count++;
         cout << s;
         maxLenght = max(maxLenght, (int)GetConsoleCaretPos().X);
         cout << maxLenght;
         
-        if (maxLenght > width + x){
-            COORD Current = GetConsoleCaretPos();
-            gotoxy(width + x, Current.Y);
-            cout << setw(maxLenght - width) << setfill(' ') << "";
-            gotoxy(Current.X, Current.Y);
-        }
+        // if (maxLenght > width + x){
+        //     COORD Current = GetConsoleCaretPos();
+        //     gotoxy(width + x, Current.Y);
+        //     cout << setw(maxLenght - width) << setfill(' ') << "";
+        //     gotoxy(Current.X, Current.Y);
+        // }
             
         s = process(fallCopy);
     }
@@ -162,18 +164,18 @@ void drawBlock(int x, int y, string content){
     // For board with no image, these lines should be uncommented (Need more work)
     // Drawing blocks with 0 (empty blocks)
     if (content == "0"){
-        // gotoxy(x, y);
-        // string bunchOfSpaces(BLOCK_WIDTH, ' ');
-        // cout << bunchOfSpaces;
+        gotoxy(x, y);
+        string bunchOfSpaces(BLOCK_WIDTH, ' ');
+        cout << bunchOfSpaces;
         
-        // gotoxy(x, y + 1);
-        // cout << bunchOfSpaces;
+        gotoxy(x, y + 1);
+        cout << bunchOfSpaces;
         
-        // gotoxy(x + ((int)BLOCK_WIDTH - content.size()) / 2, y + 1);
-        // cout << bunchOfSpaces;
+        gotoxy(x + ((int)BLOCK_WIDTH - content.size()) / 2, y + 1);
+        cout << bunchOfSpaces;
         
-        // gotoxy(x, y + 2);
-        // cout << bunchOfSpaces;
+        gotoxy(x, y + 2);
+        cout << bunchOfSpaces;
         return;
     }
         

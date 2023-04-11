@@ -1,6 +1,8 @@
 #define NCURSES_MOUSE_VERSION
 #define PI 3.14
 // #include "include/curses.h"
+#pragma pack(1)
+
 #include <Windows.h>
 #include <windows.h>
 #include <iostream>
@@ -159,41 +161,6 @@ struct Student {
 	double score; // 8 byte floating point number
 };
 
-void fileTest(){
-	ifstream file("sample.bin", ios::binary);
-	ifstream in("savedFile.txt", ios::binary);
-	
-	User user;
-	
-	file.seekg(0, ios::end);
-	in.read((char*)&user, sizeof(User));
-	
-	cout << user.name << endl;
-	cout << user.skill << endl;
-	cout << user.getBoard.highlight.first << " " << user.getBoard.highlight.second << endl;
-	cout << user.getBoard.point1.first << " " << user.getBoard.point1.second << endl;
-	cout << user.getBoard.point2.first << " " << user.getBoard.point2.second << endl;
-	
-	char a[100];
-	cout << sizeof(savefile) << endl;
-}
-
-void readFileTest(){
-	ifstream f("students.dat", ios::binary);
-	// we can’t declare a student array here because we don’t know its size
-	// so now we compute the size before reading the file
-	f.seekg(0, ios::end);
-	int num = f.tellg() / 40; // file size / struct size
-	f.seekg(0, ios::beg);
-	
-	Student students; // now we can declare an array
-	
-	f.read((char*)&students, sizeof(Student));
-	cout << students.id << "\t" << students.name << "\t" << students.score << endl;
-	
-	f.close();
-}
-
 void keyPressTest(){
 	int key;
 	while (1){
@@ -263,38 +230,40 @@ void findM(string str, int &i){
 	}
 }
 
-int main(int argc, char *argv[]){
-	SetConsoleOutputCP(65001);
-
-	// fileTest();
-	// while (1)
-	// drawBackground(2, 1, 20, 90);
+int printAt(int at, string str = abc){
+	string result;
 	
-	int found = 0;
 	int i = 0;
-	for (int j = 0; j <= 6; j++){
+	for (int j = 0; j <= at; j++){
 		// cout << "------" << endl;
 		// cout << i << endl;
 		
-		if (i >= abc.size())
+		if (i >= str.size())
 			break;
 		
-		if (abc[i] == '\033'){
+		if (str[i] == '\033'){
 			int mAt = i;
-			findM(abc, mAt);
+			findM(str, mAt);
 			mAt++;
-			cout << abc.substr(i, mAt - i + 1);
+			// cout << abc.substr(i, mAt - i + 1);
+			result = str.substr(i, mAt - i + 1);
 			i += mAt - i + 1;
 		}
 		else{
-			cout << abc[i];
+			// cout << abc[i];
+			result = str[i];
 			i++;
 		}
 		
-		cout << endl;
-	}	
+		// cout << endl;
+	}
 	
-	// return 0;
+	// cout << result;
+	
+	return i;
+}
+
+void failedAttempt(){
 	
 	// cout << endl << COLOR_RESET;
 	// cout << "-------------------------\n";
@@ -305,6 +274,193 @@ int main(int argc, char *argv[]){
 			
 	// 	i++;
 	// }
+	
+	// printAt(40, fall);
+	// for (int i = 3)
+	// 	cout << "]" << fallMono.substr(11, 3) << "[" << endl;
+	
+	int printHere = 40;
+	
+	// printAt(40, fall[0]);
+	// printAt(41, fall[0]);
+	// printAt(42, fall[0]);
+	
+	// return 0;
+	for (int i = 0; i < 100; i++)
+		if (i%10 == 0)
+			cout << dye(rainbow[4], to_string(i%10));
+		else
+			cout << i%10;
+		
+	cout << endl;
+	
+	for (int j = 0; j < 3; j++){
+		string str = fall[j];
+		bool first = true;
+		for (int i = 0; i < printAt(64, str);) {
+			if (first){
+				first = false;
+				cout << printAt(64, str);
+			}
+			
+			std::cout << str[i];
+			
+			
+			if(str[i] & 0x80) {
+				std::cout << str[i + 1];
+				if(str[i] & 0x20) {
+					std::cout << str[i + 2];
+					if(str[i] & 0x10) {
+						std::cout << str[i + 3];
+						i += 4;
+					} else {
+						i += 3;
+					}
+				} else {
+					i += 2;
+				}
+			}  else {
+				i += 1;
+			}
+			
+		}
+		
+		cout << endl;
+	}
+}
+
+void fileTest(){
+	ifstream file("sample.bin", ios::binary);
+	ifstream in("savedFile.txt", ios::binary);
+	
+	User user;
+	
+	file.seekg(0, ios::end);
+	in.read((char*)&user, sizeof(User));
+	
+	cout << user.name << endl;
+	cout << user.skill << endl;
+	cout << user.getBoard.highlight.first << " " << user.getBoard.highlight.second << endl;
+	cout << user.getBoard.point1.first << " " << user.getBoard.point1.second << endl;
+	cout << user.getBoard.point2.first << " " << user.getBoard.point2.second << endl;
+	
+	char a[100];
+	cout << sizeof(savefile) << endl;
+}
+
+void readFileTest(){
+	ifstream f("students.dat", ios::binary);
+	// we can’t declare a student array here because we don’t know its size
+	// so now we compute the size before reading the file
+	f.seekg(0, ios::end);
+	int num = f.tellg() / 40; // file size / struct size
+	f.seekg(0, ios::beg);
+	
+	Student students; // now we can declare an array
+	
+	f.read((char*)&students, sizeof(Student));
+	cout << students.id << "\t" << students.name << "\t" << students.score << endl;
+	
+	f.close();
+}
+
+string decode(char text[999], char mask){
+	string result;
+	for (int i = 0; i < strlen(text); i++){
+		result += text[i] ^ mask;
+	}
+	
+	return result;
+}
+
+string decode(char text, char mask){
+	string result;
+	result += (char)(text ^ mask);
+	return result;
+}
+
+void readFileNoDecode(){
+	ifstream input("savedFile.bin", ios::binary);
+	// ifstream input2("sample.bin", ios::binary);
+	
+	// Determine the file's size
+	// input.seekg(0, ios::end);
+	// input2.seekg(0, ios::end);
+	// cout << "Size of file: " << input.tellg() << endl;
+	// cout << "Size of sample file: " << input2.tellg() << endl;
+	
+	// cout << sizeof(savefile) << endl;
+	
+	// input.seekg(0, ios::beg);
+	
+	savefile file;
+	input.read((char *)&file, sizeof(savefile));
+	
+	cout << "Mask: " << file.mask << endl;
+	
+	cout << "Name: " << decode(file.name, file.mask) << endl;
+		
+	cout << "Password" << decode(file.password, file.mask) << endl;
+	
+	
+	cout << "Records: --------------" << endl;
+	for (int i = 0; i < 5; i++){
+		cout << "Record #" << i + 1 << ": " << endl;
+		cout << "Date: " << file.record[i].date.dd << "/" << file.record[i].date.dd << "/" << file.record[i].date.dd << endl;
+		cout << "Point: " << file.record[i].points << endl;
+	}
+	
+	cout << "States: --------------" << endl;
+	for (int i = 0; i < 5; i++){
+		cout << "State #" << i + 1 << ": " << endl;
+		cout << "Size: " << file.state[i].p << "x" << file.state[i].q << endl;
+		cout << "Pos: " << file.state[i].p_ << "x" << file.state[i].q_ << endl;
+		
+		int count = 0;
+		for (int a = 0; a < file.state[i].p; a++){
+			// cout << file.state[] << ":";
+			for (int j = 0; j < file.state[i].q; j++){
+				// cout << j << ":";
+				cout << "[" << file.state[i].board[count] << "]";
+				count++;
+			}
+			cout << endl;
+		}
+		
+		cout << decode(file.state[i].file_background, file.mask) << endl;
+	}
+	
+	cout << "Background URL: " << decode(file.state->file_background, file.mask) << endl;
+	
+}
+
+int main(int argc, char *argv[]){
+	// // SetConsoleOutputCP(65001);
+	
+	// ifstream in("savedFile.bin", ios::binary);
+	
+	// in.seekg(0, ios::beg);
+	
+	// User player;
+	// in.read((char *)&player, sizeof(User));
+	// cout << sizeof(User) << endl;
+	
+	// cout << player.name << endl;
+	// cout << player.getBoard.height << endl;
+	// cout << player.getBoard.width << endl;
+	
+	// // for (int i = 0; i < player.getBoard.height; i++){
+	// // 	for (int j = 0; j < player.getBoard.width; j++)
+	// // 		cout << "[" << (char)player.getBoard.board[i][j] << "]";
+	// // 	cout << endl;
+	// // }
+	
+	// cout << "Value: " << (int)player.getBoard.board[0][0];
+	
+	// cout << player.skill << endl;
+	// cout << player.getBoard.highlight.first << ":" << player.getBoard.highlight.second << endl;
+	
+	readFileNoDecode();
 	
 	return 0;
 }
