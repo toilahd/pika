@@ -1,7 +1,6 @@
 #define NCURSES_MOUSE_VERSION
 #define PI 3.14
 // #include "include/curses.h"
-#pragma pack(1)
 
 #include <Windows.h>
 #include <windows.h>
@@ -379,19 +378,17 @@ string decode(char text, char mask){
 	return result;
 }
 
-void readFileNoDecode(){
-	ifstream input("savedFile.bin", ios::binary);
-	// ifstream input2("sample.bin", ios::binary);
+int main(int argc, char *argv[]){
+	SetConsoleOutputCP(65001);
+	ifstream input("sample.bin", ios::binary);
 	
 	// Determine the file's size
-	// input.seekg(0, ios::end);
-	// input2.seekg(0, ios::end);
-	// cout << "Size of file: " << input.tellg() << endl;
-	// cout << "Size of sample file: " << input2.tellg() << endl;
+	input.seekg(0, ios::end);
+	cout << "Size of file: " << input.tellg() << endl;
 	
 	// cout << sizeof(savefile) << endl;
 	
-	// input.seekg(0, ios::beg);
+	input.seekg(0, ios::beg);
 	
 	savefile file;
 	input.read((char *)&file, sizeof(savefile));
@@ -400,76 +397,34 @@ void readFileNoDecode(){
 	
 	cout << "Name: " << decode(file.name, file.mask) << endl;
 		
-	cout << "Password" << decode(file.password, file.mask) << endl;
+	cout << "Password: " << decode(file.password, file.mask) << endl;
 	
 	
-	cout << "Records: --------------" << endl;
+	cout << "--------------" << endl;
 	for (int i = 0; i < 5; i++){
 		cout << "Record #" << i + 1 << ": " << endl;
 		cout << "Date: " << file.record[i].date.dd << "/" << file.record[i].date.dd << "/" << file.record[i].date.dd << endl;
 		cout << "Point: " << file.record[i].points << endl;
 	}
 	
-	cout << "States: --------------" << endl;
+	cout << "--------------" << endl;
 	for (int i = 0; i < 5; i++){
 		cout << "State #" << i + 1 << ": " << endl;
 		cout << "Size: " << file.state[i].p << "x" << file.state[i].q << endl;
 		cout << "Pos: " << file.state[i].p_ << "x" << file.state[i].q_ << endl;
-		
-		int count = 0;
-		for (int a = 0; a < file.state[i].p; a++){
-			// cout << file.state[] << ":";
-			for (int j = 0; j < file.state[i].q; j++){
-				// cout << j << ":";
-				cout << "[" << file.state[i].board[count] << "]";
-				count++;
-			}
-			cout << endl;
-		}
-		
+        int count = 0;
+		for (int j = 0; j < file.state[i].p; j++){
+			for (int b = 0; b < file.state[i].q; b++){
+				cout << "[" << decode(file.state[i].board[count], file.mask) << "]";
+                count++;
+            }
+            cout << endl;
+        }
 		cout << decode(file.state[i].file_background, file.mask) << endl;
+        cout << "Background URL: " << decode(file.state[i].file_background, file.mask) << endl;
 	}
 	
-	cout << "Background URL: " << decode(file.state->file_background, file.mask) << endl;
 	
-}
-
-int main(int argc, char *argv[]){
-	// // SetConsoleOutputCP(65001);
-	
-	// ifstream in("savedFile.bin", ios::binary);
-	
-	// in.seekg(0, ios::beg);
-	
-	// User player;
-	// in.read((char *)&player, sizeof(User));
-	// cout << sizeof(User) << endl;
-	
-	// cout << player.name << endl;
-	// cout << player.getBoard.height << endl;
-	// cout << player.getBoard.width << endl;
-	
-	// // for (int i = 0; i < player.getBoard.height; i++){
-	// // 	for (int j = 0; j < player.getBoard.width; j++)
-	// // 		cout << "[" << (char)player.getBoard.board[i][j] << "]";
-	// // 	cout << endl;
-	// // }
-	
-	// cout << "Value: " << (int)player.getBoard.board[0][0];
-	
-	// cout << player.skill << endl;
-	// cout << player.getBoard.highlight.first << ":" << player.getBoard.highlight.second << endl;
-	
-	// readFileNoDecode();
-	while (1){
-		if (_kbhit()){
-			int key;
-			
-			key = _getch();
-			
-			cout << key << " ";
-		}
-	}
 	
 	return 0;
 }

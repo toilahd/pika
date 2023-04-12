@@ -46,8 +46,7 @@ struct savefile {
     Board state[5];    // List of save state
 };
 
-// Before saving-file structures
-
+// My player's structs
 struct BoardLayout {
     int **board = NULL;
     int width = 0;

@@ -14,7 +14,7 @@ int main(){
     system("cls");
     
     // skip option with value true will go straight to the game screen
-    menuScreen(true);
+    menuScreen();
     
     return 0;
 }
