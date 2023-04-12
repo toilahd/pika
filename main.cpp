@@ -12,6 +12,7 @@ int main(){
     // ShowConsoleCursor(false);
     
     system("cls");
+    // cout << tintAll("142334");
     
     // skip option with value true will go straight to the game screen
     menuScreen();

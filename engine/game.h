@@ -1467,7 +1467,6 @@ void aboutScreen(){
 
 void menuScreen(bool skip = false){
     ShowConsoleCursor(false);
-    
     // Skip to play screen
     if (skip){
         playScreen();
@@ -1478,7 +1477,14 @@ void menuScreen(bool skip = false){
     int selected = 2;
     int screen = 0;
     
-    // gotoxy((120 - 50)/2, 4);
+    string spaces(120, ' ');
+    for (int i = 0; i < 30; i++)
+        cout << spaces << endl;
+    
+    gotoxy(0, 0);
+	// dyeAll("142334");
+    
+    // gotoxy((120 - 75)/2, 2);
     // COORD startLine = GetConsoleCaretPos();
     // for (int i = 0; i < 25; i++){
     //     cout << fall[i];
@@ -1486,6 +1492,8 @@ void menuScreen(bool skip = false){
     // }
     
     while (1){
+        // cout << tintAll("142334");
+        
         gotoxy(0, 0);
         cout << (selected != 1 ? " \t" : ">\t") << "Start!" << endl;
         cout << (selected != 2 ? " \t" : ">\t") << "Login" << endl;
