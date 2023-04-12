@@ -9,6 +9,9 @@ const string rainbow[] = {"#FF0000", "#FFA500", "#FFFF00", "#5dc591", "#84ff01",
 
 #define COLOR_RESET "\033[0m"
 
+string foreg = "\033[0m";
+string backg = "\033[0m";
+
 ostream& bold_on(ostream& cout){
     return cout << "\e[1m";
 }
@@ -17,7 +20,7 @@ ostream& bold_off(ostream& cout){
     return cout << "\e[0m";
 }
 
-string dye(string color, string text = "▞▞▞▞▞█▓▒░"){
+string dye(string color, string text = "▞▞▞▞▞█▓▒░", string resetTo = foreg){
     if (color.at(0) == '#'){
         color = color.substr(1, 6);
     }
@@ -26,7 +29,7 @@ string dye(string color, string text = "▞▞▞▞▞█▓▒░"){
     int g = stoi(color.substr(2, 2), NULL, 16);
     int b = stoi(color.substr(4, 2), NULL, 16);
     
-    return "\033[38;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + "\033[39m";
+    return "\033[38;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + resetTo;
 }
 
 string dyeAll(string color){
@@ -41,7 +44,7 @@ string dyeAll(string color){
     return "\033[38;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m";
 }
 
-string tint(string color, string text = "hello"){
+string tint(string color, string text = "hello", string resetTo = backg){
     if (color.at(0) == '#'){
         color = color.substr(1, 6);
     }
@@ -50,7 +53,7 @@ string tint(string color, string text = "hello"){
     int g = stoi(color.substr(2, 2), NULL, 16);
     int b = stoi(color.substr(4, 2), NULL, 16);
     
-    return "\033[48;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + "\033[49m";
+    return "\033[48;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text + resetTo;
 }
 
 string tintAll(string color, string text = "hello"){

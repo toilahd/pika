@@ -20,8 +20,6 @@ using namespace std;
 #define KEY_LEFT 75
 #define KEY_RIGHT 77
 
-int selected = 1;
-
 string EXAMPLE_LAYOUT = "         ╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮╭─   ─╮\n \
            A <==> B      \x1b[1mA\x1b[0mAA      B      \033[1mA\033[0m      B      \033[1mA\033[0m      B\n \
         ╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯╰─   ─╯\n \
@@ -1373,8 +1371,102 @@ void playScreen(User player = User{"", "", 0}){
     }
 }
 
+int userInput(string &str, int size = 30){
+    
+    int key = -1;
+    
+    if (_kbhit()){
+        
+        key = _getch();
+        
+        if (('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z') || key == ' '){
+            if (str.size() == size)
+                return 0;
+            
+            str += (char)key;
+            
+            return 1;
+        }
+        
+        if (key == 13){
+            if (str.size() == size)
+                return 0;
+                
+            return 2;
+        }
+        
+        if (key == 8){
+            str = str.substr(0, str.size() - 1);
+            return -1;
+        }
+        
+    }
+    
+    return 0;
+}
+
+void loginScreen(){
+    system("cls");
+    ShowConsoleCursor(true);
+    
+    gotoxy(4, 1);
+    cout << "Login page";
+    
+    string name = "";
+    string pass = "";
+    string blankLine(50, ' ');
+    
+    gotoxy(4, 2);
+    
+    while (1){
+        
+        int status = userInput(name);
+        
+        if (status == 2)
+            break;
+        
+        
+        if (status != 0){
+            ShowConsoleCursor(false);
+            gotoxy(4, 2);
+            cout << blankLine;
+            
+            gotoxy(4, 2);
+            ShowConsoleCursor(true);
+            cout << name;
+        }
+        
+    }
+    
+    gotoxy(4, 3);
+    
+    while (1){
+        int status = userInput(pass);
+        
+        if (status == 2)
+            break;
+        
+        
+        if (status != 0){
+            ShowConsoleCursor(false);
+            gotoxy(4, 3);
+            cout << blankLine;
+            
+            gotoxy(4, 3);
+            ShowConsoleCursor(true);
+            cout << pass;
+        }
+    }
+    
+    
+}
+
+void aboutScreen(){
+    
+}
 
 void menuScreen(bool skip = false){
+    ShowConsoleCursor(false);
     // Skip to play screen
     if (skip){
         playScreen();
@@ -1382,31 +1474,68 @@ void menuScreen(bool skip = false){
     }
     
     system("cls");
+    int selected = 2;
+    int screen = 0;
     
-    cout << (selected != 1 ? "\t" : ">\t") << "Play Game" << endl;
-    cout << (selected != 2 ? "\t" : ">\t") << "Continue previous game" << endl;
-    cout << (selected != 3 ? "\t" : ">\t") << "About" << endl;
+    string spaces(120, ' ');
+    for (int i = 0; i < 30; i++)
+        cout << spaces << endl;
     
-    int c = 0;
-    switch((c=getch())) {
-        case KEY_DOWN:
-            // cout << endl << "Up" << endl;//key up
-            if (selected == 3)
-                selected = 1;
-            else
-                selected += 1;
-            break;
-            
-        case KEY_UP:
-            // cout << endl << "Down" << endl;   // key down
-            if (selected == 1)
-                selected = 3;
-            else
-                selected -= 1;
-            break;
+    gotoxy(0, 0);
+	// dyeAll("142334");
+    
+    // gotoxy((120 - 75)/2, 2);
+    // COORD startLine = GetConsoleCaretPos();
+    // for (int i = 0; i < 25; i++){
+    //     cout << fall[i];
+    //     gotoxy(startLine.X, startLine.Y + i + 1);
+    // }
+    
+    while (1){
+        // cout << tintAll("142334");
         
-        default:
-            // cout << endl << "null" << endl;  // not arrow
-            break;
+        gotoxy(0, 0);
+        cout << (selected != 1 ? " \t" : ">\t") << "Start!" << endl;
+        cout << (selected != 2 ? " \t" : ">\t") << "Login" << endl;
+        cout << (selected != 3 ? " \t" : ">\t") << "About" << endl;
+        
+        int c = 0;
+        switch((c=getch())) {
+            case KEY_DOWN:
+                // cout << endl << "Up" << endl;//key up
+                if (selected == 3)
+                    selected = 1;
+                else
+                    selected += 1;
+                break;
+                
+            case KEY_UP:
+                // cout << endl << "Down" << endl;   // key down
+                if (selected == 1)
+                    selected = 3;
+                else
+                    selected -= 1;
+                break;
+                
+            case ' ':
+                screen = selected;
+                break;
+            
+            default:
+                // cout << endl << "null" << endl;  // not arrow
+                break;
         }
+        
+        switch (screen){
+            case 1:
+                playScreen();
+                break;
+            case 2:
+                loginScreen();
+                break;
+            case 3:
+                aboutScreen();
+                break;
+        }
+    }
 }
