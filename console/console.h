@@ -11,7 +11,7 @@
 
 using namespace std;
 
-COORD GetConsoleCaretPos(HANDLE hConsoleOutput);
+COORD GetConsoleCaretPos();
 void SetWindowSize(SHORT width, SHORT height);
 void setConsoleFontSize(int size);
 void gotoxy(int x, int y);
