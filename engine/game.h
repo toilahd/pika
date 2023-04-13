@@ -631,18 +631,18 @@ int** generateMap(int m, int n){
                 do {x2 = rand() % n; y2 = rand() % m;} while (map[y2][x2] != 0);
                 map[y2][x2] = i;
                 
-                cout << x << ":" << y << " & " << x2 << ":" << y2 << endl;
+                // cout << x << ":" << y << " & " << x2 << ":" << y2 << endl;
                 
             }
             // while (!pathSearch(map, m, n, x, y, x2, y2, true));
             
             // For debugging purpose, should be commentted out
-            for (int a = 0; a < m; a++){
-                for (int b = 0; b < n; b++)
-                    cout << "[" << dye(rainbow[map[a][b] % 15], to_string(map[a][b])) << "]";
-                cout << endl;
-            }
-            cout << "----------------------------" << endl;
+            // for (int a = 0; a < m; a++){
+            //     for (int b = 0; b < n; b++)
+            //         cout << "[" << dye(rainbow[map[a][b] % 15], to_string(map[a][b])) << "]";
+            //     cout << endl;
+            // }
+            // cout << "----------------------------" << endl;
     }
     
     // exit(1);
@@ -1106,37 +1106,51 @@ void pauseScreen(time_t &startTime, User &player) {
                 cin >> pass;
             } while (pass.size() > 49);
             
-            savefile *info = new savefile;
-            (*info).mask = 'Q';
-            strcpy((*info).name, name.c_str());
-            strcpy((*info).password, pass.c_str());
+            strcpy(player.name, name.c_str());
+            strcpy(player.pass, pass.c_str());
             
-            for (int i = 0; i < 5; i++){
-                if ((*info).state[i].p == 0 && (*info).state[i].q == 0){
-                    (*info).state[i].p = player.getBoard.height;
-                    (*info).state[i].q = player.getBoard.width;
-                    
-                    (*info).state[i].p_ = player.getBoard.highlight.second;
-                    (*info).state[i].q_ = player.getBoard.highlight.first;
-                    
-                    int count = 0;
-                    for (int a = 0; a < player.getBoard.height; a++){
-                        gotoxy(70, 7 + a);
-                        for (int b = 0; b < player.getBoard.width; b++){
-                            (*info).state[i].board[count] = (char)(player.getBoard.board[a][b] + 63);
-                            cout << (*info).state[i].board[count] << " ";
-                            count++;
-                        }
-                    }
-                    
-                    break;
+            // Open file
+            ifstream in("data.bin", ios::binary);
+            
+            if (in.is_open()){
+                // we can’t declare a student array here because we don’t know its size
+                // so now we compute the size before reading the file
+                in.seekg(0, ios::end);
+                int num = in.tellg() / sizeof(User); // file size / struct size
+                cout << "file size: " << in.tellg() << ", struct size: " << sizeof(User) << endl;
+                in.seekg(0, ios::beg);
+                
+                User* studentsPointers = new User[num + 1]; // now we can declare an array
+                for (int i = 0; i < num; ++i) {
+                    in.read((char*)&studentsPointers[i], sizeof(User));
+                    cout << studentsPointers[i].name << ": " << studentsPointers[i].skill << endl;
                 }
+            
+                in.close();
+                
+                // Write to file
+                
+                strcpy(studentsPointers[num].name, player.name);
+                strcpy(studentsPointers[num].pass, player.pass);
+                studentsPointers[num].skill = player.skill;
+                
+                ofstream f("data.bin", ios::binary);
+                
+                for (int i = 0; i < num + 1; ++i) {
+                    f.write((char*)&studentsPointers[i], sizeof(User));
+                }
+                
+                f.close();
+            
+                delete[] studentsPointers;
             }
             
-            ofstream out("savedFile.bin", ios::binary);
+            Sleep(5000);
             
-            out.write((char*)info, sizeof(savefile));
-            out.close();
+            // ofstream out("savedFile.bin", ios::binary);
+            
+            // out.write((char*)info, sizeof(savefile));
+            // out.close();
             
             COORD origin = GetConsoleCaretPos();
             gotoxy(70, 2);
@@ -1152,6 +1166,7 @@ void pauseScreen(time_t &startTime, User &player) {
 void playScreen(User player = User{"", "", 0}){
     // Initialize new user / load user info from saved file
     system("cls");
+    
     ShowConsoleCursor(false);
     int timeLength = 300;
     
@@ -1164,7 +1179,35 @@ void playScreen(User player = User{"", "", 0}){
         player.getBoard.height = 9;
         player.getBoard.width = 9;
     }
-    
+    else {
+        cout << "Load info from file" << endl;
+        Sleep(100);
+        
+        ifstream in;
+        in.open("data.bin", ios::binary);
+	
+        // we can’t declare a student array here because we don’t know its size
+        // so now we compute the size before reading the file
+        if (in.is_open()){
+            in.seekg(0, ios::end);
+            int num = in.tellg() / sizeof(User); // file size / struct size
+            cout << "file size: " << in.tellg() << ", struct size: " << sizeof(User) << endl;
+            in.seekg(0, ios::beg);
+            
+            User* studentsPointers = new User[num]; // now we can declare an array
+            for (int i = 0; i < num; ++i) {
+                in.read((char*)&studentsPointers[i], sizeof(User));
+            cout << studentsPointers[i].name << endl;
+            }
+            
+            delete[] studentsPointers;
+            
+        }
+        else
+            cout << "Cannot open file" << endl;
+        
+        Sleep(4000);
+    }
     
     bool isWon = false;
     while (1){
@@ -1318,6 +1361,8 @@ void playScreen(User player = User{"", "", 0}){
             COORD origin = GetConsoleCaretPos();
             gotoxy(70, 2);
             cout << setw(3) << setfill(' ') << timeLength - (time(NULL) - startTime);
+            gotoxy(70, 3);
+            cout << "Player: " << player.name;
             gotoxy(origin.X, origin.Y);
             
             // If board empty, time out or unsolvable -> go to endscreen
@@ -1379,7 +1424,7 @@ int userInput(string &str, int size = 30){
         
         key = _getch();
         
-        if (('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z') || key == ' '){
+        if (('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z') || ('0' <= key && key <= '9') || key == ' '){
             if (str.size() == size)
                 return 0;
             
@@ -1405,7 +1450,7 @@ int userInput(string &str, int size = 30){
     return 0;
 }
 
-void loginScreen(){
+void signInSreen(User player){
     system("cls");
     ShowConsoleCursor(true);
     
@@ -1420,7 +1465,7 @@ void loginScreen(){
     
     while (1){
         
-        int status = userInput(name);
+        int status = userInput(name, 49);
         
         if (status == 2)
             break;
@@ -1441,7 +1486,7 @@ void loginScreen(){
     gotoxy(4, 3);
     
     while (1){
-        int status = userInput(pass);
+        int status = userInput(pass, 49);
         
         if (status == 2)
             break;
@@ -1458,6 +1503,16 @@ void loginScreen(){
         }
     }
     
+    strcpy(player.name, name.substr(0, 49).c_str());
+    player.getBoard.board = generateMap(9, 9);
+    player.getBoard.height = 9;
+    player.getBoard.width = 9;
+    player.isLogged = 1;
+    
+    playScreen(player);
+}
+
+void logInScreen(User player){
     
 }
 
@@ -1465,7 +1520,39 @@ void aboutScreen(){
     
 }
 
-void menuScreen(bool skip = false){
+void leaderboardScreen(){
+    system("cls");
+    ifstream in("data.bin", ios::binary);
+            
+    if (in.is_open()){
+        // we can’t declare a student array here because we don’t know its size
+        // so now we compute the size before reading the file
+        in.seekg(0, ios::end);
+        int num = in.tellg() / sizeof(User); // file size / struct size
+        // cout << "file size: " << in.tellg() << ", struct size: " << sizeof(User) << endl;
+        cout << "Players: " << endl;
+        in.seekg(0, ios::beg);
+        
+        
+        User* studentsPointers = new User[num + 1]; // now we can declare an array
+        for (int i = 0; i < num; ++i) {
+            in.read((char*)&studentsPointers[i], sizeof(User));
+            cout << studentsPointers[i].name << "\t\t " << studentsPointers[i].skill << endl;
+        }
+    
+        in.close();
+        while (1){
+            
+        }
+        // delete[] studentsPointers;
+    }
+    else{
+        cout << "No data found:<" << endl << "So be our first guest!";
+        Sleep(8000);
+    }
+}
+
+void menuScreen(User player, bool skip = false){
     ShowConsoleCursor(false);
     // Skip to play screen
     if (skip){
@@ -1473,37 +1560,67 @@ void menuScreen(bool skip = false){
         return;
     }
     
+    // cout << tintAll("142334") << dyeAll("3a96dd");
+    string intro = "A journey made by Quang Huy & Phuc Khang";
+    
+    int count = 0;
+    while (count <= 9){
+        gotoxy(0, 0);
+        cout << intro.substr(0, count);
+        count++;
+        Sleep(25);
+    }
+    
+    Sleep(600);
+    
+    while (count <= intro.size()){
+        gotoxy(0, 0);
+        cout << intro.substr(0, count);
+        count++;
+        Sleep(20);
+    }
+    
+    Sleep(1000);
+    
     system("cls");
     int selected = 2;
     int screen = 0;
+    int borderWidth = 99;
+    string spaces(borderWidth, ' ');
     
-    string spaces(120, ' ');
-    for (int i = 0; i < 30; i++)
-        cout << spaces << endl;
+    gotoxy((120 - borderWidth)/2 + 1, 1);
+    COORD startLine = GetConsoleCaretPos();
+    for (int i = 0; i < 27; i++){
+        cout << tint("142334", spaces);
+        gotoxy(startLine.X, startLine.Y + i + 1);
+        Sleep(10);
+    }
     
-    gotoxy(0, 0);
-	// dyeAll("142334");
-    
-    // gotoxy((120 - 75)/2, 2);
-    // COORD startLine = GetConsoleCaretPos();
-    // for (int i = 0; i < 25; i++){
-    //     cout << fall[i];
-    //     gotoxy(startLine.X, startLine.Y + i + 1);
-    // }
+    gotoxy((120 - 92)/2, 2);
+    startLine = GetConsoleCaretPos();
+    for (int i = 0; i < 25; i++){
+        cout << fall[i];
+        gotoxy(startLine.X, startLine.Y + i + 1);
+        Sleep(10);
+    }
     
     while (1){
         // cout << tintAll("142334");
         
-        gotoxy(0, 0);
-        cout << (selected != 1 ? " \t" : ">\t") << "Start!" << endl;
-        cout << (selected != 2 ? " \t" : ">\t") << "Login" << endl;
-        cout << (selected != 3 ? " \t" : ">\t") << "About" << endl;
+        gotoxy(20, 15);
+        cout << tintAll("3a96dd") << dyeAll("142334") << (selected != 1 ? " \t" : ">\t") << "Start!" << COLOR_RESET << endl;
+        gotoxy(20, 16);
+        cout << tintAll("3a96dd") << dyeAll("142334") << (selected != 2 ? " \t" : ">\t") << "Login" << COLOR_RESET << endl;
+        gotoxy(20, 17);
+        cout << tintAll("3a96dd") << dyeAll("142334") << (selected != 3 ? " \t" : ">\t") << "About" << COLOR_RESET << endl;
+        gotoxy(20, 18);
+        cout << tintAll("3a96dd") << dyeAll("142334") << (selected != 4 ? " \t" : ">\t") << "Leaderboard" << COLOR_RESET << endl;
         
         int c = 0;
         switch((c=getch())) {
             case KEY_DOWN:
                 // cout << endl << "Up" << endl;//key up
-                if (selected == 3)
+                if (selected == 4)
                     selected = 1;
                 else
                     selected += 1;
@@ -1512,7 +1629,7 @@ void menuScreen(bool skip = false){
             case KEY_UP:
                 // cout << endl << "Down" << endl;   // key down
                 if (selected == 1)
-                    selected = 3;
+                    selected = 4;
                 else
                     selected -= 1;
                 break;
@@ -1528,13 +1645,20 @@ void menuScreen(bool skip = false){
         
         switch (screen){
             case 1:
+                screen = 0;
                 playScreen();
                 break;
             case 2:
-                loginScreen();
+                screen = 0;
+                signInSreen(player);
                 break;
             case 3:
+                screen = 0;
                 aboutScreen();
+                break;
+            case 4:
+                screen = 0;
+                leaderboardScreen();
                 break;
         }
     }

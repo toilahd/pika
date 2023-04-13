@@ -110,6 +110,23 @@ void drawUrightMatch(int x, int y, int x2, int y2, int end, int content = 0){
     gotoxy(origin.X, origin.Y);
 }
 
+// void drawRightAngleRighSideUpMatch(int x, int y, int x2, int y2, int direction, int content = 0){
+//     COORD origin = GetConsoleCaretPos();
+    
+//     int fromX = MARGIN + x*(int)BLOCK_WIDTH + 3;
+//     int fromY = MARGIN - 1 +  y*(int)BLOCK_HEIGHT + 1;
+    
+//     int toX = MARGIN + x2*(int)BLOCK_WIDTH + 3;
+//     int toY = MARGIN - 1 +  y2*(int)BLOCK_HEIGHT - 1;
+    
+//     for (; fromY <= y2; fromY++){
+//         gotoxy(fromX, fromY);
+//         cout << dye
+//     }
+    
+//     gotoxy(origin.X, origin.Y);
+// }
+
 // Convert string to substrings separated by \n character, based on https://stackoverflow.com/a/15006332
 string process(string & s)
 {

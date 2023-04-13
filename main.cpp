@@ -1,8 +1,8 @@
-#pragma pack(1)
 
 #include <iostream>
 #include "engine/game.h"
 #include "console/color.hpp"
+#include "engine/dataType.hpp"
 
 using namespace std;
 
@@ -14,8 +14,10 @@ int main(){
     system("cls");
     // cout << tintAll("142334");
     
+    User player;
+    
     // skip option with value true will go straight to the game screen
-    menuScreen();
+    menuScreen(player);
     
     return 0;
 }
