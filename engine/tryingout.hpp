@@ -1,7 +1,7 @@
 #define NCURSES_MOUSE_VERSION
 #define PI 3.14
 // #include "include/curses.h"
-#pragma pack(1)
+// #pragma pack(1)
 
 #include <Windows.h>
 #include <windows.h>
