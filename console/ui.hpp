@@ -113,14 +113,19 @@ void drawUrightMatch(int x, int y, int x2, int y2, int end, int content = 0){
 void drawULeftMatch(int x, int y, int x2, int y2, int end, int content = 0){
     COORD origin = GetConsoleCaretPos();
     
-    if (x > x2){
+    if (x < x2){
         swap(x, x2);
         swap(y, y2);
     }
     
-    int toX = MARGIN + end*(int)BLOCK_WIDTH - 2;
+    gotoxy(60, 9);
+    // cout << "Value of end: " << end;
     
-    int fromX = MARGIN + x*(int)BLOCK_WIDTH - 4;
+    int toX = MARGIN + end*(int)BLOCK_WIDTH + 3;
+    if (end == -1)
+        toX+=2;
+    
+    int fromX = MARGIN + x*(int)BLOCK_WIDTH + 2;
     int fromY = MARGIN - 1 +  y*(int)BLOCK_HEIGHT;
     
     for (; fromX > toX; fromX--){
@@ -128,7 +133,9 @@ void drawULeftMatch(int x, int y, int x2, int y2, int end, int content = 0){
         cout << dye(rainbow[0], "─");
     }
     
-    int fromX2 = MARGIN + x2*(int)BLOCK_WIDTH - 4;
+    // Sleep(2000);
+    
+    int fromX2 = MARGIN + x2*(int)BLOCK_WIDTH + 2;
     int fromY2 = MARGIN - 1 +  y2*(int)BLOCK_HEIGHT;
     
     for (; fromX2 > toX; fromX2--){
@@ -136,17 +143,21 @@ void drawULeftMatch(int x, int y, int x2, int y2, int end, int content = 0){
         cout << dye(rainbow[0], "─");
     }
     
+    // Sleep(2000);
+    
     for (int i = min(fromY, fromY2); i <= max(fromY, fromY2); i++){
         gotoxy(toX, i);
         if (i == min(fromY, fromY2))
-            cout << dye(rainbow[0], "╮");
+            cout << dye(rainbow[0], "╭");
         else if (i == max(fromY, fromY2))
-            cout << dye(rainbow[0], "╯");
+            cout << dye(rainbow[0], "╰");
         else
             cout << dye(rainbow[0], "│");
     }
     
     gotoxy(origin.X, origin.Y);
+    
+    // Sleep(1500);
 }
 
 void drawRightAngleRighSideUpMatch(int x, int y, int x2, int y2, int direction, int content = 0){
@@ -209,15 +220,7 @@ void drawRightAngleUpSideDownMatch(int x, int y, int x2, int y2, int direction, 
             cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "╮"/* )) */ << endl;
     }
     
-    for (; fromY <= toY; fromY++){
-        gotoxy(fromX, fromY);
-        if (fromY != toY)
-            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "│"/* )) */ << endl;
-        else if (direction == 1)
-            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "╰"/* )) */ << endl;
-        else
-            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "╯"/* )) */ << endl;
-    }
+    Sleep(400);
     
     fromY++;
     if (direction == 1){
@@ -235,28 +238,8 @@ void drawRightAngleUpSideDownMatch(int x, int y, int x2, int y2, int direction, 
         }
     }
         
-    fromY--;
-    if (direction == 1){
-        fromX++;
-        for (; fromX < toX - 1; fromX++){
-            gotoxy(fromX, fromY);
-            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "─"/* )) */;
-        }
-    }
-    else{
-        fromX--;
-        for (; fromX > toX + 1; fromX--){
-            gotoxy(fromX, fromY);
-            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "─"/* )) */;
-        }
-    }
-        
     
     Sleep(1000);
-    
-    gotoxy(origin.X, origin.Y);
-}
-    // Sleep(1000);
     
     gotoxy(origin.X, origin.Y);
 }

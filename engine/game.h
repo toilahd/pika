@@ -435,8 +435,8 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                     // For debugging
                     COORD origin = GetConsoleCaretPos();
                     gotoxy(70, 16);
-                    cout << "⊂   matching";
                     if (!skip){
+                    cout << "⊂   matching";
                         Sleep(000);
                         gotoxy(70, 16);
                         cout << "            ";
@@ -461,18 +461,19 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                     continue;
                 }
                 
-                
+                if (obstacle)
+                    i--;
                 
                 map[y][x] = map[y2][x2] = 0;
                 
                 // For debugging
                 COORD origin = GetConsoleCaretPos();
                 gotoxy(70, 16);
-                cout << "⊂   matching";
                 if (!skip){
+                    cout << "⊂ matching" << obstacle;
                     Sleep(000);
                     gotoxy(70, 16);
-                    cout << "            ";
+                    // cout << "            ";
                     gotoxy(origin.X, origin.Y);
                     drawULeftMatch(x, y, x2, y2, i, map[y][x]);
                 }
@@ -1608,7 +1609,7 @@ void menuScreen(User player, bool skip = false){
     for (int i = 0; i < 27; i++){
         cout << tint("142334", spaces);
         gotoxy(startLine.X, startLine.Y + i + 1);
-        Sleep(1);
+        Sleep(5);
     }
     
     gotoxy((120 - 92)/2, 2);
@@ -1616,7 +1617,7 @@ void menuScreen(User player, bool skip = false){
     for (int i = 0; i < 25; i++){
         cout << fall[i];
         gotoxy(startLine.X, startLine.Y + i + 1);
-        Sleep(1);
+        Sleep(5);
     }
     
     while (1){
@@ -1632,32 +1633,31 @@ void menuScreen(User player, bool skip = false){
         cout << tintAll("3a96dd") << dyeAll("142334") << (selected != 4 ? " \t" : ">\t") << "Leaderboard" << COLOR_RESET << endl;
         
         int c = 0;
-        if (_kbhit() )
-            switch((c=getch())) {
-                case KEY_DOWN:
-                    // cout << endl << "Up" << endl;//key up
-                    if (selected == 4)
-                        selected = 1;
-                    else
-                        selected += 1;
-                    break;
-                    
-                case KEY_UP:
-                    // cout << endl << "Down" << endl;   // key down
-                    if (selected == 1)
-                        selected = 4;
-                    else
-                        selected -= 1;
-                    break;
-                    
-                case ' ':
-                    screen = selected;
-                    break;
+        switch((c=getch())) {
+            case KEY_DOWN:
+                // cout << endl << "Up" << endl;//key up
+                if (selected == 4)
+                    selected = 1;
+                else
+                    selected += 1;
+                break;
                 
-                default:
-                    // cout << endl << "null" << endl;  // not arrow
-                    break;
-            }
+            case KEY_UP:
+                // cout << endl << "Down" << endl;   // key down
+                if (selected == 1)
+                    selected = 4;
+                else
+                    selected -= 1;
+                break;
+                
+            case ' ':
+                screen = selected;
+                break;
+            
+            default:
+                // cout << endl << "null" << endl;  // not arrow
+                break;
+        }
         
         switch (screen){
             case 1:
