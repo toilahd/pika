@@ -12,7 +12,7 @@ int main(){
     // ShowConsoleCursor(false);
     
     system("cls");
-    // cout << tintAll("142334");
+    SetWindowSize(118, 40);
     
     User player;
     

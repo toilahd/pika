@@ -8,6 +8,9 @@ using namespace std;
 const string rainbow[] = {"#FF0000", "#FFA500", "#FFFF00", "#5dc591", "#84ff01", "#077712", "#00FFFF", "#ADD8E6", "#0000FF", "#4B0082", "#FFC0CB", "#EE82EE", "#FF69B4", "#FF1493", "#800000"};
 
 #define COLOR_RESET "\033[0m"
+#ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
+#define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
+#endif
 
 string foreg = "\033[0m";
 string backg = "\033[0m";

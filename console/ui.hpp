@@ -110,22 +110,87 @@ void drawUrightMatch(int x, int y, int x2, int y2, int end, int content = 0){
     gotoxy(origin.X, origin.Y);
 }
 
-// void drawRightAngleRighSideUpMatch(int x, int y, int x2, int y2, int direction, int content = 0){
-//     COORD origin = GetConsoleCaretPos();
+void drawRightAngleRighSideUpMatch(int x, int y, int x2, int y2, int direction, int content = 0){
+    COORD origin = GetConsoleCaretPos();
     
-//     int fromX = MARGIN + x*(int)BLOCK_WIDTH + 3;
-//     int fromY = MARGIN - 1 +  y*(int)BLOCK_HEIGHT + 1;
+    int fromX = MARGIN + x*(int)BLOCK_WIDTH + 3;
+    int fromY = MARGIN - 1 +  y*(int)BLOCK_HEIGHT + 1;
     
-//     int toX = MARGIN + x2*(int)BLOCK_WIDTH + 3;
-//     int toY = MARGIN - 1 +  y2*(int)BLOCK_HEIGHT - 1;
+    int toX = MARGIN + x2*(int)BLOCK_WIDTH + 3;
+    int toY = MARGIN - 1 +  y2*(int)BLOCK_HEIGHT;
     
-//     for (; fromY <= y2; fromY++){
-//         gotoxy(fromX, fromY);
-//         cout << dye
-//     }
+    for (; fromY <= toY; fromY++){
+        gotoxy(fromX, fromY);
+        if (fromY != toY)
+            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "│"/* )) */ << endl;
+        else if (direction == 1)
+            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "╰"/* )) */ << endl;
+        else
+            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "╯"/* )) */ << endl;
+    }
     
-//     gotoxy(origin.X, origin.Y);
-// }
+    fromY--;
+    if (direction == 1){
+        fromX++;
+        for (; fromX < toX - 1; fromX++){
+            gotoxy(fromX, fromY);
+            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "─"/* )) */;
+        }
+    }
+    else{
+        fromX--;
+        for (; fromX > toX + 1; fromX--){
+            gotoxy(fromX, fromY);
+            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "─"/* )) */;
+        }
+    }
+        
+    
+    // Sleep(1000);
+    
+    gotoxy(origin.X, origin.Y);
+}
+
+void drawRightAngleUpSideDownMatch(int x, int y, int x2, int y2, int direction, int content = 0){
+    COORD origin = GetConsoleCaretPos();
+    
+    int fromX = MARGIN + x*(int)BLOCK_WIDTH + 3;
+    int fromY = MARGIN - 1 +  y*(int)BLOCK_HEIGHT - 1;
+    
+    int toX = MARGIN + x2*(int)BLOCK_WIDTH + 3;
+    int toY = MARGIN - 1 +  y2*(int)BLOCK_HEIGHT;
+    
+    for (; fromY <= toY; fromY++){
+        gotoxy(fromX, fromY);
+        if (fromY != toY)
+            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "│"/* )) */ << endl;
+        else if (direction == 1)
+            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "╰"/* )) */ << endl;
+        else
+            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "╯"/* )) */ << endl;
+    }
+    
+    fromY--;
+    if (direction == 1){
+        fromX++;
+        for (; fromX < toX - 1; fromX++){
+            gotoxy(fromX, fromY);
+            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "─"/* )) */;
+        }
+    }
+    else{
+        fromX--;
+        for (; fromX > toX + 1; fromX--){
+            gotoxy(fromX, fromY);
+            cout << /* dye(rainbow[0], tint(rainbow[content % 15], */ "─"/* )) */;
+        }
+    }
+        
+    
+    // Sleep(1000);
+    
+    gotoxy(origin.X, origin.Y);
+}
 
 // Convert string to substrings separated by \n character, based on https://stackoverflow.com/a/15006332
 string process(string & s)

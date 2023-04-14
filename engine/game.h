@@ -175,6 +175,8 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
     
     // Right angle matching
     if (x != x2 && y != y2){
+        int direction= 0;
+        
         // L|⅃
         bool obstacle = false;
         
@@ -190,7 +192,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
             }
             
         if (!obstacle){
-            int direction = 1;
+            direction = 1;
             if (x2 < x)
                 direction = -1;
                 
@@ -206,11 +208,14 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
             COORD origin = GetConsoleCaretPos();
             gotoxy(70, 16);
             cout << "L|⅃ matching";
-            if (!skip)
+            if (!skip){
                 Sleep(000);
-            gotoxy(70, 16);
-            cout << "            ";
-            gotoxy(origin.X, origin.Y);
+                gotoxy(70, 16);
+                cout << "            ";
+                gotoxy(origin.X, origin.Y);
+            }
+            
+            drawRightAngleRighSideUpMatch(x, y, x2, y2, direction, map[y][x]);
             
             map[y][x] = map[y2][x2] = 0;
             return true;
