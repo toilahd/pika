@@ -1608,7 +1608,7 @@ void menuScreen(User player, bool skip = false){
     for (int i = 0; i < 27; i++){
         cout << tint("142334", spaces);
         gotoxy(startLine.X, startLine.Y + i + 1);
-        Sleep(10);
+        Sleep(1);
     }
     
     gotoxy((120 - 92)/2, 2);
@@ -1616,7 +1616,7 @@ void menuScreen(User player, bool skip = false){
     for (int i = 0; i < 25; i++){
         cout << fall[i];
         gotoxy(startLine.X, startLine.Y + i + 1);
-        Sleep(10);
+        Sleep(1);
     }
     
     while (1){
@@ -1632,31 +1632,32 @@ void menuScreen(User player, bool skip = false){
         cout << tintAll("3a96dd") << dyeAll("142334") << (selected != 4 ? " \t" : ">\t") << "Leaderboard" << COLOR_RESET << endl;
         
         int c = 0;
-        switch((c=getch())) {
-            case KEY_DOWN:
-                // cout << endl << "Up" << endl;//key up
-                if (selected == 4)
-                    selected = 1;
-                else
-                    selected += 1;
-                break;
+        if (_kbhit() )
+            switch((c=getch())) {
+                case KEY_DOWN:
+                    // cout << endl << "Up" << endl;//key up
+                    if (selected == 4)
+                        selected = 1;
+                    else
+                        selected += 1;
+                    break;
+                    
+                case KEY_UP:
+                    // cout << endl << "Down" << endl;   // key down
+                    if (selected == 1)
+                        selected = 4;
+                    else
+                        selected -= 1;
+                    break;
+                    
+                case ' ':
+                    screen = selected;
+                    break;
                 
-            case KEY_UP:
-                // cout << endl << "Down" << endl;   // key down
-                if (selected == 1)
-                    selected = 4;
-                else
-                    selected -= 1;
-                break;
-                
-            case ' ':
-                screen = selected;
-                break;
-            
-            default:
-                // cout << endl << "null" << endl;  // not arrow
-                break;
-        }
+                default:
+                    // cout << endl << "null" << endl;  // not arrow
+                    break;
+            }
         
         switch (screen){
             case 1:

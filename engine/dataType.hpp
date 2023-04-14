@@ -57,7 +57,7 @@ struct BoardLayout {
     pair<int, int> point2 = make_pair(-1, -1);
     pair<int, int> hint1 = make_pair(-1, -1);
     pair<int, int> hint2 = make_pair(-1, -1);
-}a;
+};
  
 
 struct User {
