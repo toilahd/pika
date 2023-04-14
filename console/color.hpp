@@ -15,13 +15,12 @@ const string rainbow[] = {"#FF0000", "#FFA500", "#FFFF00", "#5dc591", "#84ff01",
 string foreg = "\033[0m";
 string backg = "\033[0m";
 
-ostream& bold_on(ostream& cout){
-    return cout << "\e[1m";
-}
+#define COLOR_RESET "\033[0m"
+// #define cout cout<<foreg<<backg
+#ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
+#define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
+#endif
 
-ostream& bold_off(ostream& cout){
-    return cout << "\e[0m";
-}
 
 string dye(string color, string text = "▞▞▞▞▞█▓▒░", string resetTo = foreg){
     if (color.at(0) == '#'){
@@ -71,13 +70,13 @@ string tintAll(string color, string text = "hello"){
     return "\033[48;2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m";
 }
 
-void testingBold(){
-    cout << "\e[1mHello\e[0mHello" << endl;
-    cout << "\e[1m" << dye("ec8797", "Hello") << "\e[0m" << dye("ec8797", "Hello") << "" << endl;
-    cout << "\x1b[1mHello\x1b[0mHello" << endl;
-    cout << bold_on << "Hello" << bold_off << "Hello" << endl;
-    cout << bold_on << dye("ec8797", "Hello") << bold_off << dye("ec8797", "Hello") << endl;
-}
+// void testingBold(){
+//     cout << "\e[1mHello\e[0mHello" << endl;
+//     cout << "\e[1m" << dye("ec8797", "Hello") << "\e[0m" << dye("ec8797", "Hello") << "" << endl;
+//     cout << "\x1b[1mHello\x1b[0mHello" << endl;
+//     cout << bold_on << "Hello" << bold_off << "Hello" << endl;
+//     cout << bold_on << dye("ec8797", "Hello") << bold_off << dye("ec8797", "Hello") << endl;
+// }
 
 void testColor(){
     SetConsoleOutputCP(65001);

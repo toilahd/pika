@@ -82,6 +82,11 @@ int main(int argc, char *argv[]){
 	
 	// ifstream in("sample.bin");
 	
+<<<<<<< HEAD
+=======
+	// ifstream in("sample.bin");
+	
+>>>>>>> 7ee8c41 (Update: without decode)
 	// in.seekg(0, ios::end);
 	// int fileSize = in.tellg();
 	

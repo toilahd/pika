@@ -236,7 +236,7 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
             }
             
         if (!obstacle){
-            int direction = 1;
+            direction = 1;
             if (x2 < x)
                 direction = -1;
                 
@@ -262,11 +262,14 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
             COORD origin = GetConsoleCaretPos();
             gotoxy(70, 16);
             cout << "Γ|⅂ matching";
-            if (!skip)
+            if (!skip){
                 Sleep(000);
-            gotoxy(70, 16);
-            cout << "            ";
-            gotoxy(origin.X, origin.Y);
+                gotoxy(70, 16);
+                cout << "            ";
+                gotoxy(origin.X, origin.Y);
+                drawRightAngleUpSideDownMatch(x, y, x2, y2, direction, map[y][x]);
+            }
+            
             
             map[y][x] = map[y2][x2] = 0;
             return true;
@@ -333,11 +336,12 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                 COORD origin = GetConsoleCaretPos();
                 gotoxy(70, 16);
                 cout << "⊃matching@" << i;
-                if (!skip)
+                if (!skip){
                     Sleep(000);
-                gotoxy(70, 16);
-                cout << "            ";
-                gotoxy(origin.X, origin.Y);
+                    gotoxy(70, 16);
+                    cout << "            ";
+                    gotoxy(origin.X, origin.Y);
+                }
                 
                 map[y][x] = map[y2][x2] = 0;
                 return true;
@@ -432,11 +436,13 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                     COORD origin = GetConsoleCaretPos();
                     gotoxy(70, 16);
                     cout << "⊂   matching";
-                    if (!skip)
+                    if (!skip){
                         Sleep(000);
-                    gotoxy(70, 16);
-                    cout << "            ";
-                    gotoxy(origin.X, origin.Y);
+                        gotoxy(70, 16);
+                        cout << "            ";
+                        gotoxy(origin.X, origin.Y);
+                        drawULeftMatch(x, y, x2, y2, i, map[y][x]);
+                    }
                     
                     return true;
                 }
@@ -455,17 +461,21 @@ bool pathSearch(int **map, int m, int n, int x, int y, int x2, int y2, bool skip
                     continue;
                 }
                 
+                
+                
                 map[y][x] = map[y2][x2] = 0;
                 
                 // For debugging
                 COORD origin = GetConsoleCaretPos();
                 gotoxy(70, 16);
                 cout << "⊂   matching";
-                if (!skip)
+                if (!skip){
                     Sleep(000);
-                gotoxy(70, 16);
-                cout << "            ";
-                gotoxy(origin.X, origin.Y);
+                    gotoxy(70, 16);
+                    cout << "            ";
+                    gotoxy(origin.X, origin.Y);
+                    drawULeftMatch(x, y, x2, y2, i, map[y][x]);
+                }
                 
                 return true;
             }

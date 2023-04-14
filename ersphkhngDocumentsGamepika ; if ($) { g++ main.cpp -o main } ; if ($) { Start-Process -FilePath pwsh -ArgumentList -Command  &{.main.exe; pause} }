@@ -1,0 +1,369 @@
+[33mcommit 709e15cc7f8bfc7e6ba74f362a698056544e735b[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Fri Apr 14 12:27:21 2023 +0700
+
+    Update: without decode
+
+[33mcommit 2eedfba35696cc94f146b6f8b55b1d54d2167df6[m
+Author: Phúc Khang <84757707+PhKhang@users.noreply.github.com>
+Date:   Thu Apr 13 18:34:08 2023 +0700
+
+    Update: console.h
+
+[33mcommit d4688fa6af5d8d48953be8ef6797253a40754c6c[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Thu Apr 13 17:55:18 2023 +0700
+
+    Pending for evaluation
+
+[33mcommit a057fd1e74f54d1158a3971d49711a4af5ed1936[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Wed Apr 12 22:15:07 2023 +0700
+
+    Fix: color error (if it exists) on game board
+
+[33mcommit 499dc4a3a379ab29a6b3db8c521ce0bfec09b843[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Wed Apr 12 17:41:37 2023 +0700
+
+    Add: taking input from user (log screen, promt,...)
+
+[33mcommit eafcfd0adbe280232bb65b7f90337124512b0be8[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Tue Apr 11 16:03:10 2023 +0700
+
+    Improved (but not finished Pause screen)
+
+[33mcommit e797e503f3b566037e463ce012f3bedab9c95102[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Mon Apr 10 19:25:45 2023 +0700
+
+    Add: comments
+
+[33mcommit badd15ab40c839f9aebf95b3ec2810bc5ca54d84[m
+Merge: aa91078 6d757dd
+Author: Phúc Khang <84757707+PhKhang@users.noreply.github.com>
+Date:   Mon Apr 10 18:59:00 2023 +0700
+
+    Merge pull request #7 from toilahd/master
+    
+    login page
+
+[33mcommit aa910783685f968ac4a4006f398066bee7f375fb[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Mon Apr 10 18:56:11 2023 +0700
+
+    ANSI escape code substring testing
+
+[33mcommit 6d757dda16e03a47e4a4685ea0451ddea3436ccf[m
+Merge: 558c17b 188d24a
+Author: hid.an <qhuy180624@gmai.com>
+Date:   Mon Apr 10 18:35:31 2023 +0800
+
+    Merge branch 'master' of https://github.com/toilahd/pika
+
+[33mcommit 558c17b1636eec37790fbf4ba146f1140df781d0[m
+Author: hid.an <qhuy180624@gmai.com>
+Date:   Mon Apr 10 18:31:32 2023 +0800
+
+    login page + new menu screen
+
+[33mcommit 188d24a28de7f6dbef7cfa6cc9b66420642b57c3[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Mon Apr 10 15:36:35 2023 +0700
+
+    Connection paths, buggy background image
+
+[33mcommit ca3ea9966becdd43b3c2264677d349211bf6c6df[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Fri Apr 7 19:40:43 2023 +0700
+
+    Endscreen, improved map generator
+
+[33mcommit 9e2d146781c3b9bd6ad1d5370effe5b8576656e6[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Tue Apr 4 22:24:25 2023 +0700
+
+    Border drawing
+
+[33mcommit a46f88ca58618399401e29383774344605e9ac4f[m
+Merge: d2cd98a 177203f
+Author: Phúc Khang <84757707+PhKhang@users.noreply.github.com>
+Date:   Fri Apr 7 19:40:25 2023 +0700
+
+    Merge pull request #6 from toilahd/master
+    
+    menuscreen
+
+[33mcommit 177203fe2e8878520881ecae42130886ca397864[m
+Merge: e4fcfeb 4a98017
+Author: hid.an <qhuy180624@gmai.com>
+Date:   Fri Apr 7 00:44:51 2023 +0800
+
+    Merge branch 'master' of https://github.com/toilahd/pika
+
+[33mcommit e4fcfeb4e66f746c5dbca515a8f0b1f9b151ba24[m
+Author: hid.an <qhuy180624@gmai.com>
+Date:   Fri Apr 7 00:44:39 2023 +0800
+
+    UI updates
+
+[33mcommit 4a98017a690d2c694165532872959c08bfe4f086[m
+Merge: 7d1c522 d2cd98a
+Author: toilahd <116057557+toilahd@users.noreply.github.com>
+Date:   Thu Apr 6 02:20:30 2023 +0800
+
+    Merge branch 'PhKhang:master' into master
+
+[33mcommit 7d1c522d4cec8e99f3767bbd99f2fb736486db16[m
+Author: hid.an <qhuy180624@gmai.com>
+Date:   Thu Apr 6 01:18:45 2023 +0800
+
+    menuscreen
+    
+    preliminary completion of the menu screen
+
+[33mcommit 78f7fd411e2c51459655c488dd2108a645935735[m
+Author: Your Name <qhuy180624@gmai.com>
+Date:   Tue Apr 4 23:41:38 2023 +0800
+
+    draw img func
+
+[33mcommit d2cd98a62ab142ed39fb5845e520aac74ee3eb16[m
+Merge: 0b40993 5cd5a24
+Author: Phúc Khang <84757707+PhKhang@users.noreply.github.com>
+Date:   Tue Apr 4 22:19:46 2023 +0700
+
+    Merge pull request #5 from toilahd/master
+    
+    drawbox function
+
+[33mcommit 5cd5a2466b76737a6eb2d22ec29dc340aad3251b[m
+Author: Your Name <qhuy180624@gmai.com>
+Date:   Tue Apr 4 22:16:20 2023 +0800
+
+    drawbox
+
+[33mcommit 9f323a99227e49ee79ec6da65028920a77db9554[m
+Author: Your Name <qhuy180624@gmai.com>
+Date:   Tue Apr 4 20:15:22 2023 +0800
+
+    fix
+
+[33mcommit 0b409937b518939dcd29a7014e47fb22d95553c2[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Tue Apr 4 11:56:12 2023 +0700
+
+    Changed the whole game's structure
+
+[33mcommit f0aa15fe8cd51c18832ecd8e7a05817c5e4e94c6[m
+Merge: 6796c52 f5d118c
+Author: Phúc Khang <84757707+PhKhang@users.noreply.github.com>
+Date:   Tue Apr 4 11:55:57 2023 +0700
+
+    Merge pull request #4 from toilahd/master
+    
+    add logo
+
+[33mcommit f5d118ce6c296edaf521bb27fe2006b7b6675f86[m
+Author: Your Name <qhuy180624@gmai.com>
+Date:   Tue Apr 4 01:06:53 2023 +0800
+
+    change setcolor -> dye
+
+[33mcommit b669842aef04a7baac12199bbe81f037ee572339[m
+Author: Your Name <qhuy180624@gmai.com>
+Date:   Tue Apr 4 00:36:52 2023 +0800
+
+    fucked up with all the headers and linking files
+
+[33mcommit beb383a85b1b575158868f5b8dad5a66714893db[m
+Author: Your Name <qhuy180624@gmai.com>
+Date:   Mon Apr 3 23:25:08 2023 +0800
+
+    add logo
+
+[33mcommit 6796c520e3061db1c858d42c3909dace9f18b3de[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Sat Apr 1 17:09:41 2023 +0700
+
+    Fixing wrong characters when printing out Braille
+
+[33mcommit 9299074c775ac575c3a6813dbd4878ca7104355c[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Sat Apr 1 11:24:39 2023 +0700
+
+    Why dont you work
+
+[33mcommit 16e130998497e86a7e23204abeaff56162708b3e[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Sat Apr 1 11:23:12 2023 +0700
+
+    Why dont you work
+
+[33mcommit 8e7ef78c8ae75f7b5aa2059e6e8bced3b8cf487a[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Sat Apr 1 09:52:52 2023 +0700
+
+    Adding fill() for background coloring
+
+[33mcommit 5d30016e77811d4ff87dd4adf85de49a3c3039c0[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Sat Apr 1 01:18:25 2023 +0700
+
+    Blocks as board
+
+[33mcommit 373443d514c6c5d482c39673a514279a74894567[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Fri Mar 31 23:19:50 2023 +0700
+
+    Rename directory
+
+[33mcommit 0f6d1e0f67e64aac530687dfda045163ea6f8e6c[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Fri Mar 31 23:18:30 2023 +0700
+
+    Small commit
+
+[33mcommit bb59465c1de8e1b2509fc2089b486a0cd1722ef0[m
+Merge: 204a692 b0fdf09
+Author: Phúc Khang <84757707+PhKhang@users.noreply.github.com>
+Date:   Fri Mar 31 23:17:01 2023 +0700
+
+    Merge pull request #3 from toilahd/master
+    
+    Consoler
+
+[33mcommit 204a69237201b20d4c29b21a636d5f59a53b02ef[m
+Merge: 20426e1 d961456
+Author: Phúc Khang <84757707+PhKhang@users.noreply.github.com>
+Date:   Fri Mar 31 22:53:37 2023 +0700
+
+    Merge pull request #1 from toilahd/master
+    
+    Rút gọn tên file, tạo header menu.
+
+[33mcommit d9614568085b5e1e175fffd1726c2af16862df79[m
+Merge: c67a53e 20426e1
+Author: toilahd <116057557+toilahd@users.noreply.github.com>
+Date:   Fri Mar 31 23:47:26 2023 +0800
+
+    Merge branch 'PhKhang:master' into master
+
+[33mcommit 20426e1d334be1b166eb085e75f58e963cfc51c1[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Fri Mar 31 22:27:00 2023 +0700
+
+    Before making the actual ui
+
+[33mcommit b0fdf0960a928af4ba9f5e342219a3af9ea9512c[m
+Author: Your Name <qhuy180624@gmai.com>
+Date:   Fri Mar 31 23:10:14 2023 +0800
+
+    Consoler
+
+[33mcommit c67a53ee6f9d6e95fdce3e86c05bd26d1b08a209[m
+Author: Your Name <qhuy180624@gmai.com>
+Date:   Fri Mar 31 21:51:16 2023 +0800
+
+    change "consolecontrol" -> "console"
+
+[33mcommit 1704c672d39b634eec692bb9733a0a43e39b1928[m
+Author: Your Name <qhuy180624@gmai.com>
+Date:   Fri Mar 31 21:30:46 2023 +0800
+
+    Update menu.cpp
+
+[33mcommit b4faf3c78d908a0044b55c75fc6d6e31180282a6[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Thu Mar 30 12:10:42 2023 +0700
+
+    A bit of change
+
+[33mcommit d76d1012a2e14bbd04ea3397e6d7ae129b9fdd70[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Thu Mar 30 12:06:18 2023 +0700
+
+    Dye feature
+
+[33mcommit 1c65cfd70afa92a9d3bd3e2008828c585a1631ed[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Thu Mar 30 10:39:27 2023 +0700
+
+    Click support testing
+
+[33mcommit b93c58ff4c2d2dc4f29d9bf81e7fabb7a69464c4[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Wed Mar 29 22:27:08 2023 +0700
+
+    Adding files
+
+[33mcommit 9ece6a0da78fd4cc939fef19cd321ef34fe653ec[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Wed Mar 29 20:45:19 2023 +0700
+
+    Basic path finding done
+
+[33mcommit 351a598e688223071a13bf9445affa1b8a54d694[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Wed Mar 29 14:34:44 2023 +0700
+
+    Changing gitignore directory
+
+[33mcommit 3f5a735a65ef46771dd8a578134c61aeb075e6f0[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Wed Mar 29 14:16:51 2023 +0700
+
+    Adding ignore file
+
+[33mcommit 23a6c1fee2169eebd90d691d0eb12153413f3a8c[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Wed Mar 29 14:09:31 2023 +0700
+
+    Delete game application files
+
+[33mcommit 751131d01e455c258690ee643665abf637dc20fa[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Wed Mar 29 14:03:19 2023 +0700
+
+    Revert "Adding ignore file"
+    
+    This reverts commit 14314fb0d6d51a10e0ad4d31a42bb99ef16335fa.
+
+[33mcommit f5dced8b91bcd8aa7d7e8d1b40f07292ba4552de[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Wed Mar 29 14:00:17 2023 +0700
+
+    Revert "highig"
+    
+    This reverts commit 7359c731ac048828cc7d23b32c0441d6df9ecee1.
+
+[33mcommit 7799c8ee055e2ef8ab9ec7c62e23c6313591f1ef[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Wed Mar 29 13:55:17 2023 +0700
+
+    higninign
+
+[33mcommit 9b628889fce00d5c57fa83dba3dbf7104cc5aa20[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Wed Mar 29 13:54:14 2023 +0700
+
+    Adding ignore file
+
+[33mcommit 4b38cf8a47f0d9e868020b173f79979498b6e1ea[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Wed Mar 29 13:50:11 2023 +0700
+
+    highig
+
+[33mcommit f10c18a46abd21240eeb6cd473249f4e7fed9ae8[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Wed Mar 29 10:24:10 2023 +0700
+
+    testing on different devices
+
+[33mcommit 7c75119e5fc9ce44d470c22652d7c5f6e31ca986[m
+Author: PhKhang <trannguyenphuckhang12@gmail.com>
+Date:   Mon Mar 27 13:54:54 2023 +0700
+
+    init
