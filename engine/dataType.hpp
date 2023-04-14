@@ -46,7 +46,7 @@ struct savefile {
     Board state[5];    // List of save state
 };
 
-// My player's structs
+// Before save file
 struct BoardLayout {
     int **board = NULL;
     int width = 0;
@@ -58,6 +58,7 @@ struct BoardLayout {
     pair<int, int> hint1 = make_pair(-1, -1);
     pair<int, int> hint2 = make_pair(-1, -1);
 };
+ 
 
 struct User {
     char name[30] = "";

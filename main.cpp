@@ -12,12 +12,12 @@ int main(){
     // ShowConsoleCursor(false);
     
     system("cls");
-    // cout << tintAll("142334");
+    SetWindowSize(118, 40);
     
     User player;
     
     // skip option with value true will go straight to the game screen
-    menuScreen(player);
+    menuScreen(player, true);
     
     return 0;
 }
