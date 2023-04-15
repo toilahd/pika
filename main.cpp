@@ -1,7 +1,9 @@
 
 #include <iostream>
 #include "engine/game.h"
+#include "console/ui.hpp"
 #include "console/color.hpp"
+#include "console/screens.hpp"
 #include "engine/dataType.hpp"
 
 using namespace std;

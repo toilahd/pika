@@ -1,1 +1,0 @@
-g++ -I"\C:\Users\phkhng\Documents\Game\pika\include" -L"C:\Users\phkhng\Documents\Game\pika\lib" .\tryingout.cpp -o tryingout  -lpdcurses
