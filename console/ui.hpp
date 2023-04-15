@@ -1,3 +1,5 @@
+// Building the game's User Interface components
+
 #pragma once
 
 #include <iomanip>
@@ -5,8 +7,14 @@
 #include "console.h"
 #include "../engine/dataType.hpp"
 #include "../ansiart.hpp"
+#include "../engine/game.h"
 
 using namespace std;
+
+#define KEY_UP 72
+#define KEY_DOWN 80
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
 
 // Each block will have the size of 7×3 characters,
 // outer board margin of 4 characters
@@ -16,6 +24,95 @@ const int BLOCK_WIDTH = 7;
 const int BLOCK_HEIGHT = 3;
 
 const int MARGIN = 4;
+
+
+void boxDrawing(int boxHeight, int boxWidth, int x = -1, int y = -1){
+    if (x == -1 && y == -1){
+        x = (120 - boxWidth)/2;
+        y = (30 - boxHeight)/2;
+    }
+    
+    gotoxy(x, y);
+    cout << "╭";
+    
+    for (int i = 0; i < boxWidth - 2; i++)
+        cout << "─";
+        
+    cout << "╮";
+    
+    for (int i = 0; i < boxHeight - 2; i++){
+        gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y + 1);
+        cout << "│";
+    }
+    
+    gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y + 1);
+    cout << "╯";
+    
+    // Sleep(500);
+    for (int i = 0; i < boxWidth - 1; i++){
+        gotoxy(GetConsoleCaretPos().X - 2, GetConsoleCaretPos().Y);
+        cout << "─";
+    }
+    
+    gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y);
+    cout << "╰";
+    
+    for (int i = 0; i < boxHeight - 2; i++){
+        gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y - 1);
+        cout << "│";
+    }
+}
+
+void boxEraseLines(int boxHeight, int boxWidth){
+    gotoxy((120 - boxWidth)/2, (30 - boxHeight)/2);
+    string blankLine(boxWidth, ' ');
+    cout << " ";
+    
+    for (int i = 0; i < boxWidth - 2; i++)
+        cout << " ";
+        
+    cout << " ";
+    
+    for (int i = 0; i < boxHeight - 2; i++){
+        gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y + 1);
+        cout << " ";
+    }
+    
+    gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y + 1);
+    cout << " ";
+    
+    // Sleep(500);
+    gotoxy(GetConsoleCaretPos().X, GetConsoleCaretPos().Y - 1);
+    for (int i = 0; i < boxWidth - 2; i++){
+        gotoxy(GetConsoleCaretPos().X - 2, GetConsoleCaretPos().Y);
+        cout << " ";
+    }
+    
+    gotoxy(GetConsoleCaretPos().X - 2, GetConsoleCaretPos().Y);
+    cout << " ";
+    
+    for (int i = 0; i < boxHeight - 2; i++){
+        gotoxy(GetConsoleCaretPos().X - 1, GetConsoleCaretPos().Y - 1);
+        cout << " ";
+    }
+}
+
+void boxErase(int boxHeight, int boxWidth, int x = -1, int y = -1, string color = ""){
+    if (x == -1 && y == -1){
+        x = (120 - boxWidth)/2;
+        y = (30 - boxHeight)/2;
+    }
+    
+    string blankLine(boxWidth, ' ');
+    if (color != "")
+        blankLine = tint(color, blankLine);
+    
+    for (int i = 0; i < boxHeight; i++){
+        gotoxy(x, y + i);
+        cout << blankLine;
+    }
+}
+
 
 void drawHorizonMatch(int x, int y, int x2, int y2, int content = 0){
     if (x > x2){
@@ -71,6 +168,78 @@ void drawVerticalMatch(int x, int y, int x2, int y2, int content = 0){
     Sleep(150);
 }
 
+void drawUDownMatch(int x, int y, int x2, int y2, int end, int content = 0){
+    COORD origin = GetConsoleCaretPos();
+    
+    int toY = MARGIN - 1 +  end*(int)BLOCK_HEIGHT;
+    
+    int fromX = MARGIN + x*(int)BLOCK_WIDTH + 3;
+    int fromY = MARGIN - 1 +  y*(int)BLOCK_HEIGHT + 1;
+    
+    for (; fromY <= toY; fromY++){
+        gotoxy(fromX, fromY);
+        cout << "│";
+    }
+    
+    int fromX2 = MARGIN + x2*(int)BLOCK_WIDTH + 3;
+    int fromY2 = MARGIN - 1 +  y2*(int)BLOCK_HEIGHT + 1;
+    
+    for (; fromY2 <= toY; fromY2++){
+        gotoxy(fromX2, fromY2);
+        cout << "│";
+    }
+    
+    for (int a = min(fromX, fromX2); a <= max(fromX, fromX2); a++){
+        gotoxy(a, toY);
+        if (a == min(fromX, fromX2))
+            cout << "╰";
+        else if (a == max(fromX, fromX2))
+            cout << "╯";
+        else
+            cout << "─";
+    }
+    
+    gotoxy(origin.X, origin.Y);
+    
+    Sleep(1000);
+}
+
+void drawUUpMatch(int x, int y, int x2, int y2, int end, int content = 0){
+    COORD origin = GetConsoleCaretPos();
+    
+    int toY = MARGIN - 1 +  end*(int)BLOCK_HEIGHT + 1;
+    
+    int fromX = MARGIN + x*(int)BLOCK_WIDTH + 3;
+    int fromY = MARGIN - 1 +  y*(int)BLOCK_HEIGHT - 1;
+    
+    for (; fromY >= toY; fromY--){
+        gotoxy(fromX, fromY);
+        cout << "│";
+    }
+    
+    int fromX2 = MARGIN + x2*(int)BLOCK_WIDTH + 3;
+    int fromY2 = MARGIN - 1 +  y2*(int)BLOCK_HEIGHT - 1;
+    
+    for (; fromY2 >= toY; fromY2--){
+        gotoxy(fromX2, fromY2);
+        cout << "│";
+    }
+    
+    for (int a = min(fromX, fromX2); a <= max(fromX, fromX2); a++){
+        gotoxy(a, toY);
+        if (a == min(fromX, fromX2))
+            cout << "╭";
+        else if (a == max(fromX, fromX2))
+            cout << "╮";
+        else
+            cout << "─";
+    }
+    
+    gotoxy(origin.X, origin.Y);
+    
+    Sleep(1000);
+}
+
 void drawUrightMatch(int x, int y, int x2, int y2, int end, int content = 0){
     COORD origin = GetConsoleCaretPos();
     
@@ -79,7 +248,7 @@ void drawUrightMatch(int x, int y, int x2, int y2, int end, int content = 0){
         swap(y, y2);
     }
     
-    int toX = MARGIN + end*(int)BLOCK_WIDTH + 2;
+    int toX = MARGIN + end*(int)BLOCK_WIDTH + 1;
     
     int fromX = MARGIN + x*(int)BLOCK_WIDTH + 4;
     int fromY = MARGIN - 1 +  y*(int)BLOCK_HEIGHT;

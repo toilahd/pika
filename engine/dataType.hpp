@@ -68,4 +68,7 @@ struct User {
     char ass[8] = "";
     char id[10] = "";
     BoardLayout getBoard;
+    
+    Record record[5];  // List of sorted best records
+    Board state[5]; 
 };
