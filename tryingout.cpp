@@ -1,44 +1,57 @@
 #include <fstream>
 #include <iostream>
 #include <cstring>
+#include <windows.h>
+#include <mmsystem.h>
+#include <Windows.h>
+
+#include "engine/tryingout.hpp"
 
 // #include "./engine/tryingout.hpp"
 #include "engine/dataType.hpp"
 
 
 int main(int argc, char *argv[]){
-	User students[1];
+	// User students[1];
 	
-	strcpy(students[0].name, "phkahng");
+	// strcpy(students[0].name, "phkahng");
 	
-	int num = 1;
-	ofstream f("data.bin", ios::binary);
+	// int num = 1;
+	// ofstream f("data.bin", ios::binary);
 	
-	for (int i = 0; i < num; ++i) {
-		f.write((char*)&students[i], sizeof(User));
-	}
+	// for (int i = 0; i < num; ++i) {
+	// 	f.write((char*)&students[i], sizeof(User));
+	// }
 	
-	f.close();
-	
-	
+	// f.close();
 	
 	
-	ifstream in("data.bin", ios::binary);
 	
-	// we can’t declare a student array here because we don’t know its size
-	// so now we compute the size before reading the file
-	in.seekg(0, ios::end);
-	num = in.tellg() / sizeof(User); // file size / struct size
-	cout << "file size: " << in.tellg() << ", struct size: " << sizeof(User) << endl;
-	in.seekg(0, ios::beg);
 	
-	User* studentsPointers = new User[num]; // now we can declare an array
-	for (int i = 0; i < num; ++i) {
-		in.read((char*)&studentsPointers[i], sizeof(User));
-	cout << studentsPointers[i].name << endl;
-	}
+	// ifstream in("data.bin", ios::binary);
 	
-	delete[] studentsPointers;
+	// // we can’t declare a student array here because we don’t know its size
+	// // so now we compute the size before reading the file
+	// in.seekg(0, ios::end);
+	// num = in.tellg() / sizeof(User); // file size / struct size
+	// cout << "file size: " << in.tellg() << ", struct size: " << sizeof(User) << endl;
+	// in.seekg(0, ios::beg);
+	
+	// User* studentsPointers = new User[num]; // now we can declare an array
+	// for (int i = 0; i < num; ++i) {
+	// 	in.read((char*)&studentsPointers[i], sizeof(User));
+	// cout << studentsPointers[i].name << endl;
+	// }
+	
+	// delete[] studentsPointers;
+	
+	// PlaySound("C:\\Users\\phkhng\\Desktop\\Let The Rain Kiss You.wav", 0, SND_FILENAME | SND_ASYNC);
+	mciSendString("play \"C:\\Users\\phkhng\\Desktop\\Let The Rain Kiss You.wav\"", NULL, 0, NULL);
+	Sleep(2000);
+	// PlaySound("C:\\Users\\phkhng\\Music\\Indoor Kei Nara Trackmaker_Stems_128bpm\\CHpercpluck.wav", 0, SND_FILENAME | SND_ASYNC);
+	
+	
+	Sleep(15000);
 	
 	return 0;
 }

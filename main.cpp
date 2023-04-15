@@ -17,7 +17,7 @@ int main(){
     User player;
     
     // skip option with value true will go straight to the game screen
-    menuScreen(player, true);
+    menuScreen(player);
     
     return 0;
 }

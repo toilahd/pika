@@ -162,16 +162,18 @@ struct Student {
 	double score; // 8 byte floating point number
 };
 
-void keyPressTest(){
+int keyPressTest(){
 	int key;
-	while (1){
-		if (_kbhit()){
-			key = _getch();
+	if (_kbhit()){
+		key = _getch();
+		
+		if (key == ' ')
+			cout << "Space pressed" << endl;
 			
-			if (key == 27)
-				cout << "ESC pressed" << endl;
-		}
+		return 1;
 	}
+	
+	return 0;
 }
 
 // void pixelManipulatingTest(){
